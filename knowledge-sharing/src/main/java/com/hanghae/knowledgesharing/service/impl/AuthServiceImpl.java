@@ -2,18 +2,13 @@ package com.hanghae.knowledgesharing.service.impl;
 
 
 import com.hanghae.knowledgesharing.common.CertificationNumber;
-import com.hanghae.knowledgesharing.dto.request.auth.CheckCertificationRequestDto;
-import com.hanghae.knowledgesharing.dto.request.auth.EmailCertificationRequestDto;
-import com.hanghae.knowledgesharing.dto.request.auth.IdCheckRequestDto;
-import com.hanghae.knowledgesharing.dto.request.auth.SignUpRequestDto;
+import com.hanghae.knowledgesharing.dto.request.auth.*;
 import com.hanghae.knowledgesharing.dto.response.ResponseDto;
-import com.hanghae.knowledgesharing.dto.response.auth.CheckCertificationResponseDto;
-import com.hanghae.knowledgesharing.dto.response.auth.EmailCertificationResponseDto;
-import com.hanghae.knowledgesharing.dto.response.auth.IdCheckResponseDto;
-import com.hanghae.knowledgesharing.dto.response.auth.SignUpResponseDto;
+import com.hanghae.knowledgesharing.dto.response.auth.*;
 import com.hanghae.knowledgesharing.entity.Certification;
 import com.hanghae.knowledgesharing.entity.User;
 import com.hanghae.knowledgesharing.provider.EmailProvider;
+import com.hanghae.knowledgesharing.provider.JwtProvider;
 import com.hanghae.knowledgesharing.repository.CertificationRepository;
 import com.hanghae.knowledgesharing.repository.UserRepository;
 import com.hanghae.knowledgesharing.service.AuthService;
@@ -28,7 +23,7 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
     private  final UserRepository userRepository;
     private final CertificationRepository certificationRepository;
-
+    private  final JwtProvider  jwtProvider;
     private  final EmailProvider emailProvider;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -129,4 +124,32 @@ public class AuthServiceImpl implements AuthService {
         return SignUpResponseDto.success();
 
     }
+
+    @Override
+    public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
+
+        String token = null;
+
+        try {
+
+            String userId = dto.getId();
+            User user = userRepository.findByUserId(userId);
+            if(user == null) return SignInResponseDto.signInFail();
+
+            String password = dto.getPassword();
+            String encodedPassword = user.getPassword();
+            boolean isMatched = passwordEncoder.matches(password, encodedPassword);
+            if(!isMatched) return SignInResponseDto.signInFail();
+
+            token = jwtProvider.create(userId);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return SignInResponseDto.success(token);
+
+    }
+
 }

@@ -1,14 +1,8 @@
 package com.hanghae.knowledgesharing.controller;
 
 
-import com.hanghae.knowledgesharing.dto.request.auth.CheckCertificationRequestDto;
-import com.hanghae.knowledgesharing.dto.request.auth.EmailCertificationRequestDto;
-import com.hanghae.knowledgesharing.dto.request.auth.IdCheckRequestDto;
-import com.hanghae.knowledgesharing.dto.request.auth.SignUpRequestDto;
-import com.hanghae.knowledgesharing.dto.response.auth.CheckCertificationResponseDto;
-import com.hanghae.knowledgesharing.dto.response.auth.EmailCertificationResponseDto;
-import com.hanghae.knowledgesharing.dto.response.auth.IdCheckResponseDto;
-import com.hanghae.knowledgesharing.dto.response.auth.SignUpResponseDto;
+import com.hanghae.knowledgesharing.dto.request.auth.*;
+import com.hanghae.knowledgesharing.dto.response.auth.*;
 import com.hanghae.knowledgesharing.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -59,5 +53,12 @@ public class AuthController {
         return response;
     }
 
+    @PostMapping("/sign-in")
+    public ResponseEntity<? super SignInResponseDto> signIn (
+            @RequestBody @Valid SignInRequestDto requestBody
+    ) {
+        ResponseEntity<? super SignInResponseDto> response = authService.signIn(requestBody);
+        return response;
+    }
 
 }
