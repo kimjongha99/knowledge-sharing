@@ -2,9 +2,11 @@ package com.hanghae.knowledgesharing.service.impl;
 
 
 import com.hanghae.knowledgesharing.common.CertificationNumber;
+import com.hanghae.knowledgesharing.dto.request.auth.CheckCertificationRequestDto;
 import com.hanghae.knowledgesharing.dto.request.auth.EmailCertificationRequestDto;
 import com.hanghae.knowledgesharing.dto.request.auth.IdCheckRequestDto;
 import com.hanghae.knowledgesharing.dto.response.ResponseDto;
+import com.hanghae.knowledgesharing.dto.response.auth.CheckCertificationResponseDto;
 import com.hanghae.knowledgesharing.dto.response.auth.EmailCertificationResponseDto;
 import com.hanghae.knowledgesharing.dto.response.auth.IdCheckResponseDto;
 import com.hanghae.knowledgesharing.entity.Certification;
@@ -62,5 +64,27 @@ public class AuthServiceImpl implements AuthService {
 
 
         return EmailCertificationResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super CheckCertificationResponseDto> emailCertificationCheck(CheckCertificationRequestDto checkCertificationRequestDto) {
+        try {
+            String userId = checkCertificationRequestDto.getId();
+            String email = checkCertificationRequestDto.getEmail();
+            String certificationNumber = checkCertificationRequestDto.getCertificationNumber();
+
+            Certification certification = certificationRepository.findByUserId(userId);
+            if(certification == null) return CheckCertificationResponseDto.certificationFail();
+            boolean isMatched = certification.getEmail().equals(email) && certification.getCertificationNumber().equals(certificationNumber);
+            if(!isMatched) return CheckCertificationResponseDto.certificationFail();
+
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return CheckCertificationResponseDto.success();
+
     }
 }

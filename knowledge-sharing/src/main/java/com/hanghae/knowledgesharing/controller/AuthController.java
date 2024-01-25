@@ -1,8 +1,10 @@
 package com.hanghae.knowledgesharing.controller;
 
 
+import com.hanghae.knowledgesharing.dto.request.auth.CheckCertificationRequestDto;
 import com.hanghae.knowledgesharing.dto.request.auth.EmailCertificationRequestDto;
 import com.hanghae.knowledgesharing.dto.request.auth.IdCheckRequestDto;
+import com.hanghae.knowledgesharing.dto.response.auth.CheckCertificationResponseDto;
 import com.hanghae.knowledgesharing.dto.response.auth.EmailCertificationResponseDto;
 import com.hanghae.knowledgesharing.dto.response.auth.IdCheckResponseDto;
 import com.hanghae.knowledgesharing.service.AuthService;
@@ -39,5 +41,12 @@ public class AuthController {
 
 
 
+    @PostMapping("/check-certification")
+    public ResponseEntity<? super CheckCertificationResponseDto> checkCertification(
+            @RequestBody @Valid CheckCertificationRequestDto requestBody
+    ) {
+        ResponseEntity<? super CheckCertificationResponseDto> response = authService.emailCertificationCheck(requestBody);
+        return response;
+    }
 
 }
