@@ -5,17 +5,22 @@ import com.hanghae.knowledgesharing.common.CertificationNumber;
 import com.hanghae.knowledgesharing.dto.request.auth.CheckCertificationRequestDto;
 import com.hanghae.knowledgesharing.dto.request.auth.EmailCertificationRequestDto;
 import com.hanghae.knowledgesharing.dto.request.auth.IdCheckRequestDto;
+import com.hanghae.knowledgesharing.dto.request.auth.SignUpRequestDto;
 import com.hanghae.knowledgesharing.dto.response.ResponseDto;
 import com.hanghae.knowledgesharing.dto.response.auth.CheckCertificationResponseDto;
 import com.hanghae.knowledgesharing.dto.response.auth.EmailCertificationResponseDto;
 import com.hanghae.knowledgesharing.dto.response.auth.IdCheckResponseDto;
+import com.hanghae.knowledgesharing.dto.response.auth.SignUpResponseDto;
 import com.hanghae.knowledgesharing.entity.Certification;
+import com.hanghae.knowledgesharing.entity.User;
 import com.hanghae.knowledgesharing.provider.EmailProvider;
 import com.hanghae.knowledgesharing.repository.CertificationRepository;
 import com.hanghae.knowledgesharing.repository.UserRepository;
 import com.hanghae.knowledgesharing.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,6 +30,8 @@ public class AuthServiceImpl implements AuthService {
     private final CertificationRepository certificationRepository;
 
     private  final EmailProvider emailProvider;
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @Override
     public ResponseEntity<? super IdCheckResponseDto> idCheck(IdCheckRequestDto idCheckRequestDto) {
         try {
@@ -85,6 +92,41 @@ public class AuthServiceImpl implements AuthService {
         }
 
         return CheckCertificationResponseDto.success();
+
+    }
+
+    @Override
+    public ResponseEntity<? super SignUpResponseDto> signUp(SignUpRequestDto dto) {
+        try {
+            String userId = dto.getId();
+            boolean isExistId = userRepository.existsByUserId(userId);
+            if(isExistId) return SignUpResponseDto.duplicateId();
+
+            String email = dto.getEmail();
+
+            String certificationNumber = dto.getCertificationNumber();
+
+            Certification certification = certificationRepository.findByUserId(userId);
+            boolean isMatched = certification.getEmail().equals(email) && certification.getCertificationNumber().equals(certificationNumber);
+            if(!isMatched) return SignUpResponseDto.certificationFail();
+
+
+            String password = dto.getPassword();
+            String encodedPassword = passwordEncoder.encode(password);
+            dto.setPassword(encodedPassword);
+
+            User user = new User(dto);
+            userRepository.save(user);
+
+
+            certificationRepository.deleteByUserId(userId);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return SignUpResponseDto.success();
 
     }
 }

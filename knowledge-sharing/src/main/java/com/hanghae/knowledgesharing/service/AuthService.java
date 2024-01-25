@@ -4,9 +4,11 @@ package com.hanghae.knowledgesharing.service;
 import com.hanghae.knowledgesharing.dto.request.auth.CheckCertificationRequestDto;
 import com.hanghae.knowledgesharing.dto.request.auth.EmailCertificationRequestDto;
 import com.hanghae.knowledgesharing.dto.request.auth.IdCheckRequestDto;
+import com.hanghae.knowledgesharing.dto.request.auth.SignUpRequestDto;
 import com.hanghae.knowledgesharing.dto.response.auth.CheckCertificationResponseDto;
 import com.hanghae.knowledgesharing.dto.response.auth.EmailCertificationResponseDto;
 import com.hanghae.knowledgesharing.dto.response.auth.IdCheckResponseDto;
+import com.hanghae.knowledgesharing.dto.response.auth.SignUpResponseDto;
 import org.springframework.http.ResponseEntity;
 
 public interface AuthService {
@@ -14,5 +16,9 @@ public interface AuthService {
     ResponseEntity<? super EmailCertificationResponseDto> emailCertification(EmailCertificationRequestDto dto);
 
     ResponseEntity<? super CheckCertificationResponseDto> emailCertificationCheck(CheckCertificationRequestDto checkCertificationRequestDto);
+
+
+    ResponseEntity<? super SignUpResponseDto> signUp(SignUpRequestDto dto);
+
 
 }

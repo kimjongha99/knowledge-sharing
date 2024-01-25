@@ -48,8 +48,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
-            User userEntity = userRepository.findByUserId(userId); // user 정보 꺼내오기
-            String role = userEntity.getRole(); // role : ROLE_USER, ROLE_ADMIN // 권한 지정
+            User user = userRepository.findByUserId(userId); // user 정보 꺼내오기
+            String role = user.getRole().getAuthority(); // role : ROLE_USER, ROLE_ADMIN // 권한 지정
 
             // ROLE_DEVELOPER, ROLE_BOSS ... etc 권한의 배열형태
             List<GrantedAuthority> authorities = new ArrayList<>(); // 권한 리스트
