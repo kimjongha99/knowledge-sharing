@@ -1,8 +1,7 @@
 package com.hanghae.knowledgesharing.provider;
 
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -54,5 +53,35 @@ public class JwtProvider {
       return null;
     }
     return subject;
+  }
+
+
+
+  public String createRefreshToken(String userId) {
+    Date expiredDate = Date.from(Instant.now().plus(7, ChronoUnit.DAYS)); // 7 days expiration for example
+    Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+    return Jwts.builder()
+            .signWith(key, SignatureAlgorithm.HS256)
+            .setSubject(userId)
+            .setIssuedAt(new Date())
+            .setExpiration(expiredDate)
+            .compact();
+  }
+
+
+  public String validateRefreshToken(String refreshToken) {
+    Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+    try {
+      Jws<Claims> claims = Jwts.parserBuilder()
+              .setSigningKey(key)
+              .build()
+              .parseClaimsJws(refreshToken);
+
+      return claims.getBody().getSubject();
+
+    }catch (Exception exception) {
+      exception.printStackTrace();
+      return null;
+    }
   }
 }

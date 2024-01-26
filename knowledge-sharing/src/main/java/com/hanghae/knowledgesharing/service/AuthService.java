@@ -16,4 +16,5 @@ public interface AuthService {
 
     ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto);
 
+    ResponseEntity<? super RefreshResponseDto> refreshAccessToken(RefreshRequestDto requestBody);
 }

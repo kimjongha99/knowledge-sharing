@@ -14,4 +14,7 @@ public interface ResponseCode {
     String MAIL_FAIL = "MF";
     String DATABASE_ERROR = "DBE";
 
+    String REFRESH_TOKEN_INVALID = "RTI";
+    String REFRESH_TOKEN_EXPIRED = "RTE";
+
 }

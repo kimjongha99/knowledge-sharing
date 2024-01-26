@@ -31,6 +31,8 @@ public class User {
     @Column(columnDefinition = "varchar(255)", nullable = true)
     private String profileImageUrl;
 
+    @Column(name = "refresh_token")
+    private String refreshToken;
 
     public  User(SignUpRequestDto dto) {
         this.userId = dto.getId();
@@ -39,5 +41,7 @@ public class User {
         this.type = "app";
         this.role = UserRoleEnum.USER;
     }
-
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 }
