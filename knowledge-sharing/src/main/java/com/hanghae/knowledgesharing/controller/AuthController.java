@@ -1,10 +1,8 @@
 package com.hanghae.knowledgesharing.controller;
 
 
-import com.hanghae.knowledgesharing.dto.request.auth.EmailCertificationRequestDto;
-import com.hanghae.knowledgesharing.dto.request.auth.IdCheckRequestDto;
-import com.hanghae.knowledgesharing.dto.response.auth.EmailCertificationResponseDto;
-import com.hanghae.knowledgesharing.dto.response.auth.IdCheckResponseDto;
+import com.hanghae.knowledgesharing.dto.request.auth.*;
+import com.hanghae.knowledgesharing.dto.response.auth.*;
 import com.hanghae.knowledgesharing.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,5 +37,47 @@ public class AuthController {
 
 
 
+    @PostMapping("/check-certification")
+    public ResponseEntity<? super CheckCertificationResponseDto> checkCertification(
+            @RequestBody @Valid CheckCertificationRequestDto requestBody
+    ) {
+        ResponseEntity<? super CheckCertificationResponseDto> response = authService.emailCertificationCheck(requestBody);
+        return response;
+    }
+
+    @PostMapping("/sign-up")
+    public ResponseEntity<? super SignUpResponseDto> signUp (
+            @RequestBody @Valid SignUpRequestDto requestBody
+    ) {
+        ResponseEntity<? super SignUpResponseDto> response = authService.signUp(requestBody);
+        return response;
+    }
+
+    @PostMapping("/sign-in")
+    public ResponseEntity<? super SignInResponseDto> signIn (
+            @RequestBody @Valid SignInRequestDto requestBody
+    ) {
+        ResponseEntity<? super SignInResponseDto> response = authService.signIn(requestBody);
+        return response;
+    }
+
+    @PostMapping("/refresh")
+    public  ResponseEntity<? super RefreshResponseDto> refreshAccessToken(
+            @RequestBody@Valid RefreshRequestDto requestBody
+    ) {
+        ResponseEntity<? super RefreshResponseDto> response = authService.refreshAccessToken(requestBody);
+        return response;
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
