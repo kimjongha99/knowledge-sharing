@@ -1,0 +1,22 @@
+#wrap {
+    text-align: center;
+}
+
+#wrap-center {
+    width: 1280px;
+    display: inline-block;
+}
+
+#header {
+    position: relative;
+    height: 64px;
+}
+
+#search {
+    display: inline-flex;
+    width: 708px;
+    height: 60px;
+    border-radius: 33px;
+    background-color: gray;
+}
+
