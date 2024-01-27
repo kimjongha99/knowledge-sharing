@@ -1,0 +1,51 @@
+#Main {
+    margin-top: 51px;
+    display: flex;
+}
+
+section[id^=main] {
+    box-shadow: 0 0 0 1px #e3e5e8, 0 1px 2px 0 rgba(0, 0, 0, .04);
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+#main-left {
+    width: 830px;
+    margin-right: 30px;
+}
+
+#main-right {
+    width: 420px;
+}
+
+#main-left-one {
+    background: gray;
+    height: 130px;
+}
+
+#main-left-two {
+    height: 426px;
+    background: gray;
+}
+
+#main-left-three {
+    height: 560px;
+    background: gray;
+}
+
+
+
+#main-right-two {
+    height: 240px;
+    background: gray;
+}
+
+#main-right-three {
+    height: 236px;
+    background: gray;
+}
+
+#main-right-four {
+    height: 236px;
+    background: gray;
+}
