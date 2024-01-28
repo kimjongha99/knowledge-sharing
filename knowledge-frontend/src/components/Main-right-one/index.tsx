@@ -1,13 +1,13 @@
 import React from "react";
 import './style.css';
 import { useNavigate } from 'react-router-dom';
-import {AUTH_PATH} from "../../constant";
+import {AUTH_PATH, SIGN_UP_PATH} from "../../constant";
 
 const MainRightOne =()=>{
     const navigate = useNavigate();
 
     function handleLogin() {
-        navigate(AUTH_PATH);
+        navigate(AUTH_PATH +SIGN_UP_PATH);
     }
 
 
@@ -18,7 +18,7 @@ const MainRightOne =()=>{
 
 
 
-             <button onClick={handleLogin}>Login</button>
+             <button onClick={handleLogin}>회원가입 및 로그인   </button>
 
 
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import { Route, Routes, useLocation } from 'react-router-dom';
-import Index from "./views/main"
+import { Route, Routes } from 'react-router-dom';
 import {AUTH_PATH, MAIN_PATH} from 'constant';
 import Container from "./layouts/Container";
 import Main from "./views/main";
-import Authentication from "./views/Authentication";
+import SignUp from "./views/SignUp";
+import SignIn from "./views/SignIn";
 
 
 function App() {
@@ -13,9 +13,12 @@ function App() {
         <Routes>
             <Route element={<Container />}>
                 <Route path={MAIN_PATH} element={<Main />} />
-                <Route path={AUTH_PATH} element={<Authentication />} />
+                <Route path={AUTH_PATH}>
+                    <Route path='sign-up' element={<SignUp/>} />
+                    <Route path='sign-in' element={<SignIn/>} />
+                </Route>
 
-            </Route>
+                </Route>
 
         </Routes>
     );
