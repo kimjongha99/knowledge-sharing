@@ -17,4 +17,5 @@ public interface ResponseCode {
     String REFRESH_TOKEN_INVALID = "RTI";
     String REFRESH_TOKEN_EXPIRED = "RTE";
 
+    String NOT_EXISTED_USER = "NEU";
 }
