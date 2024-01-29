@@ -3,7 +3,7 @@ server:
   port: 4040
 spring:
   profiles:
-    active: db ,jwt ,mail
+    active: db ,jwt ,mail,s3
   datasource:
     driver-class-name: ${driver-class-name}
     url: ${url}
@@ -28,3 +28,15 @@ spring:
           auth: true
           starttls:
             enable: true
+
+cloud:
+  aws:
+    credentials:
+      access-key: ${accessKey}
+      secret-key: ${secretKey}
+    s3:
+      bucket: ${bucketName}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

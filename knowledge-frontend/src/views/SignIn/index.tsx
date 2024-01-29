@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef, useState, KeyboardEvent } from 'react';
+import React, {ChangeEvent, useRef, useState, KeyboardEvent, FormEvent} from 'react';
 import {useCookies} from "react-cookie";
 import {useNavigate} from "react-router-dom";
 import {ResponseBody} from "../../types";
@@ -28,26 +28,33 @@ function SignIn(){
     const navigate = useNavigate();
 
 
-    const signInResponse = (responseBody: ResponseBody<SignInResponseDto>) => {
-        if(!responseBody) return;
+
+    const signInResponse = async (responseBody: ResponseBody<SignInResponseDto>) => {
+        if (!responseBody) return;
 
         const { code } = responseBody;
-        if(code === ResponseCode.VALIDATION_FAIL) alert('아이디와 비밀번호를 입력하세요.');
-        if(code === ResponseCode.SIGN_IN_FAIL) setMessage('로그인 정보가 일치하지 않습니다.');
-        if(code === ResponseCode.DATABASE_ERROR) alert('데이터베이스 오류입니다.');
-        if(code !== ResponseCode.SUCCESS) return;
+        if (code === ResponseCode.VALIDATION_FAIL) {
+            alert('아이디와 비밀번호를 다시입력하세요.');
+            return;
+        }
+        if (code === ResponseCode.SIGN_IN_FAIL) {
+            setMessage('로그인정보가 일치하지않습니다..');
+            return;
+        }
+        if (code === ResponseCode.DATABASE_ERROR) {
+            alert('Database error.');
+            return;
+        }
+        if (code !== ResponseCode.SUCCESS) return;
 
-        const { accessToken,refreshToken, expirationTime } = responseBody as  SignInResponseDto;
+        const { accessToken, refreshToken } = responseBody as SignInResponseDto;
 
-        const now = (new Date().getTime()) * 1000;
-        console.log(now)
         const oneHourInSeconds = 3600; // 1 hour in seconds
         const sevenDaysInSeconds = 7 * 24 * 3600; // 7 days in seconds
         setCookies('accessToken', accessToken, { maxAge: oneHourInSeconds, path: '/' });
         setCookies('refreshToken', refreshToken, { maxAge: sevenDaysInSeconds, path: '/' });
 
         navigate('/');
-
     };
     // onChange
     const onIdChangeHandler = (event:ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +82,11 @@ function SignIn(){
         signInRequest(requestBody).then(signInResponse);
         navigate(MAIN_PATH);
     };
+
+    const onFormSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault(); // Prevent the default form submission
+        onSignInButtonClickHandler(); // Call your sign in handler
+    };
     // OAuth 로그인 //
     const onSnsSignInButtonClickHandler = (type: 'kakao' | 'naver') => {
         window.location.href = SNS_SIGN_IN_URL(type);
@@ -90,25 +102,22 @@ function SignIn(){
         if(event.key !== 'Enter') return;
         onSignInButtonClickHandler();
     };
-
-    return(
+    return (
         <div id='sign-in-wrapper'>
-            <div className='sign-in-image'></div>
-            <div className='sign-in-container'>
+            <form onSubmit={onFormSubmitHandler}>
                 <div className='sign-in-box'>
-                    <div className='sign-in-title'>{'임대주택 가격 서비스'}</div>
                     <div className='sign-in-content-box'>
                         <div className='sign-in-content-input-box'>
                             <InputBox ref={idRef} title='아이디' placeholder='아이디를 입력해주세요.' type='text' value={id} onChange={onIdChangeHandler} onKeyDown={onIdKeyDownHandler} />
                             <InputBox ref={passwordRef} title='비밀번호' placeholder='비밀번호를 입력해주세요.' type='password' value={password} onChange={onPasswordChangeHandler} isErrorMessage message={message} onKeyDown={onPasswordKeyDownHandler}/>
                         </div>
                         <div className='sign-in-content-button-box'>
-                            <div className='primary-button-lg full-width' id='login-bar' onClick={onSignInButtonClickHandler}>{'로그인'}</div>
-                            <div className='text-link-lg-full-width  ' onClick={onSignUpButtonClickHandler} >{'회원가입 이동'}</div>
+                            <button type='submit' className='primary-button-lg full-width' id='login-bar'>로그인</button>
+                            <div className='text-link-lg-full-width' onClick={onSignUpButtonClickHandler}>회원가입 이동</div>
                         </div>
                         <div className='sign-in-content-divider'></div>
                         <div className='sign-in-content-sns-sign-in-box'>
-                            <div className='sign-in-content-sns-sign-in-title'>{'SNS 로그인'}</div>
+                            <div className='sign-in-content-sns-sign-in-title'>SNS 로그인</div>
                             <div className='sign-in-content-sns-sign-in-button-box'>
                                 <div className='kakao-sign-in-button' onClick={() => onSnsSignInButtonClickHandler('kakao')} ></div>
                                 <div className='naver-sign-in-button' onClick={() => onSnsSignInButtonClickHandler('naver')} ></div>
@@ -116,9 +125,10 @@ function SignIn(){
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
-    )
+    );
+
 
 }
 

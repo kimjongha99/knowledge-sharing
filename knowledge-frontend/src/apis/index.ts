@@ -70,3 +70,8 @@ export const signUpRequest = async (requestBody: SignUpRequestDto) => {
 };
 
 export const SNS_SIGN_IN_URL = (type: 'kakao' | 'naver') => `${API_DOMAIN}/auth/oauth2/${type}`;
+
+
+
+
+

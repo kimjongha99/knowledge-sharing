@@ -4,35 +4,31 @@ import com.hanghae.knowledgesharing.common.ResponseCode;
 import com.hanghae.knowledgesharing.common.ResponseMessage;
 import com.hanghae.knowledgesharing.dto.response.ResponseDto;
 import com.hanghae.knowledgesharing.entity.User;
-import com.hanghae.knowledgesharing.enums.UserRoleEnum;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Getter
-public class GetSignInUserResponseDto extends ResponseDto {
+public class GetUserResponseDto extends ResponseDto {
 
     private String userId;
     private String email;
     private String profileImageUrl;
 
-    private UserRoleEnum role;
-
-    private GetSignInUserResponseDto(User user) {
-        super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+    private GetUserResponseDto(User user) {
+        super();
         this.userId = user.getUserId();
         this.email = user.getEmail();
         this.profileImageUrl = user.getProfileImageUrl();
-        this.role= user.getRole();
     }
 
-    public static ResponseEntity<GetSignInUserResponseDto> success(User user) {
-        GetSignInUserResponseDto result = new GetSignInUserResponseDto(user);
+    public static ResponseEntity<GetUserResponseDto> success(User user) {
+        GetUserResponseDto result = new GetUserResponseDto(user);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    public static ResponseEntity<ResponseDto> notExistUser () {
+    public static ResponseEntity<ResponseDto> noExistUser() {
         ResponseDto result = new ResponseDto(ResponseCode.NOT_EXISTED_USER, ResponseMessage.NOT_EXISTED_USER);
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
-    }
+}
