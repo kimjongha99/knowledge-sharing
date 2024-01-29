@@ -1,6 +1,7 @@
 import React from "react";
 import './style.css';
 import MainRightOne from "../../components/Main-right-one";
+import MainRightTwo from "../../components/Main-right-two";
 
 export default function Main() {
 
@@ -13,7 +14,7 @@ export default function Main() {
                 </div>
                 <div id="main-right">
                         <MainRightOne />
-                    <section id="main-right-two"></section>
+                       <MainRightTwo/>
                     <section id="main-right-three"></section>
                     <section id="main-right-four"></section>
                 </div>

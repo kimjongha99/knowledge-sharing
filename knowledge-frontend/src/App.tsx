@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
-import {AUTH_PATH, MAIN_PATH} from 'constant';
+import {AUTH_PATH, MAIN_PATH, USER_PATH} from 'constant';
 import Container from "./layouts/Container";
 import Main from "./views/main";
 import SignUp from "./views/SignUp";
@@ -9,6 +9,7 @@ import SignIn from "./views/SignIn";
 import {User, useUserStore} from "./stores/user.store";
 import {useCookies} from "react-cookie";
 import axios from "axios";
+import MyPage from "./views/MyPage";
 
 
 function App() {
@@ -31,8 +32,8 @@ function App() {
             }
         })
             .then(response => {
-                const { userId, email, profileImageUrl } = response.data;
-                setUser({ userId, email, profileImageUrl }); // Update the user state in Zustand store
+                const { userId, email, profileImageUrl,role } = response.data;
+                setUser({ userId, email, profileImageUrl,role }); // Update the user state in Zustand store
             })
             .catch(error => {
                 console.error("Error fetching user data: ", error);
@@ -43,15 +44,17 @@ function App() {
 
     return (
         <Routes>
-            <Route element={<Container />}>
-                <Route path={MAIN_PATH} element={<Main />} />
+            <Route path="/" element={<Container />}>
+                <Route index element={<Main />} />
                 <Route path={AUTH_PATH}>
                     <Route path='sign-up' element={<SignUp/>} />
                     <Route path='sign-in' element={<SignIn/>} />
                 </Route>
 
-                </Route>
+                <Route path={USER_PATH(':userId')} element={<MyPage/>}/>
 
+
+            </Route>
         </Routes>
     );
 }

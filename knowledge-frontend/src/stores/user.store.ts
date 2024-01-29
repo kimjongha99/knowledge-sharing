@@ -5,6 +5,7 @@ export interface User {
     userId: string;
     email: string;
     profileImageUrl: string | null;
+    role: string;
 }
 
 interface UserState {

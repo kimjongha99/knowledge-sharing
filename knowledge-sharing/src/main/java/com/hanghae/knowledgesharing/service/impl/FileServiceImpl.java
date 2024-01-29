@@ -43,7 +43,7 @@ public class FileServiceImpl implements FileService {
             throw new RuntimeException("Error in uploading file", e);
         }
 
-        return "http://localhost:8000/api/files/" + keyName;
+        return "http://localhost:4040/api/files/" + keyName;
     }
 
     @Override

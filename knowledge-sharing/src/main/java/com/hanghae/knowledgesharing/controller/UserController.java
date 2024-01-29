@@ -3,6 +3,7 @@ package com.hanghae.knowledgesharing.controller;
 
 import com.hanghae.knowledgesharing.dto.request.user.PatchProfileImageRequestDto;
 import com.hanghae.knowledgesharing.dto.response.user.GetSignInUserResponseDto;
+import com.hanghae.knowledgesharing.dto.response.user.GetUserResponseDto;
 import com.hanghae.knowledgesharing.dto.response.user.PatchProfileImageResponseDto;
 import com.hanghae.knowledgesharing.service.UserService;
 import jakarta.validation.Valid;
@@ -26,7 +27,6 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated()) {
-            // Convert authorities to a string
             String authorities = authentication.getAuthorities().stream()
                     .map(grantedAuthority -> grantedAuthority.getAuthority())
                     .collect(Collectors.joining(", "));
@@ -46,6 +46,13 @@ public class UserController {
         return response;
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<? super GetUserResponseDto> getUser (
+            @PathVariable("userId") String userId
+    ){
+        ResponseEntity<? super GetUserResponseDto> response = userService.getUser(userId);
+        return response;
+    }
 
 
     @PatchMapping("/profile-image")
