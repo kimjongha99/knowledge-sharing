@@ -1,4 +1,3 @@
-import {Link, Outlet} from "react-router-dom";
 import React from "react";
 import './style.css';
 import MainRightOne from "../../components/Main-right-one";

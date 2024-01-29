@@ -1,16 +1,17 @@
 package com.hanghae.knowledgesharing.controller;
 
 
+import com.hanghae.knowledgesharing.dto.request.user.PatchProfileImageRequestDto;
 import com.hanghae.knowledgesharing.dto.response.user.GetSignInUserResponseDto;
+import com.hanghae.knowledgesharing.dto.response.user.PatchProfileImageResponseDto;
 import com.hanghae.knowledgesharing.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;
 
@@ -44,5 +45,22 @@ public class UserController {
         ResponseEntity<? super GetSignInUserResponseDto> response = userService.getSignInUser(userId);
         return response;
     }
+
+
+
+    @PatchMapping("/profile-image")
+    public ResponseEntity<? super PatchProfileImageResponseDto> patchProfileImage(
+            @RequestBody @Valid PatchProfileImageRequestDto requestBody,
+            @AuthenticationPrincipal String userId
+    ){
+        ResponseEntity<? super PatchProfileImageResponseDto> response = userService.patchProfileImage(requestBody, userId);
+        return response;
+    }
+
+
+
+
+
+
 
 }

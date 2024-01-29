@@ -28,26 +28,33 @@ function SignIn(){
     const navigate = useNavigate();
 
 
-    const signInResponse = (responseBody: ResponseBody<SignInResponseDto>) => {
-        if(!responseBody) return;
+
+    const signInResponse = async (responseBody: ResponseBody<SignInResponseDto>) => {
+        if (!responseBody) return;
 
         const { code } = responseBody;
-        if(code === ResponseCode.VALIDATION_FAIL) alert('아이디와 비밀번호를 입력하세요.');
-        if(code === ResponseCode.SIGN_IN_FAIL) setMessage('로그인 정보가 일치하지 않습니다.');
-        if(code === ResponseCode.DATABASE_ERROR) alert('데이터베이스 오류입니다.');
-        if(code !== ResponseCode.SUCCESS) return;
+        if (code === ResponseCode.VALIDATION_FAIL) {
+            alert('아이디와 비밀번호를 다시입력하세요.');
+            return;
+        }
+        if (code === ResponseCode.SIGN_IN_FAIL) {
+            setMessage('로그인정보가 일치하지않습니다..');
+            return;
+        }
+        if (code === ResponseCode.DATABASE_ERROR) {
+            alert('Database error.');
+            return;
+        }
+        if (code !== ResponseCode.SUCCESS) return;
 
-        const { accessToken,refreshToken, expirationTime } = responseBody as  SignInResponseDto;
+        const { accessToken, refreshToken } = responseBody as SignInResponseDto;
 
-        const now = (new Date().getTime()) * 1000;
-        console.log(now)
         const oneHourInSeconds = 3600; // 1 hour in seconds
         const sevenDaysInSeconds = 7 * 24 * 3600; // 7 days in seconds
         setCookies('accessToken', accessToken, { maxAge: oneHourInSeconds, path: '/' });
         setCookies('refreshToken', refreshToken, { maxAge: sevenDaysInSeconds, path: '/' });
 
         navigate('/');
-
     };
     // onChange
     const onIdChangeHandler = (event:ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +82,8 @@ function SignIn(){
         signInRequest(requestBody).then(signInResponse);
         navigate(MAIN_PATH);
     };
+
+
     // OAuth 로그인 //
     const onSnsSignInButtonClickHandler = (type: 'kakao' | 'naver') => {
         window.location.href = SNS_SIGN_IN_URL(type);

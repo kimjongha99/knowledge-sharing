@@ -1,19 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="497fed6d-59a7-4096-9f81-83c9584a9a2a" name="변경" comment="" />
+    <list default="true" id="497fed6d-59a7-4096-9f81-83c9584a9a2a" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apis/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apis/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Main-right-one/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main-right-one/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layouts/Container/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/Container/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/SignIn/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/SignIn/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/main/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/main/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/config/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/resources/application.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2bcGoNmYItdm1SAJnkCy9kz2BiW" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2022.2.3\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external"
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/jongha/Documents/GitHub/knowledge-sharing/knowledge-frontend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Users\\jongha\\Documents\\GitHub\\knowledge-sharing\\knowledge-frontend\\node_modules\\typescript\\lib"
   }
 }]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="497fed6d-59a7-4096-9f81-83c9584a9a2a" name="변경" comment="" />
+      <created>1706507127109</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1706507127109</updated>
+      <workItem from="1706507128686" duration="6220000" />
+    </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
