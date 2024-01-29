@@ -17,10 +17,18 @@ const MainRightTwo = () => {
         }
     }
 
+    const profileImageStyle = {
+        backgroundImage: `url(${user?.profileImageUrl || 'default_profile_image_url_here.png'})`, // Provide a default image URL if needed
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+        // Add other styles if necessary
+    };
+
 
     return (
         <section id="main-right-two">
-                <div className="profile-image"></div>
+            <div className="profile-image" style={profileImageStyle}></div> {/* Set the profile image style here */}
                 <div className="user-info">
                     <div className="font-semibold text-lg">UserID: <span className="font-normal">{user?.userId || 'Loading...'}</span></div>
                     <div className="font-semibold text-lg">Email: <span className="font-normal">{user?.email || 'Loading...'}</span></div>

@@ -5,6 +5,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useUserStore} from "../../stores/user.store";
 import {useCookies} from "react-cookie";
 import axios from "axios";
+import ProfileImg from "./ProfileImg";
 
 function MyPage() {
     // state : user userId path variable 상태 //
@@ -23,55 +24,13 @@ function MyPage() {
 
     //유저 화면 상단 컴포넌트 , 하단에는 다른 로직이 들어갈예정
     const UserTop = () => {
-        const [isPasswordChange, setPasswordChange] = useState(false);
-        const [password, setPassword] = useState('');
-        const [changePassword, setChangePassword] = useState('');
-        const [profileImage, setProfileImage] = useState(null);
         const [userInfo, setUserInfo] = useState({
             userId: '',
             email: '',
             profileImageUrl: ''
         });
 
-        const handleImageUpload = async () => { // 변경된 부분: 매개변수 제거
-            const fileInput = document.getElementById('fileInput') as HTMLInputElement | null;
 
-            if (!fileInput) {
-                console.error('파일 입력 요소를 찾을 수 없습니다.');
-                return;
-            }
-
-            const file = fileInput.files?.[0]; // Optional chaining을 사용하여 널 체크
-
-            if (!file) {
-                console.error('파일을 선택하지 않았습니다.');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('image', file);
-
-            try {
-                const response = await axios.post('http://localhost:4040/api/files/upload', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': `Bearer ${cookies.accessToken}`,
-                    },
-                });
-
-                // 서버에서의 응답을 콘솔로 출력합니다.
-                console.log('업로드 결과:', response.data);
-
-                // 필요하다면 응답을 처리하거나 상태를 업데이트할 수 있습니다.
-            } catch (error: any) { // 'error'를 'any'로 형변환
-                if (error.response) {
-                    const { message } = error.response.data;
-                    console.error('업로드 에러:', message);
-                } else {
-                    console.error('네트워크 에러:', error.message);
-                }
-            }
-        };
 
         useEffect(() => {
             if (!userId) return;
@@ -115,13 +74,9 @@ function MyPage() {
 
         return (
             <div>
-
-                <img src={userInfo.profileImageUrl} alt="프로필 이미지" />
-
+                <ProfileImg/>
                 <div>User ID: {userInfo.userId}</div>
                 <div>Email: {userInfo.email}</div>
-                <button onClick={handleImageUpload}>프로필 이미지 업로드</button>
-
             </div>
 
         );
