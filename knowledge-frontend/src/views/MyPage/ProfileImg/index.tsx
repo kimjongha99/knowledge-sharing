@@ -11,7 +11,7 @@ const uploadFileApi = async (file: File) => {
 };
 
 const updateProfileImageApi = async (profileImageUrl: string, accessToken: string) => {
-    await axios.patch('http://localhost:4040/api/v1/user/profile-image', {
+    await axios.patch('http://localhost:4040/api/v1/users/profile-image', {
         profileImageUrl: profileImageUrl // <- Change this line
     }, {
         headers: { 'Authorization': `Bearer ${accessToken}` }

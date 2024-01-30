@@ -24,11 +24,50 @@ function MyPage() {
 
     //유저 화면 상단 컴포넌트 , 하단에는 다른 로직이 들어갈예정
     const UserTop = () => {
+
+        const [newPassword, setNewPassword] = useState(''); // State for new password
+        const [showPasswordUpdate, setShowPasswordUpdate] = useState(false); // State to control the display of password update fields
+
         const [userInfo, setUserInfo] = useState({
             userId: '',
             email: '',
             profileImageUrl: ''
         });
+        const updatePassword = () => {
+            const updatePasswordUrl = `http://localhost:4040/api/v1/users/password`;
+            const accessToken = cookies.accessToken; // Retrieving the access token from cookies
+
+            axios.patch(updatePasswordUrl, {
+                newPassword
+            }, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}` // Including the token in the Bearer Authorization header
+                }
+            })
+                .then(response => {
+                    const { code, message } = response.data;
+
+                    alert(message); // Displaying the message
+
+                    if (code === 'SU') {
+                        // If success, reset cookies and state
+                        setCookie('accessToken', '', { path: '/' }); // Clearing the access token cookie
+                        // ... Any other state reset you need
+                        navigator('/'); // Redirecting to login page or a route that initiates logout
+                    }
+                })
+                .catch(error => {
+                    if (!error.response) return;
+                    const { message } = error.response.data;
+
+                    alert(message); // Displaying the message, for errors as well
+                });
+        };
+
+
+        const togglePasswordUpdate = () => {
+            setShowPasswordUpdate(!showPasswordUpdate); // Toggle the display of the password update section
+        };
 
 
 
@@ -36,7 +75,7 @@ function MyPage() {
             if (!userId) return;
 
             const accessToken = cookies.accessToken; // Retrieving the access token from cookies
-            const getUserUrl = `http://localhost:4040/api/v1/user/${userId}`;
+            const getUserUrl = `http://localhost:4040/api/v1/users/${userId}`;
 
             axios.get(getUserUrl, {
                 headers: {
@@ -77,6 +116,18 @@ function MyPage() {
                 <ProfileImg/>
                 <div>User ID: {userInfo.userId}</div>
                 <div>Email: {userInfo.email}</div>
+                <button onClick={togglePasswordUpdate}>Change Password</button> {/* Button to show/hide password update */}
+                {showPasswordUpdate && ( // Conditional rendering based on showPasswordUpdate state
+                    <div>
+                        <input
+                            type="password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            placeholder="Enter your new password"
+                        />
+                        <button onClick={updatePassword}>Update Password</button>
+                    </div>
+                )}
             </div>
 
         );

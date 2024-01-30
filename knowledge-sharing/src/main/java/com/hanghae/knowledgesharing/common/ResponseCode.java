@@ -18,4 +18,7 @@ public interface ResponseCode {
     String REFRESH_TOKEN_EXPIRED = "RTE";
 
     String NOT_EXISTED_USER = "NEU";
+
+    String PREVIOUS_PASSWORD ="PRP";
+
 }

@@ -26,7 +26,7 @@ function App() {
             return;
         }
 
-        axios.get('http://localhost:4040/api/v1/user', {
+        axios.get('http://localhost:4040/api/v1/users', {
             headers: {
                 'Authorization': `Bearer ${cookies.accessToken}`
             }

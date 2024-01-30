@@ -15,4 +15,5 @@ public interface ResponseMessage {
     String REFRESH_TOKEN_INVALID = "새로고침 토큰이 잘못되었습니다.";
     String REFRESH_TOKEN_EXPIRED = "새로고침 토큰이 만료되었습니다. 다시 로그인하세요";
     String NOT_EXISTED_USER = "유저가 존재하지않습니다";
+    String PREVIOUS_PASSWORD ="이전 비밀번호와 동일합니다.";
 }

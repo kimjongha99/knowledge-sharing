@@ -54,8 +54,9 @@ function SignIn(){
         setCookies('accessToken', accessToken, { maxAge: oneHourInSeconds, path: '/' });
         setCookies('refreshToken', refreshToken, { maxAge: sevenDaysInSeconds, path: '/' });
 
-        navigate('/');
+        navigate(MAIN_PATH); // Navigate only after a successful login
     };
+
     // onChange
     const onIdChangeHandler = (event:ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
@@ -71,16 +72,18 @@ function SignIn(){
     const onSignUpButtonClickHandler = () => {
         navigate('/auth/sign-up');
     };
-
     const onSignInButtonClickHandler = () => {
-
         if(!id || !password) {
             alert('아이디와 비밀번호 모두 입력해주세요.');
             return;
         }
         const requestBody: SignInRequestDto = { id, password };
-        signInRequest(requestBody).then(signInResponse);
-        navigate(MAIN_PATH);
+        signInRequest(requestBody)
+            .then(signInResponse)
+            .catch((error) => {
+                // Handle error case here if needed
+            });
+        // Removed navigate(MAIN_PATH) from here to ensure it only happens after successful login
     };
 
     const onFormSubmitHandler = (event: FormEvent<HTMLFormElement>) => {

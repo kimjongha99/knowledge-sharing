@@ -48,4 +48,8 @@ public class User {
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
     }
+
+    public void setPassword(String encode) {
+        this.password=encode;
+    }
 }

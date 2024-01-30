@@ -3,8 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="497fed6d-59a7-4096-9f81-83c9584a9a2a" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Main-right-two/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main-right-two/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/MyPage/ProfileImg/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/MyPage/ProfileImg/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/MyPage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/MyPage/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/SignIn/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/SignIn/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/common/ResponseCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/common/ResponseCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/common/ResponseMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/common/ResponseMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/config/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/impl/UserServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +61,7 @@
       <updated>1706507127109</updated>
       <workItem from="1706507128686" duration="19520000" />
       <workItem from="1706535941989" duration="1479000" />
+      <workItem from="1706589783306" duration="3010000" />
     </task>
     <servers />
   </component>
