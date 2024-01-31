@@ -42,3 +42,9 @@ application-db.yml
 application-jwt.yml
 application-mail.yml
 application-s3.yml
+application-oauth.yml
+
+
+*.iml
+*.xml
+*.xml

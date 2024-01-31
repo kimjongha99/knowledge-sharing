@@ -41,6 +41,15 @@ public class User {
         this.type = "app";
         this.role = UserRoleEnum.USER;
     }
+
+    public User(String userId, String email, String type, String profileUrl) {
+        this.userId = userId;
+        this.password = "Passw0rd";
+        this.email = email;
+        this.type = type;
+        this.profileImageUrl=profileUrl;
+        this.role= UserRoleEnum.USER;
+    }
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }

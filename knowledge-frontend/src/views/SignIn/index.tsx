@@ -57,6 +57,10 @@ function SignIn(){
         navigate(MAIN_PATH); // Navigate only after a successful login
     };
 
+
+
+
+
     // onChange
     const onIdChangeHandler = (event:ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
@@ -90,10 +94,6 @@ function SignIn(){
         event.preventDefault(); // Prevent the default form submission
         onSignInButtonClickHandler(); // Call your sign in handler
     };
-    // OAuth 로그인 //
-    const onSnsSignInButtonClickHandler = (type: 'kakao' | 'naver') => {
-        window.location.href = SNS_SIGN_IN_URL(type);
-    };
 
     // key down
     const onIdKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -105,6 +105,14 @@ function SignIn(){
         if(event.key !== 'Enter') return;
         onSignInButtonClickHandler();
     };
+
+
+    // OAuth 로그인 //
+    const onSnsSignInButtonClickHandler = (type: 'kakao' | 'naver') => {
+        window.location.href = SNS_SIGN_IN_URL(type);
+    };
+
+
     return (
         <div id='sign-in-wrapper'>
             <form onSubmit={onFormSubmitHandler}>

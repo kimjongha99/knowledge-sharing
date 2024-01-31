@@ -22,6 +22,8 @@ function MyPage() {
 
 
 
+
+
     //유저 화면 상단 컴포넌트 , 하단에는 다른 로직이 들어갈예정
     const UserTop = () => {
 
@@ -31,8 +33,24 @@ function MyPage() {
         const [userInfo, setUserInfo] = useState({
             userId: '',
             email: '',
-            profileImageUrl: ''
+            profileImageUrl: '',
+            type:''
         });
+
+
+        const showAlert = () => {
+            if (userInfo.type !== 'app') {
+                alert('소셜 로그인 가입자는 회원정보 수정이 불가능합니다.');
+                return true;
+            }
+            return false;
+        };
+
+
+
+
+
+
         const updatePassword = () => {
             const updatePasswordUrl = `http://localhost:4040/api/v1/users/password`;
             const accessToken = cookies.accessToken; // Retrieving the access token from cookies
@@ -66,9 +84,9 @@ function MyPage() {
 
 
         const togglePasswordUpdate = () => {
-            setShowPasswordUpdate(!showPasswordUpdate); // Toggle the display of the password update section
+            if (showAlert()) return; // Check if userInfo.type is not 'app' and show an alert
+            setShowPasswordUpdate(!showPasswordUpdate); // Otherwise, toggle the display of the password update section
         };
-
 
 
         useEffect(() => {
@@ -86,7 +104,7 @@ function MyPage() {
                     const responseBody = response.data;
 
                     if (!responseBody) return;
-                    const { code, userId, email, profileImageUrl, message } = responseBody;
+                    const { code, userId, email, profileImageUrl, message,type } = responseBody;
 
                     if (code !== 'SU') {
                         alert(message); // Displaying the message as it is
@@ -97,7 +115,8 @@ function MyPage() {
                     setUserInfo({
                         userId,
                         email,
-                        profileImageUrl
+                        profileImageUrl,
+                        type
                     });
                     setMyPage(email === user?.email);
                 })
@@ -109,6 +128,8 @@ function MyPage() {
                     alert(message); // Displaying the message as it is, for errors as well
                 });
         }, [userId, user, cookies.accessToken]); // Added cookies.accessToken as a dependency
+
+
 
 
         return (
@@ -128,6 +149,8 @@ function MyPage() {
                         <button onClick={updatePassword}>Update Password</button>
                     </div>
                 )}
+
+                <div>{userInfo.type}</div>
             </div>
 
         );
