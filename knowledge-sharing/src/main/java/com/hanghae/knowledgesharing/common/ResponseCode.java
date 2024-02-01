@@ -21,4 +21,9 @@ public interface ResponseCode {
 
     String PREVIOUS_PASSWORD ="PRP";
 
+
+    String HASHTAG_CREATION_FAIL = "HCF";
+    String HASHTAG_NOT_FOUND = "HNF";
+    String HASHTAG_VALIDATION_FAIL = "HVF";
+
 }
