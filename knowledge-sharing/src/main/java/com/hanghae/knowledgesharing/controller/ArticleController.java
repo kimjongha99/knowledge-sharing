@@ -1,10 +1,13 @@
 package com.hanghae.knowledgesharing.controller;
 
 
+import com.hanghae.knowledgesharing.dto.request.article.PatchArticleRequestDto;
 import com.hanghae.knowledgesharing.dto.request.article.PostArticleRequestDto;
-import com.hanghae.knowledgesharing.dto.response.article.GetBoardResponseDto;
+import com.hanghae.knowledgesharing.dto.response.article.GetArticleResponseDto;
+import com.hanghae.knowledgesharing.dto.response.article.PatchArticleResponseDto;
 import com.hanghae.knowledgesharing.dto.response.article.PostArticleResponseDto;
 import com.hanghae.knowledgesharing.service.ArticleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,12 +30,21 @@ public class ArticleController {
 
 
     @GetMapping("/{articleId}")
-    public ResponseEntity<? super GetBoardResponseDto> getArticle(
+    public ResponseEntity<? super GetArticleResponseDto> getArticle(
             @PathVariable("articleId") Long articleId
     ) {
-        ResponseEntity<? super  GetBoardResponseDto> response = articleService.getArticle(articleId);
+        ResponseEntity<? super GetArticleResponseDto> response = articleService.getArticle(articleId);
 
         return response;
     }
 
+    @PatchMapping("/{articleId}")
+    public  ResponseEntity<? super PatchArticleResponseDto> patchArticle(
+            @PathVariable("articleId") Long articleId,
+            @RequestBody @Valid PatchArticleRequestDto requestDto,
+            @AuthenticationPrincipal String userId
+            ){
+        ResponseEntity<? super  PatchArticleResponseDto> response = articleService.patchArticle(requestDto,articleId,userId);
+        return response;
+    }
 }

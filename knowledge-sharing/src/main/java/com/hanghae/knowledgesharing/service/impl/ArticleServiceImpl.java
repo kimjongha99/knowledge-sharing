@@ -1,9 +1,11 @@
 package com.hanghae.knowledgesharing.service.impl;
 
 
+import com.hanghae.knowledgesharing.dto.request.article.PatchArticleRequestDto;
 import com.hanghae.knowledgesharing.dto.request.article.PostArticleRequestDto;
 import com.hanghae.knowledgesharing.dto.response.ResponseDto;
-import com.hanghae.knowledgesharing.dto.response.article.GetBoardResponseDto;
+import com.hanghae.knowledgesharing.dto.response.article.GetArticleResponseDto;
+import com.hanghae.knowledgesharing.dto.response.article.PatchArticleResponseDto;
 import com.hanghae.knowledgesharing.dto.response.article.PostArticleResponseDto;
 import com.hanghae.knowledgesharing.entity.*;
 import com.hanghae.knowledgesharing.repository.ArticleRepository;
@@ -69,7 +71,7 @@ public class ArticleServiceImpl  implements ArticleService {
 
     @Override
     @Transactional(readOnly = true)
-    public ResponseEntity<? super GetBoardResponseDto> getArticle(Long ArticleId) {
+    public ResponseEntity<? super GetArticleResponseDto> getArticle(Long ArticleId) {
 
         Long id = null;
         String title = null;
@@ -104,7 +106,7 @@ public class ArticleServiceImpl  implements ArticleService {
                     .collect(Collectors.toList());
 
 
-            return GetBoardResponseDto.success(id, title, content, writer, favoriteCount, viewCount, articleHashtags, imageUrls);
+            return GetArticleResponseDto.success(id, title, content, writer, favoriteCount, viewCount, articleHashtags, imageUrls);
 
 
         } catch (Exception e) {
@@ -116,7 +118,47 @@ public class ArticleServiceImpl  implements ArticleService {
 
         }
 
+    @Override
+    public ResponseEntity<? super PatchArticleResponseDto> patchArticle(PatchArticleRequestDto requestDto, Long articleId, String userId) {
+        try {
+            // ArticleId로 Article 찾기, 없으면 에러 반환
+            Article article = articleRepository.findById(articleId)
+                    .orElseThrow(() -> new EntityNotFoundException("Article not found with id: " + articleId));
+            // 사용자 존재 여부 확인
+            boolean existedUser = userRepository.existsByUserId(userId);
+            if (!existedUser) return PatchArticleResponseDto.noExistUser();
 
+            // 권한 검증, 글 작성자와 현재 사용자가 같지 않으면 권한 에러 반환
+            if (!article.getUser().getUserId().equals(userId)) {
+                return PatchArticleResponseDto.permissionFail();
+            }
+            // Article 업데이트
+            article.patchArticle(requestDto);
+            // 해시태그 처리 (기존 해시태그 삭제 후 새로운 해시태그 저장)
+            article.getArticleHashtags().clear();
+            for (String tagName : requestDto.getHashtags()) {
+                HashTag hashTag = hashTagRepository.findByTagName(tagName)
+                        .orElseGet(() -> hashTagRepository.save(new HashTag(tagName)));
+                article.addHashtag(hashTag);
+            }
+            // 이미지 처리 (기존 이미지 삭제 후 새로운 이미지 저장)
+            article.getImages().clear();
+            for (String imageUrl : requestDto.getImageUrls()) {
+                Image image = Image.builder()
+                        .imageUrl(imageUrl)
+                        .article(article)
+                        .build();
+                article.addImage(image);
+            }
+
+            // Article 저장
+            articleRepository.save(article);
+            return PatchArticleResponseDto.success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+    }
 
 
 }

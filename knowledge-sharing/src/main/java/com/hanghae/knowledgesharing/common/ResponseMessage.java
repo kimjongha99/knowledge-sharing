@@ -22,4 +22,6 @@ public interface ResponseMessage {
     String HASHTAG_VALIDATION_FAIL = "해시태그 확인 실패";
 
     String ARTICLE_FAIL = " 게시글 조회실패했습니다." ;
+    String NOT_EXISTED_ARTICLE = "보드가 존재하지않습니다";
+    String PERMISSION_FAIL = "허가 실패입니다.";
 }

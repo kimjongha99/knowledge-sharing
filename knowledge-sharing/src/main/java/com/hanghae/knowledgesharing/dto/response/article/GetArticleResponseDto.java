@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @Getter
-public class GetBoardResponseDto extends ResponseDto {
+public class GetArticleResponseDto extends ResponseDto {
 
     private  Long id;
 
@@ -29,7 +29,7 @@ public class GetBoardResponseDto extends ResponseDto {
     private  List<String>  imageUrls;
 
 
-    private GetBoardResponseDto(Long id, String title, String content, String writer, int favoriteCount, int viewCount, List<String> articleHashtags, List<String> imageUrls) {
+    private GetArticleResponseDto(Long id, String title, String content, String writer, int favoriteCount, int viewCount, List<String> articleHashtags, List<String> imageUrls) {
         super();
         this.id = id;
         this.title = title;
@@ -42,8 +42,8 @@ public class GetBoardResponseDto extends ResponseDto {
     }
 
 
-    public static ResponseEntity<GetBoardResponseDto> success(Long id, String title, String content, String writer, int favoriteCount, int viewCount, List<String> articleHashtags, List<String> imageUrls) {
-        GetBoardResponseDto responseBody = new GetBoardResponseDto(id, title, content, writer, favoriteCount, viewCount, articleHashtags, imageUrls);
+    public static ResponseEntity<GetArticleResponseDto> success(Long id, String title, String content, String writer, int favoriteCount, int viewCount, List<String> articleHashtags, List<String> imageUrls) {
+        GetArticleResponseDto responseBody = new GetArticleResponseDto(id, title, content, writer, favoriteCount, viewCount, articleHashtags, imageUrls);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 

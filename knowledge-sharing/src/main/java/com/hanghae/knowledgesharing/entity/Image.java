@@ -27,5 +27,7 @@ public class Image {
     @JoinColumn(name = "article_id")
     private Article article;
 
-
+    public void setArticle(Article article) {
+        this.article = article;
+    }
 }

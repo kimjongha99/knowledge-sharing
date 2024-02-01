@@ -1,6 +1,7 @@
 package com.hanghae.knowledgesharing.entity;
 
 
+import com.hanghae.knowledgesharing.dto.request.article.PatchArticleRequestDto;
 import com.hanghae.knowledgesharing.dto.request.article.PostArticleRequestDto;
 import com.hanghae.knowledgesharing.enums.HashTagTypeEnum;
 import com.hanghae.knowledgesharing.global.entity.BaseTimeEntity;
@@ -57,5 +58,19 @@ public class Article extends BaseTimeEntity {
     }
 
 
+    public void patchArticle(PatchArticleRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+    }
 
+    public void addHashtag(HashTag hashTag) {
+        ArticleHashtag articleHashtag = new ArticleHashtag(this, hashTag);
+        this.articleHashtags.add(articleHashtag);
+
+    }
+
+    public void addImage(Image image) {
+        this.images.add(image);
+        image.setArticle(this);
+    }
 }
