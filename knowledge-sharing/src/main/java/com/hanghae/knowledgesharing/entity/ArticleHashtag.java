@@ -29,4 +29,10 @@ public class ArticleHashtag extends BaseTimeEntity {
         this.article = article;
         this.hashtag = hashTag;
     }
+
+
+    // 해시태그 이름을 반환하는 메서드
+    public String getHashtagName() {
+        return this.hashtag.getName(); // 가정: HashTag 엔티티에 getName 메소드가 있다.
+    }
 }

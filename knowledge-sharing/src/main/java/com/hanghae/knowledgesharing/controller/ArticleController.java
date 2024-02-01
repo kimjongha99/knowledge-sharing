@@ -2,6 +2,7 @@ package com.hanghae.knowledgesharing.controller;
 
 
 import com.hanghae.knowledgesharing.dto.request.article.PostArticleRequestDto;
+import com.hanghae.knowledgesharing.dto.response.article.GetBoardResponseDto;
 import com.hanghae.knowledgesharing.dto.response.article.PostArticleResponseDto;
 import com.hanghae.knowledgesharing.service.ArticleService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,16 @@ public class ArticleController {
                                                                       @AuthenticationPrincipal String userId
     ) {
         ResponseEntity<? super PostArticleResponseDto> response = articleService.postArticle(requestBody, userId);
+        return response;
+    }
+
+
+    @GetMapping("/{articleId}")
+    public ResponseEntity<? super GetBoardResponseDto> getArticle(
+            @PathVariable("articleId") Long articleId
+    ) {
+        ResponseEntity<? super  GetBoardResponseDto> response = articleService.getArticle(articleId);
+
         return response;
     }
 

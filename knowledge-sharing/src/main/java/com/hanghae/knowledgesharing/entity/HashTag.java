@@ -37,4 +37,9 @@ public class HashTag extends BaseTimeEntity {
         this.tagType = HashTagTypeEnum.ARTICLE_TAG;
         this.articleHashtags = new ArrayList<>();
     }
+
+    public String getName() {
+        return this.tagName;
+    }
+
 }

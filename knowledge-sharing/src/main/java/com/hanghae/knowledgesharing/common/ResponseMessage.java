@@ -21,4 +21,5 @@ public interface ResponseMessage {
     String HASHTAG_NOT_FOUND = "해시태그를 찾을 수 없습니다";
     String HASHTAG_VALIDATION_FAIL = "해시태그 확인 실패";
 
+    String ARTICLE_FAIL = " 게시글 조회실패했습니다." ;
 }

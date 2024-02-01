@@ -26,4 +26,5 @@ public interface ResponseCode {
     String HASHTAG_NOT_FOUND = "HNF";
     String HASHTAG_VALIDATION_FAIL = "HVF";
 
+    String ARTICLE_FAIL = "AF";
 }
