@@ -29,25 +29,33 @@ public class Article extends BaseTimeEntity {
     @Column(length = 2000, nullable = false)
     private String content;
 
-    @Column(length = 50, nullable = false)
-    private String writer;
 
     private HashTagTypeEnum tagType;
 
     private int favoriteCount;
 
     private int viewCount;
-
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ArticleHashtag> articleHashtags = new ArrayList<>();
 
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Image> images = new ArrayList<>();
 
-    public Article(PostArticleRequestDto requestDto, String userId) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id") // 이 컬럼은 'article' 테이블에 있습니다.
+    private User user;
+
+
+
+    public Article(PostArticleRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
         this.content= requestDto.getContent();
-        this.writer = userId;
+        this.user = user;
         this.tagType= HashTagTypeEnum.ARTICLE_TAG;
         this.favoriteCount =0;
         this.viewCount=0;
     }
+
+
+
 }

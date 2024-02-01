@@ -20,6 +20,10 @@ public class PostArticleRequestDto {
     @NotBlank
     @Size(max = 2000)
     private String content;
+
+
     private List<String> hashtags;
 
+
+    private List<String> imageUrls;
 }
