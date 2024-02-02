@@ -24,4 +24,6 @@ public interface ResponseMessage {
     String ARTICLE_FAIL = " 게시글 조회실패했습니다." ;
     String NOT_EXISTED_ARTICLE = "보드가 존재하지않습니다";
     String PERMISSION_FAIL = "허가 실패입니다.";
+    String COMMENTS_NOT_FOUND = "댓글 찾을 수없음 404";
+    String NO_PERMISSION_TO_VIEW_COMMENTS =  "코멘트 허가 실패";
 }
