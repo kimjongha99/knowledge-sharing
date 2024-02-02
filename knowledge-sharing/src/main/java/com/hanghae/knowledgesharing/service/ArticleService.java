@@ -2,6 +2,7 @@ package com.hanghae.knowledgesharing.service;
 
 import com.hanghae.knowledgesharing.dto.request.article.PatchArticleRequestDto;
 import com.hanghae.knowledgesharing.dto.request.article.PostArticleRequestDto;
+import com.hanghae.knowledgesharing.dto.response.article.DeleteArticleResponseDto;
 import com.hanghae.knowledgesharing.dto.response.article.GetArticleResponseDto;
 import com.hanghae.knowledgesharing.dto.response.article.PatchArticleResponseDto;
 import com.hanghae.knowledgesharing.dto.response.article.PostArticleResponseDto;
@@ -14,4 +15,5 @@ public interface ArticleService {
 
     ResponseEntity<? super PatchArticleResponseDto> patchArticle(PatchArticleRequestDto requestDto, Long articleId, String userId);
 
+    ResponseEntity<? super DeleteArticleResponseDto> deleteArticle(Long articleId  , String userId);
 }

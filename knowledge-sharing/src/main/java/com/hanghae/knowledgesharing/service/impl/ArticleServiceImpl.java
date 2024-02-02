@@ -4,6 +4,7 @@ package com.hanghae.knowledgesharing.service.impl;
 import com.hanghae.knowledgesharing.dto.request.article.PatchArticleRequestDto;
 import com.hanghae.knowledgesharing.dto.request.article.PostArticleRequestDto;
 import com.hanghae.knowledgesharing.dto.response.ResponseDto;
+import com.hanghae.knowledgesharing.dto.response.article.DeleteArticleResponseDto;
 import com.hanghae.knowledgesharing.dto.response.article.GetArticleResponseDto;
 import com.hanghae.knowledgesharing.dto.response.article.PatchArticleResponseDto;
 import com.hanghae.knowledgesharing.dto.response.article.PostArticleResponseDto;
@@ -158,6 +159,35 @@ public class ArticleServiceImpl  implements ArticleService {
             e.printStackTrace();
             return ResponseDto.databaseError();
         }
+    }
+
+    @Override
+    public ResponseEntity<? super DeleteArticleResponseDto> deleteArticle(Long articleId, String userId) {
+        try {
+            Article article = articleRepository.findById(articleId)
+                    .orElseThrow(() -> new EntityNotFoundException("Article not found with id: " + articleId));
+
+            boolean existedUser = userRepository.existsByUserId(userId);
+            if (!existedUser) {
+                return DeleteArticleResponseDto.noExistUser();
+            }
+
+            if (!article.getUser().getUserId().equals(userId)) {
+                return DeleteArticleResponseDto.permissionFail();
+            }
+
+            // Delete the article
+            articleRepository.delete(article);
+            return DeleteArticleResponseDto.success();
+
+        } catch (EntityNotFoundException e) {
+            e.printStackTrace();
+            return DeleteArticleResponseDto.noExistArticle();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
     }
 
 

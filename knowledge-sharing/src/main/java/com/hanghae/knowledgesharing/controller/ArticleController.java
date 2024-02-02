@@ -3,6 +3,7 @@ package com.hanghae.knowledgesharing.controller;
 
 import com.hanghae.knowledgesharing.dto.request.article.PatchArticleRequestDto;
 import com.hanghae.knowledgesharing.dto.request.article.PostArticleRequestDto;
+import com.hanghae.knowledgesharing.dto.response.article.DeleteArticleResponseDto;
 import com.hanghae.knowledgesharing.dto.response.article.GetArticleResponseDto;
 import com.hanghae.knowledgesharing.dto.response.article.PatchArticleResponseDto;
 import com.hanghae.knowledgesharing.dto.response.article.PostArticleResponseDto;
@@ -45,6 +46,16 @@ public class ArticleController {
             @AuthenticationPrincipal String userId
             ){
         ResponseEntity<? super  PatchArticleResponseDto> response = articleService.patchArticle(requestDto,articleId,userId);
+        return response;
+    }
+
+
+    @DeleteMapping("/{articleId}")
+    public  ResponseEntity<? super DeleteArticleResponseDto> deleteArticle(
+            @PathVariable("articleId") Long articleId,
+            @AuthenticationPrincipal String email
+    ){
+        ResponseEntity<? super DeleteArticleResponseDto> response = articleService.deleteArticle(articleId, email);
         return response;
     }
 }
