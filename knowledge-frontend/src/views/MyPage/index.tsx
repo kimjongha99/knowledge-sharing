@@ -7,7 +7,7 @@ import {useCookies} from "react-cookie";
 import axios from "axios";
 import ProfileImg from "./ProfileImg";
 
-function MyPage() {
+    function MyPage() {
     // state : user userId path variable 상태 //
     const { userId} = useParams();
     //state 현재 유저 상태관리

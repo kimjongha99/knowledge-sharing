@@ -18,12 +18,16 @@ public class GetSignInUserResponseDto extends ResponseDto {
 
     private UserRoleEnum role;
 
+    private String type;
+
     private GetSignInUserResponseDto(User user) {
         super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
         this.userId = user.getUserId();
         this.email = user.getEmail();
         this.profileImageUrl = user.getProfileImageUrl();
         this.role= user.getRole();
+        this.type = user.getType();
+
     }
 
     public static ResponseEntity<GetSignInUserResponseDto> success(User user) {

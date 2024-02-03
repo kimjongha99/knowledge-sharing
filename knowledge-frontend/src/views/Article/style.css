@@ -1,0 +1,14 @@
+#warp{
+
+    margin-top: 51px;
+    display: flex;
+
+}
+
+
+#main-contain {
+    width: 1250px;
+    height: 1116px;
+    border-radius: 45px;
+    border: 6px solid;
+}

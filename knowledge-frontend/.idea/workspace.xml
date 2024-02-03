@@ -3,10 +3,21 @@
   <component name="ChangeListManager">
     <list default="true" id="497fed6d-59a7-4096-9f81-83c9584a9a2a" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/main/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/main/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/main/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/main/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/test/java/com/hanghae/knowledgesharing/service/AuthServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/test/java/com/hanghae/knowledgesharing/service/AuthServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/test/java/com/hanghae/knowledgesharing/service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/test/java/com/hanghae/knowledgesharing/service/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Main-left-two/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main-left-two/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Main-right-two/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main-right-two/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/MyPage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/MyPage/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/SignIn/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/SignIn/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/controller/ArticleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/controller/ArticleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/controller/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/dto/response/user/GetSignInUserResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/dto/response/user/GetSignInUserResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/entity/Article.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/entity/Article.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/ArticleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/ArticleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/impl/ArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/impl/ArticleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/test/java/com/hanghae/knowledgesharing/KnowledgeSharingApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/test/java/com/hanghae/knowledgesharing/KnowledgeSharingApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/test/java/com/hanghae/knowledgesharing/service/ArticleServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/test/java/com/hanghae/knowledgesharing/service/ArticleServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +68,7 @@
       <workItem from="1706589783306" duration="6575000" />
       <workItem from="1706621032041" duration="1393000" />
       <workItem from="1706663312118" duration="8647000" />
-      <workItem from="1706936610625" duration="1505000" />
+      <workItem from="1706936610625" duration="12658000" />
     </task>
     <servers />
   </component>

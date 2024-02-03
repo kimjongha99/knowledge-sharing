@@ -9,6 +9,7 @@ import {signInRequest, SNS_SIGN_IN_URL} from "../../apis";
 import InputBox from "../../components/InputBox";
 import {MAIN_PATH} from "../../constant";
 import './style.css';
+import {replaceBehavior} from "@testing-library/user-event/dist/keyboard/plugins";
 
 
 function SignIn(){
@@ -54,7 +55,8 @@ function SignIn(){
         setCookies('accessToken', accessToken, { maxAge: oneHourInSeconds, path: '/' });
         setCookies('refreshToken', refreshToken, { maxAge: sevenDaysInSeconds, path: '/' });
 
-        navigate(MAIN_PATH); // Navigate only after a successful login
+
+        navigate(MAIN_PATH, { replace: true });
     };
 
 
@@ -85,9 +87,7 @@ function SignIn(){
         signInRequest(requestBody)
             .then(signInResponse)
             .catch((error) => {
-                // Handle error case here if needed
             });
-        // Removed navigate(MAIN_PATH) from here to ensure it only happens after successful login
     };
 
     const onFormSubmitHandler = (event: FormEvent<HTMLFormElement>) => {

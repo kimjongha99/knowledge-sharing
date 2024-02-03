@@ -3,13 +3,13 @@ package com.hanghae.knowledgesharing.controller;
 
 import com.hanghae.knowledgesharing.dto.request.article.PatchArticleRequestDto;
 import com.hanghae.knowledgesharing.dto.request.article.PostArticleRequestDto;
-import com.hanghae.knowledgesharing.dto.response.article.DeleteArticleResponseDto;
-import com.hanghae.knowledgesharing.dto.response.article.GetArticleResponseDto;
-import com.hanghae.knowledgesharing.dto.response.article.PatchArticleResponseDto;
-import com.hanghae.knowledgesharing.dto.response.article.PostArticleResponseDto;
+import com.hanghae.knowledgesharing.dto.response.article.*;
 import com.hanghae.knowledgesharing.service.ArticleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -58,4 +58,11 @@ public class ArticleController {
         ResponseEntity<? super DeleteArticleResponseDto> response = articleService.deleteArticle(articleId, email);
         return response;
     }
+
+    @GetMapping("")
+    public ResponseEntity<? super ArticleListResponseDto> getArticleList(
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        return articleService.getArticleList(pageable);
+    }
+
 }

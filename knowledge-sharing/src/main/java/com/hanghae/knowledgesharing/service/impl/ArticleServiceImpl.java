@@ -4,10 +4,7 @@ package com.hanghae.knowledgesharing.service.impl;
 import com.hanghae.knowledgesharing.dto.request.article.PatchArticleRequestDto;
 import com.hanghae.knowledgesharing.dto.request.article.PostArticleRequestDto;
 import com.hanghae.knowledgesharing.dto.response.ResponseDto;
-import com.hanghae.knowledgesharing.dto.response.article.DeleteArticleResponseDto;
-import com.hanghae.knowledgesharing.dto.response.article.GetArticleResponseDto;
-import com.hanghae.knowledgesharing.dto.response.article.PatchArticleResponseDto;
-import com.hanghae.knowledgesharing.dto.response.article.PostArticleResponseDto;
+import com.hanghae.knowledgesharing.dto.response.article.*;
 import com.hanghae.knowledgesharing.entity.*;
 import com.hanghae.knowledgesharing.repository.ArticleRepository;
 import com.hanghae.knowledgesharing.repository.HashTagRepository;
@@ -15,6 +12,8 @@ import com.hanghae.knowledgesharing.repository.UserRepository;
 import com.hanghae.knowledgesharing.service.ArticleService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -190,5 +189,61 @@ public class ArticleServiceImpl  implements ArticleService {
 
     }
 
+    @Override
+    public ResponseEntity<? super ArticleListResponseDto> getArticleList(Pageable pageable) {
+        try {
+            Page<Article> articlesPage = articleRepository.findAll(pageable);
 
-}
+
+            Page<ArticleListResponseDto.ArticleDetailDto> articleDetailsPage = articlesPage.map(article -> {
+                List<String> hashtags = article.getArticleHashtags().stream().map(ArticleHashtag::getHashtagName).collect(Collectors.toList());
+                List<String> imageUrls = article.getImages().stream().map(Image::getImageUrl).collect(Collectors.toList());
+                return new ArticleListResponseDto.ArticleDetailDto(
+                        article.getId(),
+                        article.getTitle(),
+                        article.getFavoriteCount(),
+                        article.getViewCount(),
+                        hashtags,
+                        imageUrls,
+                        article.getUser().getUserId() // Assuming User has getUserId() method
+                );
+            });
+
+            return ArticleListResponseDto.success(articleDetailsPage);
+
+
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
