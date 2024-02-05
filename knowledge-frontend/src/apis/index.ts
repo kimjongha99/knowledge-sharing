@@ -63,7 +63,7 @@ export const signInRequest = async (requestBody: SignInRequestDto) => {
 
 const SIGN_UP_URL = () => `${API_DOMAIN}/auth/sign-up`;
 export const signUpRequest = async (requestBody: SignUpRequestDto) => {
-    const result = await axios.post(SIGN_UP_URL(), requestBody)
+    const result = await axios.post(SIGN_UP_URL(), requestBody , {withCredentials:true})
         .then(responseHandler<SignUpResponseDto>)
         .catch(errorHandler);
     return result;

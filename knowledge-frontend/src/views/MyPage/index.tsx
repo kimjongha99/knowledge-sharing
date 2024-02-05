@@ -68,9 +68,6 @@ import ProfileImg from "./ProfileImg";
                     alert(message); // Displaying the message
 
                     if (code === 'SU') {
-                        // If success, reset cookies and state
-                        setCookie('accessToken', '', { path: '/' }); // Clearing the access token cookie
-                        // ... Any other state reset you need
                         navigator('/'); // Redirecting to login page or a route that initiates logout
                     }
                 })

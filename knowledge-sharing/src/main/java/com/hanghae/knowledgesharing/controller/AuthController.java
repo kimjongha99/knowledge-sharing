@@ -4,6 +4,7 @@ package com.hanghae.knowledgesharing.controller;
 import com.hanghae.knowledgesharing.dto.request.auth.*;
 import com.hanghae.knowledgesharing.dto.response.auth.*;
 import com.hanghae.knowledgesharing.service.AuthService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -55,18 +56,21 @@ public class AuthController {
 
     @PostMapping("/sign-in")
     public ResponseEntity<? super SignInResponseDto> signIn (
-            @RequestBody @Valid SignInRequestDto requestBody
+            @RequestBody @Valid SignInRequestDto requestBody,
+            HttpServletResponse response
+
     ) {
-        ResponseEntity<? super SignInResponseDto> response = authService.signIn(requestBody);
-        return response;
+        ResponseEntity<? super SignInResponseDto> result = authService.signIn(requestBody,response);
+        return result;
     }
 
     @PostMapping("/refresh")
     public  ResponseEntity<? super RefreshResponseDto> refreshAccessToken(
-            @RequestBody@Valid RefreshRequestDto requestBody
+            @RequestBody@Valid RefreshRequestDto requestBody,
+            HttpServletResponse response
     ) {
-        ResponseEntity<? super RefreshResponseDto> response = authService.refreshAccessToken(requestBody);
-        return response;
+        ResponseEntity<? super RefreshResponseDto> result = authService.refreshAccessToken(requestBody , response);
+        return result;
     }
 
 }

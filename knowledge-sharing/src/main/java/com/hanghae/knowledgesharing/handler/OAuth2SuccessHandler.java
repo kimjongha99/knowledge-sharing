@@ -5,6 +5,7 @@ import com.hanghae.knowledgesharing.entity.User;
 import com.hanghae.knowledgesharing.provider.JwtProvider;
 import com.hanghae.knowledgesharing.repository.UserRepository;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -32,12 +33,32 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         String userId = oAuth2User.getName();
         String accessToken = jwtProvider.create(userId);
+
+        Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
+        accessTokenCookie.setHttpOnly(false);
+        accessTokenCookie.setSecure(false); // Note: Set to false if you are testing over HTTP in development environment, true for production
+        accessTokenCookie.setPath("/");
+        accessTokenCookie.setMaxAge(3600); // Expiration time should match the JWT expiration
+        response.addCookie(accessTokenCookie);
+
+
         String refreshToken = jwtProvider.createRefreshToken(userId);
+        Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
+        refreshTokenCookie.setHttpOnly(false);
+        refreshTokenCookie.setSecure(false); // Note: Set to false if you are testing over HTTP in development environment, true for production
+        refreshTokenCookie.setPath("/");
+        refreshTokenCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days for refresh token
+        response.addCookie(refreshTokenCookie);
+
+
 
         User user = userRepository.findByUserId(userId);
         user.setRefreshToken(refreshToken);
         userRepository.save(user);
-        response.sendRedirect("http://localhost:3000/auth/oauth-response/" + accessToken + "/3600");
+
+
+
+        response.sendRedirect("http://localhost:3000");
 
     }
 
