@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import {Route, Routes, useNavigate} from 'react-router-dom';
-import {AUTH_PATH, MAIN_PATH, USER_PATH} from 'constant';
+import {ARTICLE_DETAIL_PATH, AUTH_PATH, MAIN_PATH, USER_PATH} from 'constant';
 import Container from "./layouts/Container";
 import Main from "./views/main";
 import SignUp from "./views/SignUp";
@@ -12,6 +12,7 @@ import axios from "axios";
 import OAuth from "./views/OAuth";
 import MyPage from "./views/MyPage";
 import Article from "./views/Article";
+import ArticleDetail from "./views/Article/ArticleDetail";
 
 
 function App() {
@@ -110,7 +111,7 @@ function App() {
 
                 <Route path={USER_PATH(':userId')} element={<MyPage/>}/>
                 <Route path='articles'  element={<Article/>}/>
-
+                <Route path={ARTICLE_DETAIL_PATH(Number(':articleId'))} element={<ArticleDetail/>} />
 
             </Route>
         </Routes>
