@@ -40,21 +40,21 @@ public class ArticleController {
     }
 
     @PatchMapping("/{articleId}")
-    public  ResponseEntity<? super PatchArticleResponseDto> patchArticle(
+    public ResponseEntity<? super PatchArticleResponseDto> patchArticle(
             @PathVariable("articleId") Long articleId,
             @RequestBody @Valid PatchArticleRequestDto requestDto,
             @AuthenticationPrincipal String userId
-            ){
-        ResponseEntity<? super  PatchArticleResponseDto> response = articleService.patchArticle(requestDto,articleId,userId);
+    ) {
+        ResponseEntity<? super PatchArticleResponseDto> response = articleService.patchArticle(requestDto, articleId, userId);
         return response;
     }
 
 
     @DeleteMapping("/{articleId}")
-    public  ResponseEntity<? super DeleteArticleResponseDto> deleteArticle(
+    public ResponseEntity<? super DeleteArticleResponseDto> deleteArticle(
             @PathVariable("articleId") Long articleId,
             @AuthenticationPrincipal String email
-    ){
+    ) {
         ResponseEntity<? super DeleteArticleResponseDto> response = articleService.deleteArticle(articleId, email);
         return response;
     }
@@ -64,5 +64,16 @@ public class ArticleController {
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return articleService.getArticleList(pageable);
     }
+
+
+    @GetMapping("/{articleId}/increase-view")
+    public  ResponseEntity<ArticleViewCountResponseDto>  increaseViewCount(
+            @PathVariable("articleId") Long articleId,
+            @AuthenticationPrincipal String userId
+    ) {
+        ResponseEntity<ArticleViewCountResponseDto> response = articleService.incrementArticleViewCount( userId, articleId);
+        return  response;
+    }
+
 
 }

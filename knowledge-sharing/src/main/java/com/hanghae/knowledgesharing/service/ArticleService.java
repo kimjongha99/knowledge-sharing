@@ -16,4 +16,7 @@ public interface ArticleService {
     ResponseEntity<? super DeleteArticleResponseDto> deleteArticle(Long articleId  , String userId);
 
     ResponseEntity<? super ArticleListResponseDto> getArticleList(Pageable pageable);
+
+    //조회수 증가
+    ResponseEntity<ArticleViewCountResponseDto> incrementArticleViewCount(String userId, Long articleId);
 }

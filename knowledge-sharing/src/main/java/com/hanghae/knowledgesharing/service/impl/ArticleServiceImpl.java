@@ -10,6 +10,7 @@ import com.hanghae.knowledgesharing.repository.ArticleRepository;
 import com.hanghae.knowledgesharing.repository.HashTagRepository;
 import com.hanghae.knowledgesharing.repository.UserRepository;
 import com.hanghae.knowledgesharing.service.ArticleService;
+import com.hanghae.knowledgesharing.service.RedisService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,8 @@ public class ArticleServiceImpl  implements ArticleService {
     private final HashTagRepository hashTagRepository;
     private final UserRepository userRepository;
 
+    private final RedisService redisService;
+
 
     @Override
     public ResponseEntity<? super PostArticleResponseDto> postArticle(PostArticleRequestDto requestDto, String userId) {
@@ -36,7 +39,7 @@ public class ArticleServiceImpl  implements ArticleService {
 
 
         // 새 생성자를 사용하여 Article 인스턴스를 만듭니다.
-        Article article = new Article(requestDto, user );
+        Article article = new Article(requestDto, user);
         // 해시태그 처리
         for (String tagName : requestDto.getHashtags()) {
             HashTag hashTag = hashTagRepository.findByTagName(tagName)
@@ -63,10 +66,9 @@ public class ArticleServiceImpl  implements ArticleService {
             }
         }
         articleRepository.save(article);
-            return PostArticleResponseDto.success();
+        return PostArticleResponseDto.success();
 
     }
-
 
 
     @Override
@@ -95,12 +97,12 @@ public class ArticleServiceImpl  implements ArticleService {
             viewCount = article.getViewCount();
 
             // 게시물의 해시태그와 이미지 URL 리스트를 추출합니다.
-            articleHashtags  = article.getArticleHashtags()
+            articleHashtags = article.getArticleHashtags()
                     .stream()
                     .map(ArticleHashtag::getHashtagName) // 가정: ArticleHashtag 엔티티에 getHashtagName 메소드가 있다.
                     .collect(Collectors.toList());
 
-            imageUrls  = article.getImages()
+            imageUrls = article.getImages()
                     .stream()
                     .map(Image::getImageUrl) // 가정: Image 엔티티에 getImageUrl 메소드가 있다.
                     .collect(Collectors.toList());
@@ -116,7 +118,7 @@ public class ArticleServiceImpl  implements ArticleService {
         }
 
 
-        }
+    }
 
     @Override
     public ResponseEntity<? super PatchArticleResponseDto> patchArticle(PatchArticleRequestDto requestDto, Long articleId, String userId) {
@@ -212,18 +214,34 @@ public class ArticleServiceImpl  implements ArticleService {
             return ArticleListResponseDto.success(articleDetailsPage);
 
 
-
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.databaseError();
         }
-        }
-
     }
 
 
+    //조회수 증가
+    @Override
+    public ResponseEntity<ArticleViewCountResponseDto> incrementArticleViewCount(String userId, Long articleId) {
+        try {
+            boolean isFirstView = redisService.checkAndSetArticleView(articleId, userId);
+            Article article = articleRepository.findById(articleId)
+                    .orElseThrow(() -> new EntityNotFoundException("Article not found with id: " + articleId));
+            if (isFirstView) { // USER가 처음 볼때. 조회수 증가
+                article.incrementViewCount();
+                articleRepository.save(article);
+            }
+            return ArticleViewCountResponseDto.success("SU", "View count updated successfully");
+        } catch (EntityNotFoundException e) {
+            return ArticleViewCountResponseDto.databaseError("NOT_FOUND_CODE", "Article not found");
+        } catch (Exception e) {
+            return ArticleViewCountResponseDto.databaseError("DATABASE_ERROR_CODE", "Database error occurred");
+        }
 
 
+    }
+}
 
 
 

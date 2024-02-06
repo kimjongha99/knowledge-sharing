@@ -74,4 +74,9 @@ public class Article extends BaseTimeEntity {
         this.images.add(image);
         image.setArticle(this);
     }
+
+    public void incrementViewCount() {
+        this.viewCount++;
+
+    }
 }
