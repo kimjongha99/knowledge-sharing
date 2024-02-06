@@ -79,4 +79,13 @@ public class Article extends BaseTimeEntity {
         this.viewCount++;
 
     }
+
+    public void increaseFavoriteCount() {
+        this.favoriteCount++;
+    }
+
+    public void decreaseFavoriteCount(int currentCount) {
+        this.favoriteCount= currentCount-1;
+    }
+
 }

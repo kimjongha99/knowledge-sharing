@@ -3,6 +3,7 @@ package com.hanghae.knowledgesharing.service.impl;
 
 import com.hanghae.knowledgesharing.dto.request.article.PatchArticleRequestDto;
 import com.hanghae.knowledgesharing.dto.request.article.PostArticleRequestDto;
+import com.hanghae.knowledgesharing.dto.request.article.UpdateFavoriteCountRequestDto;
 import com.hanghae.knowledgesharing.dto.response.ResponseDto;
 import com.hanghae.knowledgesharing.dto.response.article.*;
 import com.hanghae.knowledgesharing.entity.*;
@@ -240,6 +241,32 @@ public class ArticleServiceImpl  implements ArticleService {
         }
 
 
+    }
+
+    @Override
+    public ResponseEntity<UpdateFavoriteCountResponseDto> updateFavoriteCount(Long articleId, UpdateFavoriteCountRequestDto requestDto) {
+        try {
+            Article article = articleRepository.findById(articleId)
+                    .orElseThrow(() -> new IllegalArgumentException("Article not found with id: " + articleId));
+            switch (requestDto.getActionType()) {
+                case INCREMENT:
+                    article.increaseFavoriteCount();
+                    break;
+                case DECREMENT:
+                    int currentCount = article.getFavoriteCount();
+                    article.decreaseFavoriteCount(currentCount);
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + requestDto.getActionType());
+            }
+
+            articleRepository.save(article); // Save the updated article
+            return UpdateFavoriteCountResponseDto.success();
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            return UpdateFavoriteCountResponseDto.databaseError();
+        }
     }
 }
 

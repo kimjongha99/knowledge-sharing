@@ -42,12 +42,12 @@ function ArticleDetail() {
     useEffect(() => {
         const incrementViewCount = async () => {
             try {
-                // Replace with the actual token if needed
-                const config = {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}` // Including the token in the Bearer Authorization header
-                    }                };
-                await axios.get(`http://localhost:4040/api/v1/articles/${articleId}/increase-view`, config);
+                if (accessToken) { // Check if the token exists
+                    const config = {
+                        headers: { Authorization: `Bearer ${accessToken}` }
+                    };
+                    await axios.get(`http://localhost:4040/api/v1/articles/${articleId}/increase-view`, config);
+                }
             } catch (error) {
                 console.error('Error incrementing view count:', error);
             }
@@ -56,8 +56,7 @@ function ArticleDetail() {
         if (articleId) {
             incrementViewCount();
         }
-    }, [articleId]);
-
+    }, [articleId, accessToken]); // Add tok
     if (!articleDetail) {
         return <div>Loading...</div>;
     }

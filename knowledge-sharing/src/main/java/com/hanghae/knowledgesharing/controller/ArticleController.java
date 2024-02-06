@@ -3,6 +3,7 @@ package com.hanghae.knowledgesharing.controller;
 
 import com.hanghae.knowledgesharing.dto.request.article.PatchArticleRequestDto;
 import com.hanghae.knowledgesharing.dto.request.article.PostArticleRequestDto;
+import com.hanghae.knowledgesharing.dto.request.article.UpdateFavoriteCountRequestDto;
 import com.hanghae.knowledgesharing.dto.response.article.*;
 import com.hanghae.knowledgesharing.service.ArticleService;
 import jakarta.validation.Valid;
@@ -73,6 +74,16 @@ public class ArticleController {
     ) {
         ResponseEntity<ArticleViewCountResponseDto> response = articleService.incrementArticleViewCount( userId, articleId);
         return  response;
+    }
+
+    @PutMapping("/{articleId}/favorite")
+    public ResponseEntity<UpdateFavoriteCountResponseDto>  updateFavoriteCount(
+            @PathVariable("articleId") Long articleId,
+            @RequestBody UpdateFavoriteCountRequestDto requestDto,
+            @AuthenticationPrincipal String userId
+            ){
+        ResponseEntity<UpdateFavoriteCountResponseDto> response = articleService.updateFavoriteCount(articleId, requestDto);
+        return response;
     }
 
 
