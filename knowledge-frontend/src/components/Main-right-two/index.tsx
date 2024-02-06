@@ -33,6 +33,7 @@ const MainRightTwo = () => {
                     <div className="font-semibold text-lg">UserID: <span className="font-normal">{user?.userId || 'Loading...'}</span></div>
                     <div className="font-semibold text-lg">Email: <span className="font-normal">{user?.email || 'Loading...'}</span></div>
                     <div className="font-semibold text-lg">Role: <span className="font-normal">{user?.role || 'Loading...'}</span></div>
+                    <div className="font-semibold text-lg">type: <span className="font-normal">{user?.type || 'Loading...'}</span></div>
 
                     <div id="button">
                         <button onClick={handleMore}>더보기</button> {/* Add onClick event handler */}

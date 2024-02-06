@@ -35,7 +35,7 @@ public class CommentController {
     }
 
 
-    @GetMapping("/{articleId}/comments")
+    @GetMapping("/{articleId}/comment")
     public ResponseEntity<? super CommentListResponseDto> getComments(
             @PathVariable Long articleId,
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {

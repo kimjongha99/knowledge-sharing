@@ -28,6 +28,7 @@ import static org.mockito.MockitoAnnotations.openMocks;
 
 @DisplayName("아티클 서비스 테스트")
 class ArticleServiceTest {
+
     @Mock
     private ArticleRepository articleRepository;
 
@@ -74,5 +75,6 @@ class ArticleServiceTest {
         verify(articleRepository).save(any(Article.class));
 
     }
+
 
     }

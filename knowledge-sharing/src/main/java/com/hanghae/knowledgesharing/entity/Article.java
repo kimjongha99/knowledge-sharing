@@ -30,7 +30,8 @@ public class Article extends BaseTimeEntity {
     @Column(length = 2000, nullable = false)
     private String content;
 
-
+    @Column(name = "tag_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private HashTagTypeEnum tagType;
 
     private int favoriteCount;

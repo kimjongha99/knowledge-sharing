@@ -9,103 +9,101 @@ import {signInRequest, SNS_SIGN_IN_URL} from "../../apis";
 import InputBox from "../../components/InputBox";
 import {MAIN_PATH} from "../../constant";
 import './style.css';
+import {replaceBehavior} from "@testing-library/user-event/dist/keyboard/plugins";
+import axios from "axios";
+import {useUserStore} from "../../stores/user.store";
 
+interface AxiosError {
+    response?: {
+        status: number;
+        data: any; // Replace 'any' with a more specific type if you know the structure of your error response
+    };
+}
 
-function SignIn(){
-
-    // 레퍼런스 객체
+function SignIn() {
     const idRef = useRef<HTMLInputElement | null>(null);
     const passwordRef = useRef<HTMLInputElement | null>(null);
-
-    const [cookie, setCookies] = useCookies();
-    // 상태값
     const [id, setId] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-
     const [message, setMessage] = useState<string>('');
-
-    // navigate //
     const navigate = useNavigate();
 
 
 
-    const signInResponse = async (responseBody: ResponseBody<SignInResponseDto>) => {
-        if (!responseBody) return;
 
-        const { code } = responseBody;
-        if (code === ResponseCode.VALIDATION_FAIL) {
-            alert('아이디와 비밀번호를 다시입력하세요.');
-            return;
-        }
-        if (code === ResponseCode.SIGN_IN_FAIL) {
-            setMessage('로그인정보가 일치하지않습니다..');
-            return;
-        }
-        if (code === ResponseCode.DATABASE_ERROR) {
-            alert('Database error.');
-            return;
-        }
-        if (code !== ResponseCode.SUCCESS) return;
-
-        const { accessToken, refreshToken } = responseBody as SignInResponseDto;
-
-        const oneHourInSeconds = 3600; // 1 hour in seconds
-        const sevenDaysInSeconds = 7 * 24 * 3600; // 7 days in seconds
-        setCookies('accessToken', accessToken, { maxAge: oneHourInSeconds, path: '/' });
-        setCookies('refreshToken', refreshToken, { maxAge: sevenDaysInSeconds, path: '/' });
-
-        navigate(MAIN_PATH); // Navigate only after a successful login
-    };
-
-
-
-
-
-    // onChange
-    const onIdChangeHandler = (event:ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target;
-        setId(value);
+    const onIdChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setId(event.target.value);
         setMessage('');
     };
-    const onPasswordChangeHandler = (event:ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target;
-        setPassword(value);
+
+    const onPasswordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setPassword(event.target.value);
         setMessage('');
     };
 
     const onSignUpButtonClickHandler = () => {
         navigate('/auth/sign-up');
     };
-    const onSignInButtonClickHandler = () => {
-        if(!id || !password) {
+
+    const processSignInResponse = async (responseBody: ResponseBody<SignInResponseDto>) => {
+        if (!responseBody) return;
+        const { code } = responseBody;
+
+        if (code === ResponseCode.VALIDATION_FAIL) {
+            alert('아이디와 비밀번호를 다시 입력하세요.');
+        } else if (code === ResponseCode.SIGN_IN_FAIL) {
+            setMessage('로그인 정보가 일치하지 않습니다.');
+        } else if (code === ResponseCode.DATABASE_ERROR) {
+            alert('Database error.');
+        } else if (code === ResponseCode.SUCCESS) {
+            navigate(MAIN_PATH, { replace: true });
+        }
+    };
+
+    const onSignInButtonClickHandler = async () => {
+        if (!id || !password) {
             alert('아이디와 비밀번호 모두 입력해주세요.');
             return;
         }
+
         const requestBody: SignInRequestDto = { id, password };
-        signInRequest(requestBody)
-            .then(signInResponse)
-            .catch((error) => {
-                // Handle error case here if needed
-            });
-        // Removed navigate(MAIN_PATH) from here to ensure it only happens after successful login
+
+        try {
+            const signInResponse = await axios.post('http://localhost:4040/api/v1/auth/sign-in', requestBody,
+
+            {
+                withCredentials: true // Ensures cookies are sent with the request
+            }
+            );
+            const responseBody: ResponseBody<SignInResponseDto> = signInResponse.data;
+            await processSignInResponse(responseBody);
+        } catch (error) {
+            const axiosError = error as AxiosError;
+            console.error('SignIn failed:', axiosError);
+            if (axiosError.response && axiosError.response.status === 401) {
+                setMessage('Invalid login credentials.');
+            } else {
+                setMessage('An error occurred during the sign-in process.');
+            }
+        }
     };
 
     const onFormSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault(); // Prevent the default form submission
-        onSignInButtonClickHandler(); // Call your sign in handler
-    };
-
-    // key down
-    const onIdKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        if(event.key !== 'Enter') return;
-        if(!passwordRef.current) return;
-        passwordRef.current.focus();
-    };
-    const onPasswordKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        if(event.key !== 'Enter') return;
+        event.preventDefault();
         onSignInButtonClickHandler();
     };
 
+    const onIdKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter' && passwordRef.current) {
+            passwordRef.current.focus();
+        }
+    };
+
+    const onPasswordKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            onSignInButtonClickHandler();
+        }
+    };
 
     // OAuth 로그인 //
     const onSnsSignInButtonClickHandler = (type: 'kakao' | 'naver') => {

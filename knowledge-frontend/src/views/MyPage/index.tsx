@@ -7,7 +7,7 @@ import {useCookies} from "react-cookie";
 import axios from "axios";
 import ProfileImg from "./ProfileImg";
 
-function MyPage() {
+    function MyPage() {
     // state : user userId path variable 상태 //
     const { userId} = useParams();
     //state 현재 유저 상태관리
@@ -68,9 +68,6 @@ function MyPage() {
                     alert(message); // Displaying the message
 
                     if (code === 'SU') {
-                        // If success, reset cookies and state
-                        setCookie('accessToken', '', { path: '/' }); // Clearing the access token cookie
-                        // ... Any other state reset you need
                         navigator('/'); // Redirecting to login page or a route that initiates logout
                     }
                 })
