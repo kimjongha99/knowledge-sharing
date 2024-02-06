@@ -12,4 +12,22 @@
     border-radius: 45px;
     border: 6px solid;
     margin-bottom: 16px;
+    display: flex; /* 추가: flex display 설정 */
+    flex-direction: column; /* 추가: 자식 요소들을 세로 방향으로 정렬 */
+
+}
+
+#post-button {
+    align-self: flex-end; /* 추가: 오른쪽 끝에 정렬 */
+    margin: 10px; /* 추가: 여백 설정 */
+
+}
+
+/* Additional styles for the button appearance */
+#post-button button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
 }

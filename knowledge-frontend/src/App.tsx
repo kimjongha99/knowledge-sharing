@@ -9,10 +9,11 @@ import SignIn from "./views/SignIn";
 import {User, useUserStore} from "./stores/user.store";
 import {useCookies} from "react-cookie";
 import axios from "axios";
-import OAuth from "./views/OAuth";
 import MyPage from "./views/MyPage";
 import Article from "./views/Article";
 import ArticleDetail from "./views/Article/ArticleDetail";
+import Post from "./views/Article/ArticleDetail/Post";
+import ArticlePost from "./views/Article/ArticleDetail/Post";
 
 
 function App() {
@@ -86,12 +87,12 @@ function App() {
                 <Route path={AUTH_PATH}>
                     <Route path='sign-up' element={<SignUp/>} />
                     <Route path='sign-in' element={<SignIn/>} />
-                    {/*<Route path='oauth-response/:token/:expirationTime' element={<OAuth/>} />*/}
                 </Route>
-
                 <Route path={USER_PATH(':userId')} element={<MyPage/>}/>
-                <Route path='articles'  element={<Article/>}/>
-                <Route path={ARTICLE_DETAIL_PATH(Number(':articleId'))} element={<ArticleDetail/>} />
+
+                <Route path='articles' element={<Article/>}/>
+                <Route path='articles/:articleId' element={<ArticleDetail/>}/>
+                <Route path='articles/post' element={<ArticlePost/>}/>
 
             </Route>
         </Routes>

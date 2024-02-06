@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./style.css";
 import {useCookies} from "react-cookie";
+import {Link, useNavigate} from "react-router-dom";
 
 interface ArticleData {
     boardId: number;
@@ -30,6 +31,7 @@ function Article() {
     const [size, setSize] = useState<number>(7);
     const [totalPages, setTotalPages] = useState<number>(0);
     const [cookies] = useCookies(['accessToken']);
+    const navigator = useNavigate();
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -57,11 +59,17 @@ function Article() {
     const handlePageChange = (newPage: number) => {
         setPage(newPage);
     };
-
-
+    const handleArticlePostPage  = () => {
+        navigator('/articles/post');
+    };
     return (
         <div id="warp">
             <div id="main-contain">
+                <div id="post-button">
+                    <button onClick={handleArticlePostPage}>Button</button>
+                </div>
+
+
                 <table>
                     <thead>
                     <tr>
@@ -77,7 +85,7 @@ function Article() {
                     <tbody>
                     {articles.map((article) => (
                         <tr key={article.boardId}>
-                            <td>{article.boardId}</td>
+                            <td><Link to={`/articles/${article.boardId}`}>{article.boardId}</Link></td>
                             <td>{article.title}</td>
                             <td>{article.viewCount}</td>
                             <td>{article.favoriteCount}</td>
