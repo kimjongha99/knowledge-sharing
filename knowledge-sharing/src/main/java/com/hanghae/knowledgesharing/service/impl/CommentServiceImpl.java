@@ -1,8 +1,11 @@
 package com.hanghae.knowledgesharing.service.impl;
 
+import com.hanghae.knowledgesharing.dto.request.comment.PatchCommentRequestDto;
 import com.hanghae.knowledgesharing.dto.request.comment.PostCommentRequestDto;
 import com.hanghae.knowledgesharing.dto.response.ResponseDto;
 import com.hanghae.knowledgesharing.dto.response.comment.CommentListResponseDto;
+import com.hanghae.knowledgesharing.dto.response.comment.DeleteCommentResponseDto;
+import com.hanghae.knowledgesharing.dto.response.comment.PatchCommentResponseDto;
 import com.hanghae.knowledgesharing.dto.response.comment.PostCommentResponseDto;
 import com.hanghae.knowledgesharing.entity.Article;
 import com.hanghae.knowledgesharing.entity.Comment;
@@ -73,6 +76,49 @@ public class CommentServiceImpl implements CommentService {
             e.printStackTrace();
             // Return an error response
             return ResponseDto.databaseError();
+        }
+    }
+
+    @Override
+    public ResponseEntity<PatchCommentResponseDto> patchComment(PatchCommentRequestDto requestDto, Long commentId, String userId) {
+        try {
+            Comment comment = commentRepository.findById(commentId)
+                    .orElseThrow(() -> new IllegalArgumentException("Article not found with id: " + commentId));
+            User user = userRepository.findByUserId(userId);
+            if (user == null) return PatchCommentResponseDto.notExistUser();
+            // 2. Authorization Check
+            if (!comment.getUser().equals(user)) {
+                return PatchCommentResponseDto.notAuthorized(); // Implement this method similarly to notExistUser
+            }
+            // 3. Update Comment
+            comment.setContent(requestDto.getContent());
+            commentRepository.save(comment);
+
+            // 4. Success Response
+            return PatchCommentResponseDto.success();
+
+        }catch (Exception e) {
+            // 5. General Error Handling
+            return PatchCommentResponseDto.databaseError();
+        }
+
+    }
+
+    @Override
+    public ResponseEntity<DeleteCommentResponseDto> deleteComment(Long commentId, String userId) {
+        try {
+            Comment comment = commentRepository.findById(commentId)
+                    .orElseThrow(() -> new IllegalArgumentException("Article not found with id: " + commentId));
+            User user = userRepository.findByUserId(userId);
+            if (user == null) return DeleteCommentResponseDto.notExistUser();
+
+
+            commentRepository.delete(comment);
+            return DeleteCommentResponseDto.success();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return DeleteCommentResponseDto.databaseError();
         }
     }
 }

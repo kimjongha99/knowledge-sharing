@@ -8,8 +8,11 @@
       <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack.old" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/Article/ArticleDetail/Comment/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Article/ArticleDetail/Comment/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Article/ArticleDetail/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Article/ArticleDetail/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/entity/Article.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/entity/Article.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/controller/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/dto/request/comment/PatchCommentRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/dto/request/comment/PatchCommentRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/entity/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/entity/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/CommentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/impl/CommentServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +67,7 @@
       <workItem from="1707106626490" duration="1778000" />
       <workItem from="1707117037430" duration="13515000" />
       <workItem from="1707181863511" duration="7635000" />
-      <workItem from="1707264211324" duration="1342000" />
+      <workItem from="1707264211324" duration="5303000" />
     </task>
     <servers />
   </component>
