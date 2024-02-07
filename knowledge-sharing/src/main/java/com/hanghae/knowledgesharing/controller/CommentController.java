@@ -1,8 +1,11 @@
 package com.hanghae.knowledgesharing.controller;
 
 
+import com.hanghae.knowledgesharing.dto.request.comment.PatchCommentRequestDto;
 import com.hanghae.knowledgesharing.dto.request.comment.PostCommentRequestDto;
 import com.hanghae.knowledgesharing.dto.response.comment.CommentListResponseDto;
+import com.hanghae.knowledgesharing.dto.response.comment.DeleteCommentResponseDto;
+import com.hanghae.knowledgesharing.dto.response.comment.PatchCommentResponseDto;
 import com.hanghae.knowledgesharing.dto.response.comment.PostCommentResponseDto;
 import com.hanghae.knowledgesharing.repository.CommentRepository;
 import com.hanghae.knowledgesharing.service.CommentService;
@@ -41,5 +44,25 @@ public class CommentController {
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
 
         return commentService.getCommentList(articleId, pageable);
+    }
+
+    @PatchMapping("/{commentId}/comment")
+    public ResponseEntity<PatchCommentResponseDto> patchComment(
+            @PathVariable Long commentId,
+            @AuthenticationPrincipal String userId,
+            @RequestBody PatchCommentRequestDto requestDto
+
+    ) {
+        ResponseEntity<PatchCommentResponseDto> response =commentService.patchComment(requestDto,commentId,userId);
+        return response;
+    }
+
+    @DeleteMapping("/{commentId}/comment")
+    public ResponseEntity<DeleteCommentResponseDto> deleteComment(
+            @PathVariable Long commentId,
+            @AuthenticationPrincipal String userId
+    ) {
+        ResponseEntity<DeleteCommentResponseDto> response = commentService.deleteComment(commentId, userId);
+        return  response;
     }
 }

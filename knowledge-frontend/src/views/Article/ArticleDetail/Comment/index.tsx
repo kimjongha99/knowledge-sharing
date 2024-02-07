@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import {useCookies} from "react-cookie";
+import {useUserStore} from "../../../../stores/user.store";
 
 interface CommentResponse {
     code: string;
@@ -38,7 +39,53 @@ function Comments() {
     const [commentInput, setCommentInput] = useState<string>(""); // State for the comment input field
     const [cookies] = useCookies(["accessToken"]); // Assuming you're using react-cookie for managing cookies
     const accessToken = cookies.accessToken; // Retrieving the access token from cookies
+    const { user } = useUserStore(); // Access the current user from the store
+    const [editingCommentId, setEditingCommentId] = useState<number | null>(null); // State to manage which comment is being edited
+    const [editCommentContent, setEditCommentContent] = useState<string>(""); // State to manage the input of the comment being edited
+    const startEditing = (comment: CommentItem) => {
+        setEditingCommentId(comment.id);
+        setEditCommentContent(comment.content); // Pre-fill the input with the current comment content
+    };
+    const handleDeleteComment = async (commentId: number) => {
+        if (!accessToken) {
+            console.error("No access token available.");
+            return;
+        }
 
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            };
+            await axios.delete(`http://localhost:4040/api/v1/comments/${commentId}/comment`, config);
+            fetchComments(); // Refresh the comments list after deletion
+        } catch (error) {
+            console.error("Error deleting comment:", error);
+        }
+    };
+
+    const submitEditComment = async (commentId: number) => {
+        if (!accessToken) {
+            return; // Early return if no token
+        }
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            };
+            await axios.patch(
+                `http://localhost:4040/api/v1/comments/${commentId}/comment`,
+                { content: editCommentContent },
+                config
+            );
+            setEditingCommentId(null); // Reset editing state
+            fetchComments(); // Re-fetch comments to show the updated comment
+        } catch (error) {
+            console.error("Error updating comment:", error);
+        }
+    };
+    const handleEditCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEditCommentContent(e.target.value);
+    };
     const fetchComments = async () => {
         try {
             const response: AxiosResponse<CommentResponse> = await axios.get(
@@ -49,6 +96,8 @@ function Comments() {
             console.error("Error fetching comments:", error);
         }
     };
+
+
 
     useEffect(() => {
         fetchComments(); // Initial fetch
@@ -98,45 +147,57 @@ function Comments() {
     };
     return (
         <div>
-            <div>
-                {accessToken && (
-                    <form onSubmit={handleCommentSubmit}>
-                        <input
-                            type="text"
-                            value={commentInput}
-                            onChange={handleCommentInputChange}
-                            placeholder="Write a comment..."
-                        />
-                        <button type="submit">Post Comment</button>
-                    </form>
-                )}
-
-
-            </div>
-
+            {accessToken && (
+                <form onSubmit={handleCommentSubmit}>
+                    <input
+                        type="text"
+                        value={commentInput}
+                        onChange={handleCommentInputChange}
+                        placeholder="Write a comment..."
+                    />
+                    <button type="submit">Post Comment</button>
+                </form>
+            )}
 
             {comments.content.map((comment: CommentItem) => (
                 <div key={comment.id}>
-                    {/* Render individual comment details */}
-                    <p>{comment.id}</p>
-                    <p>Author: {comment.content}</p>
-                    <p>Created At: {comment.userId}</p>
+                    {editingCommentId === comment.id ? (
+                        <div>
+                            <input
+                                type="text"
+                                value={editCommentContent}
+                                onChange={handleEditCommentChange}
+                            />
+                            <button onClick={() => submitEditComment(comment.id)}>Save</button>
+                            <button onClick={() => setEditingCommentId(null)}>Cancel</button>
+                        </div>
+                    ) : (
+                        <div>
+                            <p>Comment ID: {comment.id}</p>
+                            <p>Content: {comment.content}</p>
+                            <p>User ID: {comment.userId}</p>
+                            {user?.userId === comment.userId && (
+                                <>
+                                    <button onClick={() => startEditing(comment)}>Edit</button>
+                                    <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                                </>
+                            )}
+
+                        </div>
+                    )}
                 </div>
             ))}
 
-            {/* Pagination controls */}
             <button
                 onClick={() => {
                     if (!comments.last) {
-                        // Load the next page of comments
-                        setPage(page + 1); // Increment the page number
+                        setPage(page + 1);
                     }
                 }}
             >
                 Load More
             </button>
 
-            {/* Page number input */}
             <div>
                 <input
                     type="number"
@@ -150,5 +211,6 @@ function Comments() {
         </div>
     );
 }
+
 
 export default Comments;
