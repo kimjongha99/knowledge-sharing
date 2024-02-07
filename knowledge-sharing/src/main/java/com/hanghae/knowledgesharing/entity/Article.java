@@ -47,6 +47,8 @@ public class Article extends BaseTimeEntity {
     @JoinColumn(name = "user_id") // 이 컬럼은 'article' 테이블에 있습니다.
     private User user;
 
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
 
     public Article(PostArticleRequestDto requestDto, User user) {

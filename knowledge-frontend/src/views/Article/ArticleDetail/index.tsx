@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Comments from "./Comment";
 import {useCookies} from "react-cookie";
+import {useUserStore} from "../../../stores/user.store";
 
 // Define an interface to represent the response data structure
 interface ArticleResponse {
@@ -20,8 +21,111 @@ function ArticleDetail() {
     const { articleId } = useParams();
     const [articleDetail, setArticleDetail] = useState<ArticleResponse | null>(null); // Annotate with the interface
     const [cookies] = useCookies();
+    const [isUpdatingFavorite, setIsUpdatingFavorite] = useState(false); // New state to track request status
+    const [isEditing, setIsEditing] = useState(false); // Initialize state for managing edit form visibility
+    const navigate = useNavigate(); // Initialize useNavigate hook
 
     const accessToken = cookies.accessToken; // Retrieving the access token from cookies
+    const { user } = useUserStore(); // Access the current user from the store
+    const showEditForm = user?.userId === articleDetail?.writer; // Condition to show edit button
+    const [editFormData, setEditFormData] = useState({
+        title: '',
+        content: '',
+        imageUrls: [''], // Assuming imageUrls is an array of strings
+        hashtags: [''], // Assuming hashtags is an array of strings
+    }); // Initialize state for edit form data
+    const handleDelete = async () => {
+        if (!accessToken || !articleId) {
+            return; // Early return if no token or article ID
+        }
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            };
+            await axios.delete(`http://localhost:4040/api/v1/articles/${articleId}`, config);
+            navigate('/articles'); // Navigate to the articles page after successful deletion
+        } catch (error) {
+            console.error('Error deleting article:', error);
+        }
+    };
+
+
+    const handleEditInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string) => {
+        const value = e.target.value;
+        if (field === 'hashtags' || field === 'imageUrls') {
+            // Split the string by commas and remove whitespace from each element
+            const arrayValue = value.split(',').map((item) => item.trim());
+            setEditFormData({ ...editFormData, [field]: arrayValue });
+        } else {
+            setEditFormData({ ...editFormData, [field]: value });
+        }
+    };
+
+    const initializeEditFormData = () => {
+        if (articleDetail) {
+            setEditFormData({
+                title: articleDetail.title,
+                content: articleDetail.content,
+                imageUrls: articleDetail.imageUrls, // Assuming this is an array of strings
+                hashtags: articleDetail.articleHashtags, // Assuming this is an array of strings
+            });
+        }
+    };
+    const handleEditFormSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!accessToken || !articleId) {
+            return; // Early return if no token or article ID
+        }
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            };
+            await axios.patch(`http://localhost:4040/api/v1/articles/${articleId}`, editFormData, config);
+            // Re-fetch article details to show the updated article
+            const response = await axios.get<ArticleResponse>(`http://localhost:4040/api/v1/articles/${articleId}`);
+            setArticleDetail(response.data);
+            setIsEditing(false); // Hide the edit form after successful submission
+        } catch (error) {
+            console.error('Error updating article:', error);
+        }
+    };
+
+
+    const handleFavoriteChange = async (actionType: 'INCREMENT' | 'DECREMENT') => {
+        if (isUpdatingFavorite || !accessToken || !articleId) {
+            return;// 이미 요청을 처리 중이거나 토큰이나 기사 ID가 없는 경우 조기 반환
+        }
+
+        setIsUpdatingFavorite(true); // 처리하는 동안 버튼을 비활성화합니다.
+
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            };
+            const requestBody = {
+                actionType: actionType,
+            };
+            await axios.put(`http://localhost:4040/api/v1/articles/${articleId}/favorite`, requestBody, config);
+            // 성공하면 기사 세부정보를 다시 가져와서 업데이트된 즐겨찾기 개수를 가져옵니다.
+            const response = await axios.get<ArticleResponse>(`http://localhost:4040/api/v1/articles/${articleId}`);
+            setArticleDetail(response.data);
+        } catch (error) {
+            console.error(`Error ${actionType === 'INCREMENT' ? 'incrementing' : 'decrementing'} favorite count:`, error);
+        }
+
+        setIsUpdatingFavorite(false); /// 처리 후 버튼을 다시 활성화합니다.
+
+
+    };
+
+
+
+
+
+
 
     useEffect(() => {
         const fetchArticleDetail = async () => {
@@ -68,6 +172,29 @@ function ArticleDetail() {
 
 
         <div>
+            <div>
+                <div>
+                    {showEditForm && (
+                        <button onClick={handleDelete}>Delete Article</button>
+                    )}
+                </div>
+                {showEditForm && !isEditing && (
+                    <button onClick={() => {
+                        setIsEditing(true);
+                        initializeEditFormData(); // Initialize form data when entering edit mode
+                    }}>Edit Article</button>
+                )}                {isEditing && (
+                    <form onSubmit={handleEditFormSubmit}>
+                        <input type="text" value={editFormData.title} onChange={(e) => handleEditInputChange(e, 'title')} placeholder="Title" />
+                        <textarea value={editFormData.content} onChange={(e) => handleEditInputChange(e, 'content')} placeholder="Content" />
+                        <input type="text" value={editFormData.hashtags.join(", ")} onChange={(e) => handleEditInputChange(e, 'hashtags')} placeholder="Hashtags (comma separated)"/>
+                        <input type="text" value={editFormData.imageUrls.join(", ")} onChange={(e) => handleEditInputChange(e, 'imageUrls')} placeholder="Image URLs (comma separated)"/>
+
+                        <button type="submit">Update Article</button>
+                        <button onClick={() => setIsEditing(false)}>Cancel</button>
+                    </form>
+                )}
+            </div>
             <h1>{articleDetail.title}</h1>
             <p>{articleDetail.content}</p>
             <p>Writer: {articleDetail.writer}</p>
@@ -85,7 +212,10 @@ function ArticleDetail() {
             </div>
 
             <div>
-
+                <div>
+                    <button onClick={() => handleFavoriteChange('INCREMENT')} disabled={isUpdatingFavorite}>Like</button>
+                    <button onClick={() => handleFavoriteChange('DECREMENT')} disabled={isUpdatingFavorite}>Unlike</button>
+                </div>
                 <br/><br/><br/><br/><br/><br/>
                 <Comments/>
             </div>
