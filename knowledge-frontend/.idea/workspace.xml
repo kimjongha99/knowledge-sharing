@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="497fed6d-59a7-4096-9f81-83c9584a9a2a" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/0.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/1.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack.old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Article/ArticleDetail/Comment/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Article/ArticleDetail/Comment/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Article/ArticleDetail/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Article/ArticleDetail/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/entity/Article.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/entity/Article.java" afterDir="false" />
-    </list>
+    <list default="true" id="497fed6d-59a7-4096-9f81-83c9584a9a2a" name="변경" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,7 +55,7 @@
       <workItem from="1707106626490" duration="1778000" />
       <workItem from="1707117037430" duration="13515000" />
       <workItem from="1707181863511" duration="7635000" />
-      <workItem from="1707264211324" duration="1342000" />
+      <workItem from="1707264211324" duration="1605000" />
     </task>
     <servers />
   </component>
