@@ -34,6 +34,36 @@ function ArticleDetail() {
         imageUrls: [''], // Assuming imageUrls is an array of strings
         hashtags: [''], // Assuming hashtags is an array of strings
     }); // Initialize state for edit form data
+
+
+
+
+
+
+
+    const handleFollow = async () => {
+        // Check if there's a logged-in user and an article writer to follow
+        if (!accessToken || !user?.userId || user?.userId === articleDetail?.writer) {
+            return; // Early return if no access token, user ID, or if the user is the writer
+        }
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            };
+            // Replace followId and followingId with appropriate IDs
+            const response = await axios.post(`http://localhost:4040/api/v1/follows/${user.userId}/${articleDetail?.writer}`, {}, config);
+
+            // Handle response
+            if (response.data.checkFollowEnum === "following") {
+                alert("Followed successfully.");
+            } else if (response.data.checkFollowEnum === "unFollowing") {
+                alert("Unfollowed successfully.");
+            }
+        } catch (error) {
+            console.error('Error following/unfollowing:', error);
+        }
+    };
     const handleDelete = async () => {
         if (!accessToken || !articleId) {
             return; // Early return if no token or article ID
@@ -173,6 +203,13 @@ function ArticleDetail() {
 
         <div>
             <div>
+                <div>
+                    {/* 현재 사용자가 작성자가 아닌 경우 팔로우 버튼 표시 */}
+                    {user?.userId !== articleDetail?.writer && (
+                        <button onClick={handleFollow}>Follow</button>
+                    )}
+                </div>
+
                 <div>
                     {showEditForm && (
                         <button onClick={handleDelete}>Delete Article</button>

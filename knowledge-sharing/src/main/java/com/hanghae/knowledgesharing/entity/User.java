@@ -41,6 +41,16 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Article> articles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL, orphanRemoval = true)//너
+    private List<Follow> followings = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, orphanRemoval = true) //나
+    private List<Follow> followers = new ArrayList<>();
+
+
+
+
     public  User(SignUpRequestDto dto) {
         this.userId = dto.getId();
         this.password = dto.getPassword();
