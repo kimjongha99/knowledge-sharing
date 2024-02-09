@@ -25,6 +25,7 @@ const MainRightTwo = () => {
         // Add other styles if necessary
     };
 
+    console.log(user?.role);
 
     return (
         <section id="main-right-two">

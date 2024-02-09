@@ -7,6 +7,7 @@ import com.hanghae.knowledgesharing.dto.response.ResponseDto;
 import com.hanghae.knowledgesharing.dto.response.auth.*;
 import com.hanghae.knowledgesharing.entity.Certification;
 import com.hanghae.knowledgesharing.entity.User;
+import com.hanghae.knowledgesharing.enums.UserRoleEnum;
 import com.hanghae.knowledgesharing.provider.EmailProvider;
 import com.hanghae.knowledgesharing.provider.JwtProvider;
 import com.hanghae.knowledgesharing.repository.CertificationRepository;
@@ -133,7 +134,7 @@ public class AuthServiceImpl implements AuthService {
         String accessToken = null;
         String refreshToken =null;
         int expirationTime = 3600;
-
+        UserRoleEnum role = null;
         try {
 
             String userId = dto.getId();
@@ -147,7 +148,7 @@ public class AuthServiceImpl implements AuthService {
 
              accessToken = jwtProvider.create(userId);
              refreshToken = jwtProvider.createRefreshToken(userId);
-
+             role = user.getRole();
             Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
             accessTokenCookie.setHttpOnly(false);
             accessTokenCookie.setSecure(false); // Note: Set to false if you are testing over HTTP in development environment, true for production
@@ -173,7 +174,7 @@ public class AuthServiceImpl implements AuthService {
             return ResponseDto.databaseError();
         }
 
-        return SignInResponseDto.success(accessToken,refreshToken,expirationTime);
+        return SignInResponseDto.success(accessToken,refreshToken,expirationTime,role);
 
     }
 

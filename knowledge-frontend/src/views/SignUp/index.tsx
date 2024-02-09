@@ -238,7 +238,7 @@ function SignUp() {
         };
 
         const onSignInButtonClickHandler = () => {
-            navigate('/auth/sign-in');
+            navigate('/');
         };
 
         // OAuth 로그인 //

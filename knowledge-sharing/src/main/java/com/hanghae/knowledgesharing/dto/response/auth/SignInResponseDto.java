@@ -3,26 +3,31 @@ package com.hanghae.knowledgesharing.dto.response.auth;
 import com.hanghae.knowledgesharing.common.ResponseCode;
 import com.hanghae.knowledgesharing.common.ResponseMessage;
 import com.hanghae.knowledgesharing.dto.response.ResponseDto;
+import com.hanghae.knowledgesharing.enums.UserRoleEnum;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Getter
 public class SignInResponseDto extends  ResponseDto{
+
+    private UserRoleEnum role;
     private String accessToken;
     private String refreshToken;
-
     private int expirationTime;
 
-    private SignInResponseDto(String accessToken, String refreshToken, int expirationTime) {
+    private SignInResponseDto(String accessToken, String refreshToken, int expirationTime , UserRoleEnum role) {
         super();
+
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+
         this.expirationTime = expirationTime;
+        this.role =role;
     }
 
-    public static ResponseEntity<SignInResponseDto> success(String accessToken, String refreshToken, int expirationTime) {
-        SignInResponseDto responseBody = new SignInResponseDto(accessToken, refreshToken, expirationTime);
+    public static ResponseEntity<SignInResponseDto> success(String accessToken, String refreshToken, int expirationTime, UserRoleEnum role) {
+        SignInResponseDto responseBody = new SignInResponseDto(accessToken, refreshToken, expirationTime, role);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
