@@ -17,17 +17,26 @@ import org.springframework.stereotype.Service;
 public class AdminServiceImpl implements AdminService {
 
     private final UserRepository userRepository;
-    @Override
-    public ResponseEntity<UserListResponseDto> getAllUsers(Pageable pageable) {
-        Page<User> usersPage = userRepository.findAll(pageable);
 
+    @Override
+    public ResponseEntity<UserListResponseDto> getAllUsers(String userId, String email, Pageable pageable) {
+
+        Page<User> usersPage;
+        if (userId != null && !userId.isEmpty()) {
+            usersPage = userRepository.findByUserIdContaining(userId, pageable);
+        } else if (email != null && !email.isEmpty()) {
+            usersPage = userRepository.findByEmailContaining(email, pageable);
+        } else {
+            usersPage = userRepository.findAll(pageable);
+        }
         Page<UserDetailDto> userDetailPage = usersPage.map(user -> new UserDetailDto(
                 user.getUserId(),
                 user.getEmail(),
                 user.getRole().getAuthority(),
-                user.getType() // Assuming getType() returns a string representation of the user type
+                user.getType()
         ));
 
         return UserListResponseDto.success(userDetailPage);
+
     }
 }

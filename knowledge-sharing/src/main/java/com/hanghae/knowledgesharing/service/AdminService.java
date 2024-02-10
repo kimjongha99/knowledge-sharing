@@ -6,6 +6,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface AdminService {
 
-    ResponseEntity<UserListResponseDto> getAllUsers(Pageable pageable);
+    ResponseEntity<UserListResponseDto> getAllUsers(String userId, String email, Pageable pageable);
 
 }

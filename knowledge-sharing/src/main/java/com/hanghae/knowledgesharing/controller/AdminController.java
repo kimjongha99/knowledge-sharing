@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.stream.Collectors;
@@ -42,13 +43,19 @@ public class AdminController {
 
         /*
         유저 전체 목록 조회 및 페이징 처리
+
+        http://localhost:8080/users?page=0&size=10
+        http://localhost:8080/users?userId=testUserId&page=0&size=10
+        http://localhost:8080/users?email=test@example.com&page=0&size=10
+
          */
         @GetMapping("/users")
         public ResponseEntity<UserListResponseDto> getAllUsers(
-                @PageableDefault() Pageable pageable
-
+                @RequestParam(required = false) String userId,
+                @RequestParam(required = false) String email,
+                @PageableDefault Pageable pageable
         ) {
-            ResponseEntity<UserListResponseDto> response = adminService.getAllUsers(pageable);
+            ResponseEntity<UserListResponseDto> response = adminService.getAllUsers(userId, email, pageable);
             return response;
         }
 
