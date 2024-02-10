@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="497fed6d-59a7-4096-9f81-83c9584a9a2a" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/src/views/Admin/AdminDashboard/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/0.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/1.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack.old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Main-right-two/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main-right-two/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/SignUp/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/SignUp/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/config/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/dto/response/auth/SignInResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/dto/response/auth/SignInResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/impl/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/impl/AuthServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="497fed6d-59a7-4096-9f81-83c9584a9a2a" name="변경" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,6 +63,7 @@
       <workItem from="1707264211324" duration="7417000" />
       <workItem from="1707354775653" duration="9590000" />
       <workItem from="1707441003161" duration="4560000" />
+      <workItem from="1707487274207" duration="177000" />
     </task>
     <servers />
   </component>
