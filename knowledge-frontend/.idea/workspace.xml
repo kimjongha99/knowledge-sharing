@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="497fed6d-59a7-4096-9f81-83c9584a9a2a" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Admin/AdminDashboard/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Admin/AdminDashboard/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/AdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/impl/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../knowledge-sharing/src/main/java/com/hanghae/knowledgesharing/service/impl/AdminServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="497fed6d-59a7-4096-9f81-83c9584a9a2a" name="변경" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,7 +64,7 @@
       <workItem from="1707354775653" duration="9590000" />
       <workItem from="1707441003161" duration="4560000" />
       <workItem from="1707487274207" duration="177000" />
-      <workItem from="1707639161369" duration="7258000" />
+      <workItem from="1707639161369" duration="7261000" />
     </task>
     <servers />
   </component>
