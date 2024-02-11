@@ -1,7 +1,9 @@
 package com.hanghae.knowledgesharing.service.impl;
 
+import com.hanghae.knowledgesharing.dto.request.admin.UserRoleChangeRequestDto;
 import com.hanghae.knowledgesharing.dto.response.admin.UserDetailDto;
 import com.hanghae.knowledgesharing.dto.response.admin.UserListResponseDto;
+import com.hanghae.knowledgesharing.dto.response.admin.UserRoleChangeResponseDto;
 import com.hanghae.knowledgesharing.entity.User;
 import com.hanghae.knowledgesharing.repository.UserRepository;
 import com.hanghae.knowledgesharing.service.AdminService;
@@ -37,6 +39,26 @@ public class AdminServiceImpl implements AdminService {
         ));
 
         return UserListResponseDto.success(userDetailPage);
+
+    }
+
+    @Override
+    public ResponseEntity<UserRoleChangeResponseDto> userRoleChanges(UserRoleChangeRequestDto requestDto) {
+        try {
+            int updatedRows = userRepository.updateUserRole(requestDto.getChangeUserId(), requestDto.getRoleEnum());
+            if (updatedRows == 0) {
+                // 업데이트된 행이 없습니다. 이는 사용자를 찾을 수 없음을 나타냅니다.
+                return UserRoleChangeResponseDto.noExistUser();
+            }
+
+            return UserRoleChangeResponseDto.success();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return UserRoleChangeResponseDto.databaseError();
+        }
+
+
 
     }
 }

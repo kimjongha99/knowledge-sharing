@@ -1,7 +1,9 @@
 package com.hanghae.knowledgesharing.controller;
 
 
+import com.hanghae.knowledgesharing.dto.request.admin.UserRoleChangeRequestDto;
 import com.hanghae.knowledgesharing.dto.response.admin.UserListResponseDto;
+import com.hanghae.knowledgesharing.dto.response.admin.UserRoleChangeResponseDto;
 import com.hanghae.knowledgesharing.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -9,10 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;
 
@@ -21,7 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdminController {
 
-       private  final AdminService adminService;
+    private final AdminService adminService;
 
 
     @GetMapping("/health")
@@ -41,23 +40,34 @@ public class AdminController {
     }
 
 
-        /*
-        유저 전체 목록 조회 및 페이징 처리
+    /*
+    유저 전체 목록 조회 및 페이징 처리
 
-        http://localhost:8080/users?page=0&size=10
-        http://localhost:8080/users?userId=testUserId&page=0&size=10
-        http://localhost:8080/users?email=test@example.com&page=0&size=10
+    http://localhost:8080/users?page=0&size=10
+    http://localhost:8080/users?userId=testUserId&page=0&size=10
+    http://localhost:8080/users?email=test@example.com&page=0&size=10
 
-         */
-        @GetMapping("/users")
-        public ResponseEntity<UserListResponseDto> getAllUsers(
-                @RequestParam(required = false) String userId,
-                @RequestParam(required = false) String email,
-                @PageableDefault Pageable pageable
-        ) {
-            ResponseEntity<UserListResponseDto> response = adminService.getAllUsers(userId, email, pageable);
-            return response;
-        }
+     */
+    @GetMapping("/users")
+    public ResponseEntity<UserListResponseDto> getAllUsers(
+            @RequestParam(required = false) String userId,
+            @RequestParam(required = false) String email,
+            @PageableDefault Pageable pageable
+    ) {
+        ResponseEntity<UserListResponseDto> response = adminService.getAllUsers(userId, email, pageable);
+        return response;
+    }
+
+
+    @PostMapping("/change-role")
+    public ResponseEntity<UserRoleChangeResponseDto> userRoleChanges(
+            @RequestBody UserRoleChangeRequestDto requestDto
+    ) {
+        ResponseEntity<UserRoleChangeResponseDto> response = adminService.userRoleChanges(requestDto);
+
+        return  response;
+    }
+
 
 
 
