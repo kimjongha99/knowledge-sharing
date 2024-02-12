@@ -1,6 +1,8 @@
 package com.hanghae.knowledgesharing.service.impl;
 
+import com.hanghae.knowledgesharing.dto.request.admin.UserAdminDeleteRequestDto;
 import com.hanghae.knowledgesharing.dto.request.admin.UserRoleChangeRequestDto;
+import com.hanghae.knowledgesharing.dto.response.admin.UserAdminDeleteResponseDto;
 import com.hanghae.knowledgesharing.dto.response.admin.UserDetailDto;
 import com.hanghae.knowledgesharing.dto.response.admin.UserListResponseDto;
 import com.hanghae.knowledgesharing.dto.response.admin.UserRoleChangeResponseDto;
@@ -59,6 +61,18 @@ public class AdminServiceImpl implements AdminService {
         }
 
 
+
+    }
+
+    @Override
+    public ResponseEntity<UserAdminDeleteResponseDto> userAdminDelete(UserAdminDeleteRequestDto requestDto) {
+        try {
+            userRepository.deleteById(requestDto.getDeleteUserId());
+            return UserAdminDeleteResponseDto.success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  UserAdminDeleteResponseDto.databaseError();
+        }
 
     }
 }

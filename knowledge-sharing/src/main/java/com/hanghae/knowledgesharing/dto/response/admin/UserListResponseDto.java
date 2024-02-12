@@ -1,5 +1,7 @@
 package com.hanghae.knowledgesharing.dto.response.admin;
 
+import com.hanghae.knowledgesharing.common.ResponseCode;
+import com.hanghae.knowledgesharing.common.ResponseMessage;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,4 +21,6 @@ public class UserListResponseDto {
         UserListResponseDto result = new UserListResponseDto(users);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
+
 }

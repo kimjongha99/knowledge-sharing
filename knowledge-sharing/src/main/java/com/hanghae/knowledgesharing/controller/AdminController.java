@@ -1,7 +1,9 @@
 package com.hanghae.knowledgesharing.controller;
 
 
+import com.hanghae.knowledgesharing.dto.request.admin.UserAdminDeleteRequestDto;
 import com.hanghae.knowledgesharing.dto.request.admin.UserRoleChangeRequestDto;
+import com.hanghae.knowledgesharing.dto.response.admin.UserAdminDeleteResponseDto;
 import com.hanghae.knowledgesharing.dto.response.admin.UserListResponseDto;
 import com.hanghae.knowledgesharing.dto.response.admin.UserRoleChangeResponseDto;
 import com.hanghae.knowledgesharing.service.AdminService;
@@ -65,10 +67,15 @@ public class AdminController {
     ) {
         ResponseEntity<UserRoleChangeResponseDto> response = adminService.userRoleChanges(requestDto);
 
-        return  response;
+        return response;
     }
 
 
-
-
+    @PostMapping("/users-delete")
+    public ResponseEntity<UserAdminDeleteResponseDto> userAdminDelete(
+            @RequestBody UserAdminDeleteRequestDto requestDto
+    ){
+        ResponseEntity<UserAdminDeleteResponseDto> response = adminService.userAdminDelete(requestDto);
+        return response;
+    }
 }
