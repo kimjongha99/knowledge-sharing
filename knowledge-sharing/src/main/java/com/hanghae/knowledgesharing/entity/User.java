@@ -78,4 +78,8 @@ public class User {
     public void setPassword(String encode) {
         this.password=encode;
     }
+
+    public void setRole(UserRoleEnum roleEnum) {
+        this.role = roleEnum;
+    }
 }

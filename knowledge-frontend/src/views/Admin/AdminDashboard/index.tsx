@@ -1,4 +1,7 @@
 import './style.css';
+import AdminLeftOne from "./AdminLeftOne";
+
+
 
 
 function  adminDashboard(){
@@ -7,7 +10,7 @@ function  adminDashboard(){
         <div id="warp">
 
             <div id="main-contain">
-assasdasd
+                <AdminLeftOne/>
 
             </div>
 
