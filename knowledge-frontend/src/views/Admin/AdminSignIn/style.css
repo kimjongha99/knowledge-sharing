@@ -1,0 +1,17 @@
+#warp{
+
+    margin-top: 51px;
+    display: flex;
+
+}
+
+#main-contain {
+    width: 1250px;
+    height: 1116px;
+    border-radius: 45px;
+    border: 1px solid;
+    margin-bottom: 16px;
+    display: flex; /* 추가: flex display 설정 */
+    flex-direction: column; /* 추가: 자식 요소들을 세로 방향으로 정렬 */
+
+}

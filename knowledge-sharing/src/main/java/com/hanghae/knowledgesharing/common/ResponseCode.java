@@ -18,4 +18,17 @@ public interface ResponseCode {
     String REFRESH_TOKEN_EXPIRED = "RTE";
 
     String NOT_EXISTED_USER = "NEU";
+
+    String PREVIOUS_PASSWORD ="PRP";
+
+
+    String HASHTAG_CREATION_FAIL = "HCF";
+    String HASHTAG_NOT_FOUND = "HNF";
+    String HASHTAG_VALIDATION_FAIL = "HVF";
+
+    String ARTICLE_FAIL = "AF";
+    String NOT_EXISTED_ARTICLE = "NA";
+    String PERMISSION_FAIL ="PF" ;
+    String COMMENTS_NOT_FOUND = "CNF";
+    String NO_PERMISSION_TO_VIEW_COMMENTS = "NPVC";
 }

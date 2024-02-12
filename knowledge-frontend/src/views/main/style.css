@@ -23,11 +23,6 @@ section[id^=main] {
     height: 130px;
 }
 
-#main-left-two {
-    height: 426px;
-    background: gray;
-}
-
 #main-left-three {
     height: 560px;
     background: gray;

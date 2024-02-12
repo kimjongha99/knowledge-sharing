@@ -3,6 +3,7 @@ package com.hanghae.knowledgesharing.service;
 
 import com.hanghae.knowledgesharing.dto.request.auth.*;
 import com.hanghae.knowledgesharing.dto.response.auth.*;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 
 public interface AuthService {
@@ -14,7 +15,7 @@ public interface AuthService {
 
     ResponseEntity<? super SignUpResponseDto> signUp(SignUpRequestDto dto);
 
-    ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto);
+    ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto, HttpServletResponse response);
 
-    ResponseEntity<? super RefreshResponseDto> refreshAccessToken(RefreshRequestDto requestBody);
+    ResponseEntity<? super RefreshResponseDto> refreshAccessToken(RefreshRequestDto requestBody,HttpServletResponse response);
 }

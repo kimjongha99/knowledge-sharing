@@ -1,0 +1,27 @@
+.grid-cell {
+    width: 100px;
+    height: 100px;
+}
+.profile-image {
+    width: 200px; /* 2 grid cells wide */
+    height: 200px; /* 2 grid cells tall */
+}
+.input-field {
+    border: 1px solid #ccc;
+    padding: 8px;
+    width: calc(100% - 16px);
+}
+.button {
+    background-color: #f3f4f6;
+    padding: 8px 16px;
+    border: 1px solid #d1d5db;
+    cursor: pointer;
+}
+.button:hover {
+    background-color: #e5e7eb;
+}
+
+#myPage{
+    display: flex;
+    justify-content: left;
+}

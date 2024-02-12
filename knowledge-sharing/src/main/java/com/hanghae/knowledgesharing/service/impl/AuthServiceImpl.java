@@ -7,11 +7,14 @@ import com.hanghae.knowledgesharing.dto.response.ResponseDto;
 import com.hanghae.knowledgesharing.dto.response.auth.*;
 import com.hanghae.knowledgesharing.entity.Certification;
 import com.hanghae.knowledgesharing.entity.User;
+import com.hanghae.knowledgesharing.enums.UserRoleEnum;
 import com.hanghae.knowledgesharing.provider.EmailProvider;
 import com.hanghae.knowledgesharing.provider.JwtProvider;
 import com.hanghae.knowledgesharing.repository.CertificationRepository;
 import com.hanghae.knowledgesharing.repository.UserRepository;
 import com.hanghae.knowledgesharing.service.AuthService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -126,12 +129,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
+    public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto, HttpServletResponse response) {
 
         String accessToken = null;
         String refreshToken =null;
         int expirationTime = 3600;
-
+        UserRoleEnum role = null;
         try {
 
             String userId = dto.getId();
@@ -145,6 +148,22 @@ public class AuthServiceImpl implements AuthService {
 
              accessToken = jwtProvider.create(userId);
              refreshToken = jwtProvider.createRefreshToken(userId);
+             role = user.getRole();
+            Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
+            accessTokenCookie.setHttpOnly(false);
+            accessTokenCookie.setSecure(false); // Note: Set to false if you are testing over HTTP in development environment, true for production
+            accessTokenCookie.setPath("/");
+            accessTokenCookie.setMaxAge(3600); // Expiration time should match the JWT expiration
+            response.addCookie(accessTokenCookie);
+
+            Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
+            refreshTokenCookie.setHttpOnly(false);
+            refreshTokenCookie.setSecure(false); // Note: Set to false if you are testing over HTTP in development environment, true for production
+            refreshTokenCookie.setPath("/");
+            refreshTokenCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days for refresh token
+            response.addCookie(refreshTokenCookie);
+
+
             user.setRefreshToken(refreshToken);
             userRepository.save(user);
 
@@ -155,7 +174,7 @@ public class AuthServiceImpl implements AuthService {
             return ResponseDto.databaseError();
         }
 
-        return SignInResponseDto.success(accessToken,refreshToken,expirationTime);
+        return SignInResponseDto.success(accessToken,refreshToken,expirationTime,role);
 
     }
 
@@ -167,7 +186,7 @@ public class AuthServiceImpl implements AuthService {
     //5. 둘다 검증후 아니면 새로운 액세스토큰을 발급한다.
     //6.     public static ResponseEntity<RefreshResponseDto> success(String newAccessToken) { 여기에 담아서 리턴한다.
     @Override
-    public ResponseEntity<? super RefreshResponseDto> refreshAccessToken(RefreshRequestDto requestBody) {
+    public ResponseEntity<? super RefreshResponseDto> refreshAccessToken(RefreshRequestDto requestBody, HttpServletResponse response) {
         String refreshToken = requestBody.getRefreshToken();
         String newAccessToken =null;
         try {
@@ -181,6 +200,14 @@ public class AuthServiceImpl implements AuthService {
 
             // 새로운 액세스 토큰을 생성합니다.
             newAccessToken = jwtProvider.create(userId);
+
+            Cookie accessTokenCookie = new Cookie("accessToken", newAccessToken);
+            accessTokenCookie.setHttpOnly(false);
+            accessTokenCookie.setSecure(false); // Note: Set to false if you are testing over HTTP in development environment, true for production
+            accessTokenCookie.setPath("/");
+            accessTokenCookie.setMaxAge(3600); // Expiration time should match the JWT expiration
+            response.addCookie(accessTokenCookie);
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.databaseError();
