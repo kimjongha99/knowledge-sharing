@@ -3,9 +3,12 @@ package com.hanghae.knowledgesharing.controller;
 
 import com.hanghae.knowledgesharing.dto.request.admin.UserAdminDeleteRequestDto;
 import com.hanghae.knowledgesharing.dto.request.admin.UserRoleChangeRequestDto;
+import com.hanghae.knowledgesharing.dto.response.admin.ArticleListResponseDto;
 import com.hanghae.knowledgesharing.dto.response.admin.UserAdminDeleteResponseDto;
 import com.hanghae.knowledgesharing.dto.response.admin.UserListResponseDto;
 import com.hanghae.knowledgesharing.dto.response.admin.UserRoleChangeResponseDto;
+import com.hanghae.knowledgesharing.dto.response.article.DeleteArticleResponseDto;
+import com.hanghae.knowledgesharing.dto.response.article.GetArticleResponseDto;
 import com.hanghae.knowledgesharing.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -59,6 +62,29 @@ public class AdminController {
         ResponseEntity<UserListResponseDto> response = adminService.getAllUsers(userId, email, pageable);
         return response;
     }
+    /*
+     아티클 전체 목록 조회 및 페이징 처리
+
+     http://localhost:4040/api/v1/admin/articles?page=0&size=10
+
+     http://localhost:4040/api/v1/admin/articles?title={title}&page=0&size=10
+
+     http://localhost:4040/api/v1/admin/articles?content={content}&page=0&size=10
+
+      http://localhost:4040/api/v1/admin/articles?hashtag={hashtag}&page=0&size=10
+
+      */
+    @GetMapping("/articles")
+    public ResponseEntity<ArticleListResponseDto> getAllArticles(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String content,
+            @RequestParam(required = false) String hashtag,
+            @PageableDefault Pageable pageable
+    ) {
+        ResponseEntity<ArticleListResponseDto> response = adminService.getAllArticles(title, content,hashtag, pageable);
+        return response;
+    }
+
 
 
     @PostMapping("/change-role")
@@ -76,6 +102,23 @@ public class AdminController {
             @RequestBody UserAdminDeleteRequestDto requestDto
     ){
         ResponseEntity<UserAdminDeleteResponseDto> response = adminService.userAdminDelete(requestDto);
+        return response;
+    }
+
+    @DeleteMapping("/admin/articles/{articleId}")
+    public ResponseEntity<? super DeleteArticleResponseDto> deleteArticle(
+            @PathVariable("articleId") Long articleId
+    ) {
+        ResponseEntity<? super DeleteArticleResponseDto> response = adminService.deleteArticle(articleId);
+        return response;
+    }
+
+    @GetMapping("/admin/articles/{articleId}")
+    public ResponseEntity<? super GetArticleResponseDto> getArticle(
+            @PathVariable("articleId") Long articleId
+    ) {
+        ResponseEntity<? super GetArticleResponseDto> response = adminService.getArticle(articleId);
+
         return response;
     }
 }
