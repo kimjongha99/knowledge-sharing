@@ -1,12 +1,12 @@
 package com.hanghae.knowledgesharing.service;
 
-import com.hanghae.knowledgesharing.dto.request.user.PatchPasswordRequestDto;
-import com.hanghae.knowledgesharing.dto.response.user.GetSignInUserResponseDto;
-import com.hanghae.knowledgesharing.dto.response.user.PatchPasswordResponseDto;
-import com.hanghae.knowledgesharing.entity.User;
-import com.hanghae.knowledgesharing.enums.UserRoleEnum;
-import com.hanghae.knowledgesharing.repository.UserRepository;
-import com.hanghae.knowledgesharing.service.impl.UserServiceImpl;
+import com.hanghae.knowledgesharing.user.dto.request.user.PatchPasswordRequestDto;
+import com.hanghae.knowledgesharing.user.dto.response.user.GetSignInUserResponseDto;
+import com.hanghae.knowledgesharing.user.dto.response.user.PatchPasswordResponseDto;
+import com.hanghae.knowledgesharing.common.entity.User;
+import com.hanghae.knowledgesharing.common.enums.UserRoleEnum;
+import com.hanghae.knowledgesharing.user.repository.UserRepository;
+import com.hanghae.knowledgesharing.user.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

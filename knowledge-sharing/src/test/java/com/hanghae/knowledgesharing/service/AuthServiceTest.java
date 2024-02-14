@@ -1,16 +1,16 @@
 package com.hanghae.knowledgesharing.service;
 
-import com.hanghae.knowledgesharing.dto.request.auth.IdCheckRequestDto;
-import com.hanghae.knowledgesharing.dto.request.auth.SignUpRequestDto;
-import com.hanghae.knowledgesharing.dto.response.auth.IdCheckResponseDto;
-import com.hanghae.knowledgesharing.dto.response.auth.SignUpResponseDto;
-import com.hanghae.knowledgesharing.entity.Certification;
-import com.hanghae.knowledgesharing.entity.User;
-import com.hanghae.knowledgesharing.provider.EmailProvider;
-import com.hanghae.knowledgesharing.provider.JwtProvider;
-import com.hanghae.knowledgesharing.repository.CertificationRepository;
-import com.hanghae.knowledgesharing.repository.UserRepository;
-import com.hanghae.knowledgesharing.service.impl.AuthServiceImpl;
+import com.hanghae.knowledgesharing.auth.dto.request.IdCheckRequestDto;
+import com.hanghae.knowledgesharing.auth.dto.request.SignUpRequestDto;
+import com.hanghae.knowledgesharing.auth.dto.response.auth.IdCheckResponseDto;
+import com.hanghae.knowledgesharing.auth.dto.response.auth.SignUpResponseDto;
+import com.hanghae.knowledgesharing.common.entity.Certification;
+import com.hanghae.knowledgesharing.common.entity.User;
+import com.hanghae.knowledgesharing.common.util.email.EmailProvider;
+import com.hanghae.knowledgesharing.common.jwt.provider.JwtProvider;
+import com.hanghae.knowledgesharing.auth.repository.CertificationRepository;
+import com.hanghae.knowledgesharing.user.repository.UserRepository;
+import com.hanghae.knowledgesharing.auth.service.impl.AuthServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

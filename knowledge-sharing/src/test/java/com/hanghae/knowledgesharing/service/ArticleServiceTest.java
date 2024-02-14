@@ -1,13 +1,13 @@
 package com.hanghae.knowledgesharing.service;
 
-import com.hanghae.knowledgesharing.dto.request.article.PostArticleRequestDto;
-import com.hanghae.knowledgesharing.entity.Article;
-import com.hanghae.knowledgesharing.entity.User;
-import com.hanghae.knowledgesharing.repository.ArticleRepository;
-import com.hanghae.knowledgesharing.repository.HashTagRepository;
-import com.hanghae.knowledgesharing.repository.UserRepository;
-import com.hanghae.knowledgesharing.service.impl.ArticleServiceImpl;
-import com.hanghae.knowledgesharing.service.impl.UserServiceImpl;
+import com.hanghae.knowledgesharing.article.dto.request.article.PostArticleRequestDto;
+import com.hanghae.knowledgesharing.common.entity.Article;
+import com.hanghae.knowledgesharing.common.entity.User;
+import com.hanghae.knowledgesharing.article.repository.ArticleRepository;
+import com.hanghae.knowledgesharing.hashtag.repository.HashTagRepository;
+import com.hanghae.knowledgesharing.user.repository.UserRepository;
+import com.hanghae.knowledgesharing.article.service.impl.ArticleServiceImpl;
+import com.hanghae.knowledgesharing.user.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
