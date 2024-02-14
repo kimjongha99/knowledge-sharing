@@ -1,13 +1,16 @@
 package com.hanghae.knowledgesharing.follow.serivce.impl;
 
-import com.hanghae.knowledgesharing.follow.dto.response.follow.CheckFollowResponseDto;
 import com.hanghae.knowledgesharing.common.entity.Follow;
 import com.hanghae.knowledgesharing.common.entity.User;
 import com.hanghae.knowledgesharing.common.enums.CheckFollowEnum;
+import com.hanghae.knowledgesharing.follow.dto.response.CheckFollowResponseDto;
+import com.hanghae.knowledgesharing.follow.dto.response.FollowingUserResponseDto;
 import com.hanghae.knowledgesharing.follow.repository.FollowRepository;
-import com.hanghae.knowledgesharing.user.repository.UserRepository;
 import com.hanghae.knowledgesharing.follow.serivce.FollowService;
+import com.hanghae.knowledgesharing.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +52,25 @@ public class FollowServiceImpl implements FollowService {
             return CheckFollowResponseDto.databaseError();
         }
 
-
-
     }
+
+
+    @Override
+    public Page<FollowingUserResponseDto> getFollowingUsers(String userId, Pageable pageable) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (!userOptional.isPresent()) {
+            return Page.empty(pageable);
+        }
+        Page<Follow> followsPage = followRepository.findAllByFromUser(userOptional.get(), pageable);
+        return followsPage.map(follow -> new FollowingUserResponseDto(
+                follow.getToUser().getUserId(),
+                follow.getToUser().getEmail()
+        ));
+    }
+
+    @Override
+    public Page<FollowingUserResponseDto> getFollowers(String userId, Pageable pageable) {
+        return null;
+    }
+
 }

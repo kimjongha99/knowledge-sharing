@@ -28,4 +28,8 @@ public class Follow extends BaseTimeEntity {
         this.toUser = toUser;
         this.fromUser = fromUser;
     }
+
+    public User getToUser() {
+        return toUser;
+    }
 }

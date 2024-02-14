@@ -1,4 +1,4 @@
-package com.hanghae.knowledgesharing.follow.dto.response.follow;
+package com.hanghae.knowledgesharing.follow.dto.response;
 
 
 import com.hanghae.knowledgesharing.common.exception.ResponseCode;
