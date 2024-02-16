@@ -1,17 +1,18 @@
 package com.hanghae.knowledgesharing.article.controller;
 
 
-import com.hanghae.knowledgesharing.article.dto.request.article.PatchArticleRequestDto;
-import com.hanghae.knowledgesharing.article.dto.request.article.PostArticleRequestDto;
-import com.hanghae.knowledgesharing.article.dto.request.article.UpdateFavoriteCountRequestDto;
-import com.hanghae.knowledgesharing.article.dto.response.article.*;
-import com.hanghae.knowledgesharing.article.service.ArticleService;
+import com.hanghae.knowledgesharing.article.dto.request.PatchArticleRequestDto;
+import com.hanghae.knowledgesharing.article.dto.request.PostArticleRequestDto;
+import com.hanghae.knowledgesharing.article.dto.request.UpdateFavoriteCountRequestDto;
+import com.hanghae.knowledgesharing.article.dto.response.*;
+import com.hanghae.knowledgesharing.article.sevice.ArticleService;
+import com.hanghae.knowledgesharing.common.dto.ResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,69 +23,62 @@ public class ArticleController {
 
     private final ArticleService articleService;
 
-    @PostMapping("")
-    public ResponseEntity<? super PostArticleResponseDto> postArticle(@RequestBody PostArticleRequestDto requestBody,
-                                                                      @AuthenticationPrincipal String userId
-    ) {
-        ResponseEntity<? super PostArticleResponseDto> response = articleService.postArticle(requestBody, userId);
-        return response;
-    }
 
+    @PostMapping("")
+    public ResponseDto<String>postArticle(@RequestBody PostArticleRequestDto requestBody,
+                                          @AuthenticationPrincipal String userId
+    ) {
+        String response = articleService.postArticle(requestBody, userId);
+        return ResponseDto.success(response);
+    }
 
     @GetMapping("/{articleId}")
-    public ResponseEntity<? super GetArticleResponseDto> getArticle(
-            @PathVariable("articleId") Long articleId
-    ) {
-        ResponseEntity<? super GetArticleResponseDto> response = articleService.getArticle(articleId);
-
-        return response;
+    public ResponseDto<GetArticleResponseDto> getArticle(@PathVariable("articleId") Long articleId) {
+        GetArticleResponseDto responseDto = articleService.getArticle(articleId);
+        return ResponseDto.success(responseDto); // 성공 응답을 반환합니다.
     }
+
 
     @PatchMapping("/{articleId}")
-    public ResponseEntity<? super PatchArticleResponseDto> patchArticle(
+    public ResponseDto<PatchArticleResponseDto> patchArticle(
             @PathVariable("articleId") Long articleId,
             @RequestBody @Valid PatchArticleRequestDto requestDto,
-            @AuthenticationPrincipal String userId
-    ) {
-        ResponseEntity<? super PatchArticleResponseDto> response = articleService.patchArticle(requestDto, articleId, userId);
-        return response;
+            @AuthenticationPrincipal String userId) {
+        PatchArticleResponseDto responseDto = articleService.patchArticle(requestDto, articleId, userId);
+        return ResponseDto.success(responseDto); // 수정 성공 메시지 포함
     }
-
 
     @DeleteMapping("/{articleId}")
-    public ResponseEntity<? super DeleteArticleResponseDto> deleteArticle(
+    public ResponseDto<DeleteArticleResponseDto> deleteArticle(
             @PathVariable("articleId") Long articleId,
-            @AuthenticationPrincipal String email
-    ) {
-        ResponseEntity<? super DeleteArticleResponseDto> response = articleService.deleteArticle(articleId, email);
-        return response;
+            @AuthenticationPrincipal String userId) {
+        DeleteArticleResponseDto responseDto = articleService.deleteArticle(articleId, userId);
+        return ResponseDto.success(responseDto);
     }
+
 
     @GetMapping("")
-    public ResponseEntity<? super ArticleListResponseDto> getArticleList(
+    public ResponseDto<Page<ArticleListResponseDto.ArticleDetailDto>> getArticleList(
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        return articleService.getArticleList(pageable);
+        Page<ArticleListResponseDto.ArticleDetailDto> articles = articleService.getArticleList(pageable);
+        return ResponseDto.success(articles);
     }
-
 
     @GetMapping("/{articleId}/increase-view")
-    public  ResponseEntity<ArticleViewCountResponseDto>  increaseViewCount(
+    public ResponseDto<ArticleViewCountResponseDto> increaseViewCount(
             @PathVariable("articleId") Long articleId,
-            @AuthenticationPrincipal String userId
-    ) {
-        ResponseEntity<ArticleViewCountResponseDto> response = articleService.incrementArticleViewCount( userId, articleId);
-        return  response;
+            @AuthenticationPrincipal String userId) {
+        ArticleViewCountResponseDto responseDto = articleService.incrementArticleViewCount(userId, articleId);
+        return ResponseDto.success(responseDto);
     }
+
 
     @PutMapping("/{articleId}/favorite")
-    public ResponseEntity<UpdateFavoriteCountResponseDto>  updateFavoriteCount(
+    public ResponseDto<UpdateFavoriteCountResponseDto> updateFavoriteCount(
             @PathVariable("articleId") Long articleId,
             @RequestBody UpdateFavoriteCountRequestDto requestDto,
-            @AuthenticationPrincipal String userId
-            ){
-        ResponseEntity<UpdateFavoriteCountResponseDto> response = articleService.updateFavoriteCount(articleId, requestDto);
-        return response;
+            @AuthenticationPrincipal String userId) {
+        UpdateFavoriteCountResponseDto responseDto = articleService.updateFavoriteCount(articleId, requestDto);
+        return ResponseDto.success(responseDto);
     }
-
-
 }

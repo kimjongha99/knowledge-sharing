@@ -1,8 +1,7 @@
 package com.hanghae.knowledgesharing.common.entity;
 
-
-import com.hanghae.knowledgesharing.article.dto.request.article.PatchArticleRequestDto;
-import com.hanghae.knowledgesharing.article.dto.request.article.PostArticleRequestDto;
+import com.hanghae.knowledgesharing.article.dto.request.PatchArticleRequestDto;
+import com.hanghae.knowledgesharing.article.dto.request.PostArticleRequestDto;
 import com.hanghae.knowledgesharing.common.enums.HashTagTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -52,11 +51,11 @@ public class Article extends BaseTimeEntity {
 
     public Article(PostArticleRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
-        this.content= requestDto.getContent();
+        this.content = requestDto.getContent();
         this.user = user;
-        this.tagType= HashTagTypeEnum.ARTICLE_TAG;
-        this.favoriteCount =0;
-        this.viewCount=0;
+        this.tagType = HashTagTypeEnum.ARTICLE_TAG;
+        this.favoriteCount = 0;
+        this.viewCount = 0;
     }
 
 
@@ -86,7 +85,6 @@ public class Article extends BaseTimeEntity {
     }
 
     public void decreaseFavoriteCount(int currentCount) {
-        this.favoriteCount= currentCount-1;
+        this.favoriteCount = currentCount - 1;
     }
-
 }

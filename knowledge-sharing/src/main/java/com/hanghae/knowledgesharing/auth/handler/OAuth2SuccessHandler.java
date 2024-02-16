@@ -1,7 +1,7 @@
 package com.hanghae.knowledgesharing.auth.handler;
 
 import com.hanghae.knowledgesharing.common.entity.User;
-import com.hanghae.knowledgesharing.common.jwt.provider.JwtProvider;
+import com.hanghae.knowledgesharing.common.jwt.JwtProvider;
 import com.hanghae.knowledgesharing.user.repository.UserRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;

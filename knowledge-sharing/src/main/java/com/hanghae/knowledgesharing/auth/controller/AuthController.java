@@ -1,13 +1,13 @@
 package com.hanghae.knowledgesharing.auth.controller;
 
 
-import com.hanghae.knowledgesharing.auth.dto.request.*;
+import com.hanghae.knowledgesharing.auth.dto.request.auth.*;
+import com.hanghae.knowledgesharing.auth.dto.response.auth.RefreshResponseDto;
+import com.hanghae.knowledgesharing.auth.dto.response.auth.SignInResponseDto;
 import com.hanghae.knowledgesharing.auth.service.AuthService;
-import com.hanghae.knowledgesharing.auth.dto.response.auth.*;
-import jakarta.servlet.http.HttpServletResponse;
+import com.hanghae.knowledgesharing.common.dto.ResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,60 +20,62 @@ public class AuthController {
 
     private final AuthService authService;
 
-
+//    @Operation(summary = "아이디 중복검사 ", description = "아이디를 중복검사할수있습니다.")
     @PostMapping("/id-check")
-    public ResponseEntity<? super IdCheckResponseDto> idCheck(
+    public ResponseDto<String> idCheck(
             @RequestBody @Valid IdCheckRequestDto requestBody
     ) {
-        ResponseEntity<? super IdCheckResponseDto> response = authService.idCheck(requestBody);
-        return response;
+         String result =  authService.idChecking(requestBody);
+         return ResponseDto.success(result);
     }
 
 
+//    @Operation(summary = "이메일 인증 ", description = "이메일 인증 번호 전송입니다..")
+       @PostMapping("/email-certification")
+       public ResponseDto<String> emailCertification(
+               @RequestBody @Valid EmailCertificationRequestDto requestBody
+       ){
+           String result =  authService.emailCertification(requestBody);
 
-    @PostMapping("/email-certification")
-    public ResponseEntity<? super EmailCertificationResponseDto> emailCertification(
-            @RequestBody @Valid EmailCertificationRequestDto requestBody
-    ) {
-        ResponseEntity<? super EmailCertificationResponseDto> response = authService.emailCertification(requestBody);
-        return response;
-    }
-
+           return ResponseDto.success(result);
+       }
 
 
     @PostMapping("/check-certification")
-    public ResponseEntity<? super CheckCertificationResponseDto> checkCertification(
+    public ResponseDto<String> checkCertification(
             @RequestBody @Valid CheckCertificationRequestDto requestBody
     ) {
-        ResponseEntity<? super CheckCertificationResponseDto> response = authService.emailCertificationCheck(requestBody);
-        return response;
+        String  result = authService.emailCertificationCheck(requestBody);
+        return ResponseDto.success(result);
     }
+
 
     @PostMapping("/sign-up")
-    public ResponseEntity<? super SignUpResponseDto> signUp (
-            @RequestBody @Valid SignUpRequestDto requestBody
-    ) {
-        ResponseEntity<? super SignUpResponseDto> response = authService.signUp(requestBody);
-        return response;
+    public ResponseDto<String> signUp(@RequestBody @Valid SignUpRequestDto requestBody) {
+        String  result= authService.signUp(requestBody);
+        return ResponseDto.success(result);
+
     }
 
+
+
+    // 로그인 요청을 처리합니다.
     @PostMapping("/sign-in")
-    public ResponseEntity<? super SignInResponseDto> signIn (
-            @RequestBody @Valid SignInRequestDto requestBody,
-            HttpServletResponse response
+    public ResponseDto<SignInResponseDto> signIn(@RequestBody @Valid SignInRequestDto requestBody) {
+        SignInResponseDto  result = authService.signIn(requestBody);
 
-    ) {
-        ResponseEntity<? super SignInResponseDto> result = authService.signIn(requestBody,response);
-        return result;
+        return ResponseDto.success(result);
     }
+
+
+
 
     @PostMapping("/refresh")
-    public  ResponseEntity<? super RefreshResponseDto> refreshAccessToken(
-            @RequestBody@Valid RefreshRequestDto requestBody,
-            HttpServletResponse response
+    public  ResponseDto<RefreshResponseDto> refreshAccessToken(
+            @RequestBody@Valid RefreshRequestDto requestBody
     ) {
-        ResponseEntity<? super RefreshResponseDto> result = authService.refreshAccessToken(requestBody , response);
-        return result;
+        RefreshResponseDto response = authService.refreshAccessToken(requestBody);
+        return ResponseDto.success(response);
     }
 
 }

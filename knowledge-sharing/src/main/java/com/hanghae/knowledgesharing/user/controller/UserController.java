@@ -1,13 +1,13 @@
 package com.hanghae.knowledgesharing.user.controller;
 
 
-import com.hanghae.knowledgesharing.user.dto.request.user.PatchPasswordRequestDto;
-import com.hanghae.knowledgesharing.user.dto.request.user.PatchProfileImageRequestDto;
-import com.hanghae.knowledgesharing.user.dto.response.user.GetSignInUserResponseDto;
-import com.hanghae.knowledgesharing.user.dto.response.user.GetUserResponseDto;
-import com.hanghae.knowledgesharing.user.dto.response.user.PatchPasswordResponseDto;
-import com.hanghae.knowledgesharing.user.dto.response.user.PatchProfileImageResponseDto;
-import com.hanghae.knowledgesharing.user.service.UserService;
+import com.hanghae.knowledgesharing.common.dto.ResponseDto;
+import com.hanghae.knowledgesharing.user.dto.request.PatchPasswordRequestDto;
+import com.hanghae.knowledgesharing.user.dto.request.PatchProfileImageRequestDto;
+import com.hanghae.knowledgesharing.user.dto.response.GetSignInUserResponseDto;
+import com.hanghae.knowledgesharing.user.dto.response.GetUserResponseDto;
+import com.hanghae.knowledgesharing.user.sevice.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +25,7 @@ public class UserController {
 
     private final UserService userService;
 
+
     @GetMapping("/health")
     public ResponseEntity<String> healthCheck() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -41,38 +42,43 @@ public class UserController {
         return ResponseEntity.ok("Authentication is required.");
     }
 
+
+    @Operation(summary = "사용자 정보를 조회", description = "현재 로그인한 사용자 정보를 조회 합니다.")
     @GetMapping("")
-    public ResponseEntity<? super GetSignInUserResponseDto> getSignInUser(
-            @AuthenticationPrincipal String userId
-    ) {
-        ResponseEntity<? super GetSignInUserResponseDto> response = userService.getSignInUser(userId);
-        return response;
+    public ResponseDto<GetSignInUserResponseDto> getSignInUser(@AuthenticationPrincipal String userId) {
+        ResponseDto<GetSignInUserResponseDto> result = userService.getSignInUser(userId);
+        return result;
     }
 
+
+    // 사용자 정보를 조회합니다.
+    @Operation(summary = "사용자 정보를 조회", description = "현재  사용자 정보를 조회 합니다.")
     @GetMapping("/{userId}")
-    public ResponseEntity<? super GetUserResponseDto> getUser(
-            @PathVariable("userId") String userId
-    ) {
-        ResponseEntity<? super GetUserResponseDto> response = userService.getUser(userId);
-        return response;
+    public ResponseDto<GetUserResponseDto> getUser(@PathVariable("userId") String userId) {
+
+        ResponseDto<GetUserResponseDto> result = userService.getUser(userId);
+        return result; // 서비스에서 처리한 응답을 반환합니다.
     }
 
-
+    @Operation(summary = "프로필이미지", description = "프사 변경 합니다..")
     @PatchMapping("/profile-image")
-    public ResponseEntity<? super PatchProfileImageResponseDto> patchProfileImage(
+    public ResponseDto<String> patchProfileImage(
             @RequestBody @Valid PatchProfileImageRequestDto requestBody,
-            @AuthenticationPrincipal String userId
-    ) {
-        ResponseEntity<? super PatchProfileImageResponseDto> response = userService.patchProfileImage(requestBody, userId);
-        return response;
+            @AuthenticationPrincipal String userId) {
+        ResponseDto<String>  result = userService.patchProfileImage(requestBody, userId);
+        return result;
     }
 
+    @Operation(summary = "비밀번호 변경", description = "비밀번호 변경 합니다..")
     @PatchMapping("/password")
-    public ResponseEntity<? super PatchPasswordResponseDto>  patchPassword(
+    public ResponseDto<String> patchPassword(
             @RequestBody @Valid PatchPasswordRequestDto requestBody,
             @AuthenticationPrincipal String userId
-    ){
-        ResponseEntity<? super PatchPasswordResponseDto> response = userService.patchPassword(requestBody,userId);
-        return response;
+    ) {
+        ResponseDto<String> result = userService.patchPassword(requestBody, userId);
+        return result;
+
     }
+
+
 }

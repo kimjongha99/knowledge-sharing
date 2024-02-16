@@ -19,7 +19,7 @@ public class RedisServiceImpl implements RedisService {
         String key = "viewCount:article_" + articleId;
         ValueOperations<String, Object> valueOps = redisTemplate.opsForValue();
         boolean alreadyViewed = redisTemplate.hasKey(key);
-        System.out.println(key + alreadyViewed);
+//        System.out.println(key + alreadyViewed);
         if (!alreadyViewed) {
             valueOps.set(key, "viewed", 1, TimeUnit.HOURS);
 

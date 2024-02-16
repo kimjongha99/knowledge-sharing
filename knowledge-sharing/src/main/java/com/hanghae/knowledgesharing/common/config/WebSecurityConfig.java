@@ -1,7 +1,7 @@
 package com.hanghae.knowledgesharing.common.config;
 
-import com.hanghae.knowledgesharing.common.jwt.filter.JwtAuthenticationFilter;
 import com.hanghae.knowledgesharing.auth.handler.OAuth2SuccessHandler;
+import com.hanghae.knowledgesharing.common.jwt.JwtAuthenticationFilter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -85,7 +85,6 @@ public class WebSecurityConfig {
         return source;
 
     }
-
     class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
         @Override

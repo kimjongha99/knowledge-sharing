@@ -1,6 +1,6 @@
 package com.hanghae.knowledgesharing.common.entity;
 
-import com.hanghae.knowledgesharing.auth.dto.request.SignUpRequestDto;
+import com.hanghae.knowledgesharing.auth.dto.request.auth.SignUpRequestDto;
 import com.hanghae.knowledgesharing.common.enums.UserRoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ public class User {
 
     @Id
     @Column(name = "user_id", columnDefinition = "VARCHAR(30)")
-    private  String userId;
+    private String userId;
     @Column(name = "password") //next-do: 길이설정
     private String password;
     @Column(name = "email", columnDefinition = "VARCHAR(255)")
@@ -49,9 +49,7 @@ public class User {
     private List<Follow> followers = new ArrayList<>();
 
 
-
-
-    public  User(SignUpRequestDto dto) {
+    public User(SignUpRequestDto dto) {
         this.userId = dto.getId();
         this.password = dto.getPassword();
         this.email = dto.getEmail();
@@ -64,9 +62,10 @@ public class User {
         this.password = "Passw0rd";
         this.email = email;
         this.type = type;
-        this.profileImageUrl=profileUrl;
-        this.role= UserRoleEnum.USER;
+        this.profileImageUrl = profileUrl;
+        this.role = UserRoleEnum.USER;
     }
+
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
@@ -76,7 +75,7 @@ public class User {
     }
 
     public void setPassword(String encode) {
-        this.password=encode;
+        this.password = encode;
     }
 
     public void setRole(UserRoleEnum roleEnum) {

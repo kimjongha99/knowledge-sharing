@@ -1,6 +1,5 @@
 package com.hanghae.knowledgesharing.comment.repository;
 
-
 import com.hanghae.knowledgesharing.common.entity.Comment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

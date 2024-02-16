@@ -1,7 +1,6 @@
 package com.hanghae.knowledgesharing.common.entity;
 
-
-import com.hanghae.knowledgesharing.comment.dto.request.comment.PostCommentRequestDto;
+import com.hanghae.knowledgesharing.comment.dto.request.PostCommentRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

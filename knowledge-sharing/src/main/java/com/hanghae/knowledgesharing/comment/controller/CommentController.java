@@ -1,20 +1,16 @@
 package com.hanghae.knowledgesharing.comment.controller;
 
-
-import com.hanghae.knowledgesharing.comment.dto.request.comment.PatchCommentRequestDto;
-import com.hanghae.knowledgesharing.comment.dto.request.comment.PostCommentRequestDto;
-import com.hanghae.knowledgesharing.comment.dto.response.comment.CommentListResponseDto;
-import com.hanghae.knowledgesharing.comment.dto.response.comment.DeleteCommentResponseDto;
-import com.hanghae.knowledgesharing.comment.dto.response.comment.PatchCommentResponseDto;
-import com.hanghae.knowledgesharing.comment.dto.response.comment.PostCommentResponseDto;
-import com.hanghae.knowledgesharing.comment.repository.CommentRepository;
-import com.hanghae.knowledgesharing.comment.serivce.CommentService;
+import com.hanghae.knowledgesharing.comment.dto.request.PostCommentRequestDto;
+import com.hanghae.knowledgesharing.comment.dto.response.CommentListResponseDto;
+import com.hanghae.knowledgesharing.comment.dto.response.PostCommentResponseDto;
+import com.hanghae.knowledgesharing.comment.sevice.CommentService;
+import com.hanghae.knowledgesharing.common.dto.ResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,46 +19,34 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/comments")
 public class CommentController {
 
+
+
     private final CommentService commentService;
-    private final CommentRepository commentRepository;
 
 
     @PostMapping("/{articleId}/comment")
-    public ResponseEntity<? super PostCommentResponseDto> postComment(
-            @RequestBody @Valid PostCommentRequestDto requestBody,
+    public ResponseDto<PostCommentResponseDto> postComment(
+            @RequestBody @Valid PostCommentRequestDto requestDto,
             @PathVariable("articleId") Long articleId,
             @AuthenticationPrincipal String userId
-    ) {
-        ResponseEntity<? super PostCommentResponseDto> response = commentService.postComment(requestBody, articleId, userId);
-        return response;
+    ){
+
+        PostCommentResponseDto  response =commentService.postComment(requestDto, articleId, userId);
+        return ResponseDto.success(response);
     }
 
 
     @GetMapping("/{articleId}/comment")
-    public ResponseEntity<? super CommentListResponseDto> getComments(
+    public ResponseDto<Page<CommentListResponseDto>> getComments(
             @PathVariable Long articleId,
-            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-
-        return commentService.getCommentList(articleId, pageable);
-    }
-
-    @PatchMapping("/{commentId}/comment")
-    public ResponseEntity<PatchCommentResponseDto> patchComment(
-            @PathVariable Long commentId,
-            @AuthenticationPrincipal String userId,
-            @RequestBody PatchCommentRequestDto requestDto
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
 
     ) {
-        ResponseEntity<PatchCommentResponseDto> response =commentService.patchComment(requestDto,commentId,userId);
-        return response;
+        Page<CommentListResponseDto> response = commentService.getCommentList(articleId, pageable);
+        return ResponseDto.success(response);
+
     }
 
-    @DeleteMapping("/{commentId}/comment")
-    public ResponseEntity<DeleteCommentResponseDto> deleteComment(
-            @PathVariable Long commentId,
-            @AuthenticationPrincipal String userId
-    ) {
-        ResponseEntity<DeleteCommentResponseDto> response = commentService.deleteComment(commentId, userId);
-        return  response;
-    }
+
+
 }

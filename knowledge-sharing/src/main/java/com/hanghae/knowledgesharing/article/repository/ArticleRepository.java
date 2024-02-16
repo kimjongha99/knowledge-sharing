@@ -1,5 +1,6 @@
 package com.hanghae.knowledgesharing.article.repository;
 
+
 import com.hanghae.knowledgesharing.common.entity.Article;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
