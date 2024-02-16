@@ -1,9 +1,9 @@
 package com.hanghae.knowledgesharing;
 
-import com.hanghae.knowledgesharing.dto.request.article.PostArticleRequestDto;
-import com.hanghae.knowledgesharing.dto.response.article.PostArticleResponseDto;
-import com.hanghae.knowledgesharing.repository.UserRepository;
-import com.hanghae.knowledgesharing.service.ArticleService;
+import com.hanghae.knowledgesharing.article.dto.request.article.PostArticleRequestDto;
+import com.hanghae.knowledgesharing.article.dto.response.article.PostArticleResponseDto;
+import com.hanghae.knowledgesharing.user.repository.UserRepository;
+import com.hanghae.knowledgesharing.article.service.ArticleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

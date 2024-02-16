@@ -1,8 +1,8 @@
 package com.hanghae.knowledgesharing;
 
-import com.hanghae.knowledgesharing.entity.User;
-import com.hanghae.knowledgesharing.repository.ArticleRepository;
-import com.hanghae.knowledgesharing.repository.UserRepository;
+import com.hanghae.knowledgesharing.common.entity.User;
+import com.hanghae.knowledgesharing.article.repository.ArticleRepository;
+import com.hanghae.knowledgesharing.user.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
