@@ -1,0 +1,43 @@
+
+
+
+.sign-in-content-sns-sign-in-box{
+    margin-top: 40px;
+}
+
+
+.sign-in-content-sns-sign-in-title{
+    display: flex;
+    justify-content: center;
+}
+
+.sign-in-content-sns-sign-in-button-box{
+    display: flex;
+    margin-top: 40px;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+.sign-in-content-sns-sign-in-button-box > * {
+    margin: 0 20px; /* 좌우 간격을 20px로 설정 */
+}
+.kakao-sign-in-button {
+    width: 56px;
+    height: 56px;
+
+    background-image: url(assets/images/kakao-sign-in.png);
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+
+    cursor: pointer;
+}
+
+.naver-sign-in-button {
+    width: 56px;
+    height: 56px;
+
+    background-image: url(assets/images/naver-sign-in.png);
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+
+    cursor: pointer;
+}

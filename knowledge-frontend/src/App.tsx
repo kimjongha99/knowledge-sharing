@@ -51,6 +51,8 @@ function App() {
             // 여기서 사용자에게 로그인이 필요하다는 메시지를 표시할 수도 있음
         }
     };
+
+
     const fetchUserData = async () => {
         if (cookies.accessToken) {
             try {

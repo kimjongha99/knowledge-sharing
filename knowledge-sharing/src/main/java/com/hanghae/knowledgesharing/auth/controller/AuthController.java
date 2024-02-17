@@ -73,10 +73,11 @@ public class AuthController {
 
     @PostMapping("/refresh")
     public  ResponseDto<RefreshResponseDto> refreshAccessToken(
-            @RequestBody@Valid RefreshRequestDto requestBody
+            @RequestBody@Valid RefreshRequestDto requestBody,
+            HttpServletResponse response
     ) {
-        RefreshResponseDto response = authService.refreshAccessToken(requestBody);
-        return ResponseDto.success(response);
+        RefreshResponseDto result = authService.refreshAccessToken(requestBody,response);
+        return ResponseDto.success(result);
     }
 
 }

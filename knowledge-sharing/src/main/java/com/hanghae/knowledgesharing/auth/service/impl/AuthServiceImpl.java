@@ -173,13 +173,13 @@ public class AuthServiceImpl implements AuthService {
 
 
 //    //1. RefreshRequestDto 에서 리프래쉬토큰을 가져온다.
-//    //2. jwtProvider에 리프래쉬 토큰 검증 메서드를 만들고 검증한다.
+//    //2. jwtProvider 리프래쉬 토큰 검증 메서드를 만들고 검증한다.
 //    //3. 리프래쉬토큰이 만료된 토큰이거나 잘못된토큰이면 refreshInExpired 이 에러를 날린다.
 //    //4. 그게아닌 다른이유면 REFRESH_TOKEN_INVALID 이 애러를 날린다
 //    //5. 둘다 검증후 아니면 새로운 액세스토큰을 발급한다.
 //    //6.     public static ResponseEntity<RefreshResponseDto> success(String newAccessToken) { 여기에 담아서 리턴한다.
     @Override@Transactional
-    public  RefreshResponseDto refreshAccessToken(RefreshRequestDto requestBody) {
+    public  RefreshResponseDto refreshAccessToken(RefreshRequestDto requestBody ,HttpServletResponse response) {
 
         // 새로고침 토큰의 유효성을 검사합니다.
         String refreshToken = requestBody.getRefreshToken();
@@ -187,19 +187,23 @@ public class AuthServiceImpl implements AuthService {
         if (userId == null) {
             throw new CustomException(ErrorCode.RefreshTokenExpire);
         }
-        ;
-
-
         // 새로 고침 토큰이 데이터베이스의 토큰과 일치하는지 확인합니다.
         User user = userRepository.findByUserId(userId);
         if (user == null || !user.getRefreshToken().equals(refreshToken)) //리프래쉬토큰이 일치하지않거나 유저정보가없으
         {
             throw new CustomException(ErrorCode.RefreshTokenFail);
         }
-
-
         // 새로운 액세스 토큰을 생성합니다.
         String newAccessToken = jwtProvider.create(userId);
+
+        Cookie accessTokenCookie = new Cookie("accessToken", newAccessToken);
+        accessTokenCookie.setHttpOnly(false);
+        accessTokenCookie.setSecure(false); // Note: Set to false if you are testing over HTTP in development environment, true for production
+        accessTokenCookie.setPath("/");
+        accessTokenCookie.setMaxAge(3600); // Expiration time should match the JWT expiration
+        response.addCookie(accessTokenCookie);
+
+
         RefreshResponseDto refreshResponse = new RefreshResponseDto(newAccessToken); // 생성자를 public으로 변경하거나, 팩토리 메소드/빌더 패턴 사용
 
         return refreshResponse;

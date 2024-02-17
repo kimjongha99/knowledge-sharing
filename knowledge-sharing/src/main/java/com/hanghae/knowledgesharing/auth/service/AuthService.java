@@ -30,7 +30,7 @@ public interface AuthService {
     //    //4. 그게아닌 다른이유면 REFRESH_TOKEN_INVALID 이 애러를 날린다
     //    //5. 둘다 검증후 아니면 새로운 액세스토큰을 발급한다.
     //    //6.     public static ResponseEntity<RefreshResponseDto> success(String newAccessToken) { 여기에 담아서 리턴한다.
-     RefreshResponseDto refreshAccessToken(RefreshRequestDto requestBody);
+     RefreshResponseDto refreshAccessToken(RefreshRequestDto requestBody,HttpServletResponse response);
 
 
 

@@ -22,7 +22,6 @@ const MainRightTwo = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
-        // Add other styles if necessary
     };
 
     console.log(user?.role);

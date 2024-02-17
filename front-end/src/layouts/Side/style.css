@@ -21,8 +21,8 @@
     padding-top: 10px;
     border-radius: 0 15px 15px 0 ;
     font-family: "Roboto", sans-serif;
-    /* Set the height of the sidebar based on your layout requirements */
-    height: calc(100vh - 64px - 500px); /* Adjust according to header and footer height */
+    height: 800px;
+
 }
 
 .main-menu ul{
