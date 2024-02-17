@@ -4,6 +4,7 @@ package com.hanghae.knowledgesharing.auth.service;
 import com.hanghae.knowledgesharing.auth.dto.request.auth.*;
 import com.hanghae.knowledgesharing.auth.dto.response.auth.RefreshResponseDto;
 import com.hanghae.knowledgesharing.auth.dto.response.auth.SignInResponseDto;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface AuthService {
@@ -19,7 +20,9 @@ public interface AuthService {
 
     String signUp(SignUpRequestDto dto);
 
-    SignInResponseDto signIn(SignInRequestDto dto);
+
+    @Transactional
+    SignInResponseDto signIn(SignInRequestDto dto, HttpServletResponse response);
 
     //    //1. RefreshRequestDto 에서 리프래쉬토큰을 가져온다.
     //    //2. jwtProvider에 리프래쉬 토큰 검증 메서드를 만들고 검증한다.

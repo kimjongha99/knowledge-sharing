@@ -26,19 +26,15 @@ function App() {
     useEffect(() => {
         const checkAuthStatus = async () => {
             if (cookies.accessToken) {
-                // 액세스 토큰이 있으면 유저 데이터를 가져오는 로직
                 fetchUserData();
             } else if (!cookies.accessToken && cookies.refreshToken) {
-                // 액세스 토큰은 없지만 새로 고침 토큰이 있으면 액세스 토큰 갱신 시도
                 refreshAccessToken();
-            } else {
-                // 첫 방문이거나 로그아웃 상태에서는 자동으로 로그인 페이지로 리다이렉트 하지 않음
-                // 필요하다면, 사용자에게 로그인 페이지로 이동할지 물어보는 모달을 여기서 표시할 수 있음
             }
+            // No else part needed for now as per the given logic
         };
 
         checkAuthStatus();
-    }, [cookies.accessToken, cookies.refreshToken, navigate]);
+    }, [cookies.accessToken, cookies.refreshToken]);
 
     const refreshAccessToken = async () => {
         try {
@@ -55,25 +51,28 @@ function App() {
             // 여기서 사용자에게 로그인이 필요하다는 메시지를 표시할 수도 있음
         }
     };
+    const fetchUserData = async () => {
+        if (cookies.accessToken) {
+            try {
+                const response = await axios.get('http://localhost:4040/api/v1/users', {
+                    headers: { Authorization: `Bearer ${cookies.accessToken}`},
+                    withCredentials: true,
+                });
 
-        const fetchUserData = async () => {
-            if (cookies.accessToken) { // Check if accessToken is available
-                try {
-                    const response = await axios.get('http://localhost:4040/api/v1/users', {
-                        headers: {
-                            Authorization: `Bearer ${cookies.accessToken}` // Include the token in the Authorization header
-                        },
-                        withCredentials: true // Ensures cookies are sent with the request
-                    });
-                    const { userId, email, profileImageUrl, role, type } = response.data;
-                    setUser({ userId, email, profileImageUrl, role, type }); // Update the user state in Zustand store
-                } catch (error) {
-                    console.error('Failed to fetch user data:', error);
-                    // Handle error appropriately
+                if (response.data.statusCode === 200) {
+                    const { userId, email, profileImageUrl, role, type } = response.data.data;
+                    setUser({ userId, email, profileImageUrl, role, type });
+                } else {
+                    // Handle non-success status codes appropriately
+                    console.error('Failed to fetch user data with non-success status code:', response.data);
                 }
+            } catch (error) {
+                console.error('Failed to fetch user data:', error);
+                removeCookie('accessToken');
+                // Optionally, redirect to sign-in page or show a message
             }
-        };
-
+        }
+    };
 
 
 

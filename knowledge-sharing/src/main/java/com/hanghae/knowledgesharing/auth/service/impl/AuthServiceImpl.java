@@ -14,6 +14,8 @@ import com.hanghae.knowledgesharing.common.jwt.JwtProvider;
 import com.hanghae.knowledgesharing.common.util.email.CertificationNumber;
 import com.hanghae.knowledgesharing.common.util.email.EmailProvider;
 import com.hanghae.knowledgesharing.user.repository.UserRepository;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,18 +36,13 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional(readOnly = true)//   : 데이터를 변경하지 않고, 사용자 ID의 존재 여부만 확인합니다.
     public String idChecking(IdCheckRequestDto requestDto) {
-        try {
+
             String userId = requestDto.getId();
             boolean isExistId = userRepository.existsByUserId(userId);
-            if (isExistId) {
+            if (isExistId)
                 throw new CustomException(ErrorCode.ExistId);
-            }
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new CustomException(ErrorCode.DatabaseError);
-        }
         return "중복된 아이디가 없습니다.";
 
 
@@ -130,7 +127,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override@Transactional
-    public SignInResponseDto signIn(SignInRequestDto dto) {
+    public SignInResponseDto signIn(SignInRequestDto dto , HttpServletResponse response) {
 
             String userId = dto.getId();
             User user = userRepository.findByUserId(userId);
@@ -148,7 +145,22 @@ public class AuthServiceImpl implements AuthService {
              String  refreshToken = jwtProvider.createRefreshToken(userId);
              int expirationTime = 3600;
 
-           user.setRefreshToken(refreshToken);
+        Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
+        accessTokenCookie.setHttpOnly(false);
+        accessTokenCookie.setSecure(false); // Note: Set to false if you are testing over HTTP in development environment, true for production
+        accessTokenCookie.setPath("/");
+        accessTokenCookie.setMaxAge(3600); // Expiration time should match the JWT expiration
+        response.addCookie(accessTokenCookie);
+
+        Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
+        refreshTokenCookie.setHttpOnly(false);
+        refreshTokenCookie.setSecure(false); // Note: Set to false if you are testing over HTTP in development environment, true for production
+        refreshTokenCookie.setPath("/");
+        refreshTokenCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days for refresh token
+        response.addCookie(refreshTokenCookie);
+
+
+        user.setRefreshToken(refreshToken);
              userRepository.save(user);
 
         SignInResponseDto responseDto = new SignInResponseDto(accessToken, refreshToken, expirationTime);

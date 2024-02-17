@@ -6,6 +6,7 @@ import com.hanghae.knowledgesharing.auth.dto.response.auth.RefreshResponseDto;
 import com.hanghae.knowledgesharing.auth.dto.response.auth.SignInResponseDto;
 import com.hanghae.knowledgesharing.auth.service.AuthService;
 import com.hanghae.knowledgesharing.common.dto.ResponseDto;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,8 +62,8 @@ public class AuthController {
 
     // 로그인 요청을 처리합니다.
     @PostMapping("/sign-in")
-    public ResponseDto<SignInResponseDto> signIn(@RequestBody @Valid SignInRequestDto requestBody) {
-        SignInResponseDto  result = authService.signIn(requestBody);
+    public ResponseDto<SignInResponseDto> signIn(@RequestBody @Valid SignInRequestDto requestBody, HttpServletResponse response) {
+        SignInResponseDto  result = authService.signIn(requestBody,response);
 
         return ResponseDto.success(result);
     }

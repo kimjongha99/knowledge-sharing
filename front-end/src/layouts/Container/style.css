@@ -1,0 +1,22 @@
+#wrap {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full height of the viewport */
+}
+
+#content {
+    display: flex;
+    flex: 1;
+}
+
+#wrap-main {
+    flex-grow: 1; /* Ensures it takes up the rest of the space */
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+#sidebar {
+    width: 250px; /* Adjust the width as necessary */
+    height: calc(100vh - 64px - 500px); /* Adjust 50px and 500px to the actual height of your header and footer */
+}
+

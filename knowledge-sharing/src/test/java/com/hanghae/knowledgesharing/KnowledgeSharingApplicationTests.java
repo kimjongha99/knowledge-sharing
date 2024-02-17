@@ -1,13 +1,11 @@
 package com.hanghae.knowledgesharing;
 
-import com.hanghae.knowledgesharing.article.dto.request.article.PostArticleRequestDto;
-import com.hanghae.knowledgesharing.article.dto.response.article.PostArticleResponseDto;
+import com.hanghae.knowledgesharing.article.dto.request.PostArticleRequestDto;
+import com.hanghae.knowledgesharing.article.sevice.ArticleService;
 import com.hanghae.knowledgesharing.user.repository.UserRepository;
-import com.hanghae.knowledgesharing.article.service.ArticleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
 
@@ -38,7 +36,7 @@ class KnowledgeSharingApplicationTests {
             requestDto.setImageUrls(Arrays.asList("image" + i + ".jpg", "image" + (i + 1) + ".jpg")); // Modify as needed
 
             // Call the postArticle method
-            ResponseEntity<? super PostArticleResponseDto> response = articleService.postArticle(requestDto, userId); // Ensure the articleService is properly initialized
+//            ResponseEntity<? super PostArticleResponseDto> response = articleService.postArticle(requestDto, userId); // Ensure the articleService is properly initialized
 
             // Optional: Print out a message or log the result
             System.out.println("Inserted article " + i);

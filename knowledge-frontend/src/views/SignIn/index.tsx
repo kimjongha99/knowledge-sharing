@@ -28,9 +28,6 @@ function SignIn() {
     const [message, setMessage] = useState<string>('');
     const navigate = useNavigate();
 
-
-
-
     const onIdChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setId(event.target.value);
         setMessage('');
@@ -45,18 +42,12 @@ function SignIn() {
         navigate('/auth/sign-up');
     };
 
-    const processSignInResponse = async (responseBody: ResponseBody<SignInResponseDto>) => {
-        if (!responseBody) return;
-        const { code } = responseBody;
-
-        if (code === ResponseCode.VALIDATION_FAIL) {
-            alert('아이디와 비밀번호를 다시 입력하세요.');
-        } else if (code === ResponseCode.SIGN_IN_FAIL) {
-            setMessage('로그인 정보가 일치하지 않습니다.');
-        } else if (code === ResponseCode.DATABASE_ERROR) {
-            alert('Database error.');
-        } else if (code === ResponseCode.SUCCESS) {
+    const processSignInResponse = (response: { statusCode: number; errorMessage: any; }) => {
+        if (response.statusCode === 200) {
+            // Assuming you would handle token storage here
             navigate(MAIN_PATH, { replace: true });
+        } else {
+            setMessage(response.errorMessage || 'An unexpected error occurred.');
         }
     };
 
@@ -66,22 +57,15 @@ function SignIn() {
             return;
         }
 
-        const requestBody: SignInRequestDto = { id, password };
-
         try {
-            const signInResponse = await axios.post('http://localhost:4040/api/v1/auth/sign-in', requestBody,
-
-            {
+            const response = await axios.post('http://localhost:4040/api/v1/auth/sign-in', { id, password }, {
                 withCredentials: true // Ensures cookies are sent with the request
-            }
-            );
-            const responseBody: ResponseBody<SignInResponseDto> = signInResponse.data;
-            await processSignInResponse(responseBody);
+            });
+
+            processSignInResponse(response.data);
         } catch (error) {
-            const axiosError = error as AxiosError;
-            console.error('SignIn failed:', axiosError);
-            if (axiosError.response && axiosError.response.status === 401) {
-                setMessage('Invalid login credentials.');
+            if (axios.isAxiosError(error) && error.response) {
+                setMessage(error.response.data.errorMessage || 'An error occurred during the sign-in process.');
             } else {
                 setMessage('An error occurred during the sign-in process.');
             }
