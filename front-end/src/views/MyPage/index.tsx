@@ -1,4 +1,6 @@
 import './style.css';
+import Profile from "./Profile";
+import Follow from "./Follow";
 
 export default function MyPage(){
 
@@ -10,12 +12,12 @@ export default function MyPage(){
                 <div id="main-left">
                     <section id="main-left-one"></section>
                     <section id="main-left-two"></section>
-                    <section id="main-left-three"></section>
-                </div>
+               </div>
                 <div id="main-right">
-                    <section id="main-right-one"></section>
-                    <section id="main-right-two"></section>
-                    <section id="main-right-three"></section>
+                    <Profile/>
+                    {/*<section id="main-right-two"></section>*/}
+                    {/*<section id="main-right-three"></section>*/}
+                    <Follow/>
                     <section id="main-right-four"></section>
                 </div>
             </main>

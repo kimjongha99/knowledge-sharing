@@ -1,6 +1,7 @@
 #Main {
-    margin-top: 51px;
+    margin-top: 25px;
     display: flex;
+    justify-content: center;
 }
 
 section[id^=main] {
@@ -10,50 +11,38 @@ section[id^=main] {
 }
 
 #main-left {
-    width: 830px;
+    width: 440px;
     margin-right: 30px;
 }
+
 
 #main-right {
     width: 420px;
 }
 
 
-
-
-
-
 #main-left-one {
     background: gray;
-    height: 130px;
+    height: 360px;
 }
 
 #main-left-two {
-    height: 426px;
-    background: gray;
-}
-
-#main-left-three {
-    height: 560px;
+    height: 360px;
     background: gray;
 }
 
 
 
-#main-right-one {
-    height: 164px;
-    background: gray;
-}
 
-#main-right-two {
-    height: 240px;
-    background: gray;
-}
+/*#main-right-two {*/
+/*    height: 240px;*/
+/*    background: gray;*/
+/*}*/
 
-#main-right-three {
-    height: 236px;
-    background: gray;
-}
+/*#main-right-three {*/
+/*    height: 236px;*/
+/*    background: gray;*/
+/*}*/
 
 #main-right-four {
     height: 236px;

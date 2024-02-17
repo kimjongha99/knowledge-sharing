@@ -1,0 +1,6 @@
+#main-right-three {
+    height: 236px;
+    background: gray;
+    overflow-y: auto; /* Will only add a scrollbar if necessary */
+
+}

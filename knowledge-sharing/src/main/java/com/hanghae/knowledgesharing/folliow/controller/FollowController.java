@@ -9,7 +9,6 @@ import com.hanghae.knowledgesharing.folliow.sevice.FollowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -39,7 +38,7 @@ public class FollowController {
     public ResponseDto<Page<FollowingUserResponseDto>> getFollowingUsers(
             @PathVariable String userId, Pageable pageable
     ) {
-        Page<FollowingUserResponseDto> followingUsersPage = followService.getFollowingUsers(userId, pageable);
+        Page<FollowingUserResponseDto>  followingUsersPage = followService.getFollowingUsers(userId, pageable);
         return ResponseDto.success(followingUsersPage);
     }
 
