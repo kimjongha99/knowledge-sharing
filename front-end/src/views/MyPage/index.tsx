@@ -1,6 +1,7 @@
 import './style.css';
 import Profile from "./Profile";
 import Follow from "./Follow";
+import ToFollow from "./ToFollow";
 
 export default function MyPage(){
 
@@ -17,8 +18,10 @@ export default function MyPage(){
                     <Profile/>
                     {/*<section id="main-right-two"></section>*/}
                     {/*<section id="main-right-three"></section>*/}
+                    {/*<section id="main-right-four"></section>*/}
+
                     <Follow/>
-                    <section id="main-right-four"></section>
+                    <ToFollow/>
                 </div>
             </main>
         </div>

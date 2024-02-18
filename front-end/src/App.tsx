@@ -9,14 +9,15 @@ import {useUserStore} from "./stores/userStore";
 import {useCookies} from "react-cookie";
 import axios from "axios";
 import MyPage from "./views/MyPage";
+import Articles from "./views/Articles";
 
 function App() {
     const { user, setUser } = useUserStore();
     const [cookies, setCookie, removeCookie] = useCookies(['accessToken', 'refreshToken']);
     const navigate = useNavigate();
 
-
-
+  // 유저 정보 가져오고 리프레쉬 토큰 발급해주는 로직//
+   //region
     useEffect(() => {
         const checkAuthStatus = async () => {
             if (cookies.accessToken) {
@@ -62,6 +63,9 @@ function App() {
             }
         }
     };
+
+    //endregion
+
     return (
       <Routes>
           <Route path="/" element={<Container />}>
@@ -71,7 +75,10 @@ function App() {
               <Route path='sign-in' element={<SignIn/>} />
           </Route>
           <Route path='/user/:userId' element={<MyPage/>} />
-
+           <Route path="/articles" element={<Articles/>}>
+               <Route path='sign-up' element={<SignUp/>} />
+               <Route path='sign-in' element={<SignIn/>} />
+           </Route>
 
       </Route>
       </Routes>

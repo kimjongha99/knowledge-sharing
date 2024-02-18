@@ -22,6 +22,9 @@ export default function Side() {
         if (index === 1 && isLoggedIn) {
             navigate(`/user/${user?.userId}`);
         }
+        if (index === 2) {
+            navigate(`/articles`);
+        }
 
     };
 
@@ -59,7 +62,7 @@ export default function Side() {
                     <li className={`nav-item ${activeIndex === 2 ? 'active' : ''}`} onClick={() => handleItemClick(2)}>
                         <a>
                             <i className="fa fa-calendar-check nav-icon"></i>
-                            <span className="nav-text">Schedule</span>
+                            <span className="nav-text" id='knowledge-article'> Knowledge Article</span>
                         </a>
                     </li>
                     <li className={`nav-item ${activeIndex === 3 ? 'active' : ''}`} onClick={() => handleItemClick(3)}>

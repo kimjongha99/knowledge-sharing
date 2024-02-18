@@ -9,7 +9,8 @@ interface FollowingUser {
     email: string;
 }
 
-export default function Follow() {
+export default function ToFollow() {
+
     const [cookies] = useCookies(['accessToken']);
     const { user } = useUserStore();
     const [followingList, setFollowingList] = useState<FollowingUser[]>([]);
@@ -23,7 +24,7 @@ export default function Follow() {
             if (!user?.userId) return;
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:4040/api/v1/follows/${user.userId}/following?page=${currentPage}&size=3`, {
+                const response = await axios.get(`http://localhost:4040/api/v1/follows/${user.userId}/followers?page=${currentPage}&size=3`, {
                     headers: {
                         Authorization: `Bearer ${cookies.accessToken}`,
                         'Accept': '*/*',
@@ -73,7 +74,7 @@ export default function Follow() {
 
     return (
         <section id="main-right-three">
-            <h2 className="flex justify-center">나를 팔로잉하는 사람들</h2>
+            <h2 className="flex justify-center">내가 팔로잉하는 사람들</h2>
             {followingList.length > 0 ? (
                 <ul className="following-list">
                     {followingList.map((user) => (
