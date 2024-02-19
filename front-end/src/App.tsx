@@ -9,7 +9,10 @@ import {useUserStore} from "./stores/userStore";
 import {useCookies} from "react-cookie";
 import axios from "axios";
 import MyPage from "./views/MyPage";
-import Articles from "./views/Articles";
+import Articles from "./views/Article/Articles";
+import ArticleDetail from "./views/Article/ArticleDetail";
+import Test from "./views/Test";
+import ArticlePost from "./views/Article/ArticlePost";
 
 function App() {
     const { user, setUser } = useUserStore();
@@ -75,11 +78,13 @@ function App() {
               <Route path='sign-in' element={<SignIn/>} />
           </Route>
           <Route path='/user/:userId' element={<MyPage/>} />
-           <Route path="/articles" element={<Articles/>}>
-               <Route path='sign-up' element={<SignUp/>} />
-               <Route path='sign-in' element={<SignIn/>} />
-           </Route>
 
+
+          <Route path="/articles" element={<Articles />}/>
+          <Route path="/articles/:articleId" element={<ArticleDetail />} />
+          <Route path='articles/post' element={<ArticlePost/>}/>
+
+           <Route path='/test' element={<Test/>}/>
       </Route>
       </Routes>
 

@@ -9,6 +9,8 @@ import com.hanghae.knowledgesharing.folliow.sevice.FollowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,7 +38,8 @@ public class FollowController {
 
     @GetMapping("/{userId}/following")
     public ResponseDto<Page<FollowingUserResponseDto>> getFollowingUsers(
-            @PathVariable String userId, Pageable pageable
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable,
+            @PathVariable String userId
     ) {
         Page<FollowingUserResponseDto>  followingUsersPage = followService.getFollowingUsers(userId, pageable);
         return ResponseDto.success(followingUsersPage);
@@ -47,7 +50,8 @@ public class FollowController {
      */
  @GetMapping("/{userId}/followers")
  public ResponseDto<Page<FollowerUserResponseDto>> getFollowers(
-         @PathVariable String userId, Pageable pageable) {
+         @PathVariable String userId,
+         @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
      Page<FollowerUserResponseDto> followersPage = followService.getFollowers(userId, pageable);
      return ResponseDto.success(followersPage);
  }

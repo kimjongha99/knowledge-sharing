@@ -74,7 +74,7 @@ export default function ToFollow() {
 
     return (
         <section id="main-right-three">
-            <h2 className="flex justify-center">내가 팔로잉하는 사람들</h2>
+            <h2 className="flex justify-center">나를 팔로잉하는 사람들</h2>
             {followingList.length > 0 ? (
                 <ul className="following-list">
                     {followingList.map((user) => (

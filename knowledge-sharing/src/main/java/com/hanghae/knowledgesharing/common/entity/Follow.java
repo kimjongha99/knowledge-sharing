@@ -32,4 +32,12 @@ public class Follow extends BaseTimeEntity {
     public User getToUser() {
         return toUser;
     }
+
+    public void setFromUser(User follower) {
+        this.fromUser= follower;
+    }
+
+    public void setToUser(User following) {
+        this.toUser= following;
+    }
 }

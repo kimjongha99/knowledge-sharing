@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ public class FollowServiceImpl implements FollowService {
     private  final FollowRepository followRepository;
 
     @Override
+    @Transactional
     public CheckFollowResponseDto checkFollow(String followId, String followingId) {
         // 팔로워 유저와 팔로잉 유저의 존재 확인 및 객체 가져오기
         User follower = userRepository.findByUserId(followId);
@@ -37,19 +39,21 @@ public class FollowServiceImpl implements FollowService {
             throw new CustomException(ErrorCode.UserNotFound);
         }
 
-        // 팔로우 관계 확인
-        Optional<Follow> followRelation = followRepository.findByFromUserAndToUser(follower, following);
-
-        if (followRelation.isPresent()) {
-            // 이미 팔로우 상태라면, 언팔로우 처리
-            followRepository.delete(followRelation.get());
-            return new CheckFollowResponseDto("Unfollowed successfully", CheckFollowEnum.unFollowing);
+        // 기존 팔로우 관계를 확인합니다.
+        boolean exists = followRepository.existsByFromUserAndToUser(follower, following);
+        if (exists) {
+            // If an existing follow relationship is found, remove it to unfollow
+            followRepository.deleteByFromUserAndToUser(follower, following);
+            return new CheckFollowResponseDto("Successfully unfollowed", CheckFollowEnum.unFollowing);
         } else {
-            // 팔로우 관계가 없다면, 팔로우 처리
-            Follow newFollow = new Follow(follower, following);
+            // If no follow relationship is found, create a new one to follow
+            Follow newFollow = new Follow();
+            newFollow.setFromUser(follower);
+            newFollow.setToUser(following);
             followRepository.save(newFollow);
-            return new CheckFollowResponseDto("Followed successfully", CheckFollowEnum.following);
-        }    }
+            return new CheckFollowResponseDto("Successfully followed", CheckFollowEnum.following);
+        }
+    }
 
     @Override
     public Page<FollowingUserResponseDto> getFollowingUsers(String userId, Pageable pageable) {

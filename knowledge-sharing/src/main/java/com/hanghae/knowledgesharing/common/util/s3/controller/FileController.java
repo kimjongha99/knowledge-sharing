@@ -2,10 +2,12 @@ package com.hanghae.knowledgesharing.common.util.s3.controller;
 
 import com.hanghae.knowledgesharing.common.util.s3.service.FileService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -21,12 +23,9 @@ public class FileController {
         String fileUrl = fileService.uploadFile(file);
         return ResponseEntity.ok(fileUrl);
     }
-
-    @GetMapping("/{filename}")
-    public ResponseEntity<InputStreamResource> viewImage(@PathVariable String filename) {
-        InputStreamResource resource = fileService.downloadFile(filename);
-        return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(resource);
+    @PostMapping("/upload/article")
+    public ResponseEntity<String> uploadFileArticle(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal String userId) {
+        String fileUrl = fileService.uploadFileArticles(file , userId);
+        return ResponseEntity.ok(fileUrl);
     }
 }

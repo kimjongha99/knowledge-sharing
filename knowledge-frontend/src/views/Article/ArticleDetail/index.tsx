@@ -28,6 +28,8 @@ function ArticleDetail() {
     const accessToken = cookies.accessToken; // Retrieving the access token from cookies
     const { user } = useUserStore(); // Access the current user from the store
     const showEditForm = user?.userId === articleDetail?.writer; // Condition to show edit button
+
+
     const [editFormData, setEditFormData] = useState({
         title: '',
         content: '',

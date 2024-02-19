@@ -33,8 +33,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtProvider jwtProvider;
     // 인증을 건너뛰어야 하는 경로 목록을 정의합니다.
     private static final Set<String> SKIP_PATHS = Set.of(
-            "/api/v1/articles/{articleId}",
-            "/api/v1/comments/{articleId}/comment" // 예시 추가 경로
+            "GET /api/v1/articles/{articleId}",
+            "GET /api/v1/comments/{articleId}/comment"
     );
 
     @Override
@@ -42,12 +42,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             String requestUri = request.getRequestURI();
+            String requestMethod = request.getMethod();
+
             // 요청 URI가 인증을 건너뛰어야 하는 경로 목록에 있는지 확인합니다.
-            boolean skip = SKIP_PATHS.stream().anyMatch(path -> new UriTemplate(path).matches(requestUri));
-            if (skip) {
-                filterChain.doFilter(request, response);
-                return;
-            }
+            // Check if the combined method and URI should be skipped
+            boolean skip = SKIP_PATHS.stream().anyMatch(path -> {
+                String[] parts = path.split(" ", 2); // Split into method and path
+                if (parts.length < 2) return false; // Safety check
+                String method = parts[0];
+                String uriTemplate = parts[1];
+                return method.equalsIgnoreCase(requestMethod) && new UriTemplate(uriTemplate).matches(requestUri);
+            });
+
 
             String token = parseBearerToken(request);
             if(token == null) { // token이 null이면 밑에 작업 진행하지말고 doFilter로 다음 필터로 넘기고 return //
