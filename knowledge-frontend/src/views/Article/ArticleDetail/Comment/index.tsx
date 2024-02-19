@@ -107,6 +107,10 @@ function Comments() {
         setPageNumberInput(e.target.value);
     };
 
+
+
+
+
     const navigateToPage = () => {
         const newPage = parseInt(pageNumberInput) - 1; // Convert to 0-based page
         if (
@@ -127,6 +131,8 @@ function Comments() {
     const handleCommentInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCommentInput(e.target.value);
     };
+
+
     const handleCommentSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!commentInput.trim() || !accessToken || !articleId) {
@@ -145,6 +151,9 @@ function Comments() {
             console.error("Error posting comment:", error);
         }
     };
+
+
+
     return (
         <div>
             {accessToken && (
@@ -168,6 +177,8 @@ function Comments() {
                                 value={editCommentContent}
                                 onChange={handleEditCommentChange}
                             />
+
+
                             <button onClick={() => submitEditComment(comment.id)}>Save</button>
                             <button onClick={() => setEditingCommentId(null)}>Cancel</button>
                         </div>

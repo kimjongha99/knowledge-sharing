@@ -26,7 +26,8 @@ public enum ErrorCode {
     EqualPassword(HttpStatus.UNAUTHORIZED, "이전 비밀번호와 동일합니다"),
     PermissionDenied(HttpStatus.UNAUTHORIZED, "당신의 권한이 아닙니다." ),
     ArticleNotFound(HttpStatus.FORBIDDEN, " 아티클을 찾을수없습니다 ." ),
-    InvalidActionType(HttpStatus.BAD_REQUEST, "타입이 정확하지않습니다" );
+    InvalidActionType(HttpStatus.BAD_REQUEST, "타입이 정확하지않습니다" ),
+    CommentNotFound(HttpStatus.BAD_REQUEST,"댓글을 찾을수없습니다." );
 
 
     private final HttpStatus httpStatus;

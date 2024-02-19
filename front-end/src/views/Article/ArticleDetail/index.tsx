@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useUserStore} from "../../../stores/userStore";
 import {useCookies} from "react-cookie";
+import Comment from "../Comment";
 
 
 interface Article {
@@ -17,6 +18,8 @@ interface Article {
     imageUrls: string[];
 }
 
+
+
 export default function ArticleDetail(){
     const { articleId } = useParams<{ articleId: string }>(); // Ensure the type matches the expected parameter
     const [article, setArticle] = useState<Article | null>(null);
@@ -24,6 +27,7 @@ export default function ArticleDetail(){
     const { user } = useUserStore();
     const [cookies] = useCookies();
     const navigate = useNavigate(); // Initialize useNavigate hook
+    const [isUpdatingFavorite, setIsUpdatingFavorite] = useState(false); // New state to track request status
 
     const showEditForm = user?.userId === article?.writer; // Condition to show edit button
 
@@ -150,11 +154,62 @@ export default function ArticleDetail(){
             });
         };
         fetchArticle();
-    }, [articleId]);
+    }, [articleId] );
+
+    useEffect(() => {
+        const incrementViewCount = async () => {
+            try {
+                if (cookies.accessToken) { // Check if the token exists
+                    const config = {
+                        headers: { Authorization: `Bearer ${cookies.accessToken}` }
+                    };
+                    await axios.get(`http://localhost:4040/api/v1/articles/${articleId}/increase-view`, config);
+                }
+            } catch (error) {
+                console.error('Error incrementing view count:', error);
+            }
+        };
+
+        if (articleId) {
+            incrementViewCount();
+        }
+    }, [articleId, cookies.accessToken]); // Add tok
+    if (!article) {
+        return <div>Loading...</div>;
+    }
+
 
     if (error) return <p>Error: {error}</p>;
     if (!article) return <p>Loading...</p>;
 
+
+    const handleFavoriteChange = async (actionType: 'INCREMENT' | 'DECREMENT') => {
+        if (isUpdatingFavorite || !cookies.accessToken || !articleId) {
+            return;// 이미 요청을 처리 중이거나 토큰이나 기사 ID가 없는 경우 조기 반환
+        }
+
+        setIsUpdatingFavorite(true); // 처리하는 동안 버튼을 비활성화합니다.
+
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${cookies.accessToken}` },
+            };
+            const requestBody = {
+                actionType: actionType,
+            };
+            await axios.put(`http://localhost:4040/api/v1/articles/${articleId}/favorite`, requestBody, config);
+            const updatedArticleResponse = await axios.get(`http://localhost:4040/api/v1/articles/${articleId}`);
+            setArticle(updatedArticleResponse.data.data); // Assuming the response structure is the same
+
+        } catch (error) {
+            console.error(`Error ${actionType === 'INCREMENT' ? 'incrementing' : 'decrementing'} favorite count:`, error);
+        }
+
+        setIsUpdatingFavorite(false); /// 처리 후 버튼을 다시 활성화합니다.
+
+
+    };
 
     return(
         <div>
@@ -263,6 +318,19 @@ export default function ArticleDetail(){
                             </div>
                         </>
                     )}
+                </div>
+
+                <div className="flex justify-center space-x-4 mt-10">
+                    <div className="h-10 w-10 rounded-full bg-green-500 flex items-center justify-center">
+                        <button className="text-xs text-white" onClick={() => handleFavoriteChange('INCREMENT')} disabled={isUpdatingFavorite}>Like</button>
+                    </div>
+
+                    <div className="h-10 w-10 rounded-full bg-red-500 flex items-center justify-center">
+                        <button className="text-xs text-white" onClick={() => handleFavoriteChange('DECREMENT')} disabled={isUpdatingFavorite}>Like</button>
+                    </div>
+                </div>
+                <div className="mt-10">
+                <Comment/>
                 </div>
             </div>
         </div>
