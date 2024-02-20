@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
 
         // 각 사용자 엔터티를 UserTypeInfoDto로 변환합니다.
         List<ArticleInfo> articleInfos = articlePage.getContent().stream()
-                .map(article -> new ArticleInfo(article.getTitle(),article.getFavoriteCount(),article.getViewCount()))
+                .map(article -> new ArticleInfo(article.getId(),article.getTitle(),article.getFavoriteCount(),article.getViewCount()))
                 .collect(Collectors.toList());
 
         return  new UserArticleResponseDto(articleInfos,pageable.getPageNumber(), pageable.getPageSize(), articlePage.getTotalElements());

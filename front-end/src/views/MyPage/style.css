@@ -21,18 +21,21 @@ section[id^=main] {
 }
 
 
-#main-left-one {
-    background: gray;
-    height: 360px;
-}
+/*#main-left-one {*/
+/*    background: gray;*/
+/*    height: 180px;*/
+/*}*/
 
 #main-left-two {
-    height: 360px;
+    height: 180px;
     background: gray;
 }
 
 
-
+#main-left-three{
+    height: 360px;
+    background: gray;
+}
 /*#main-right-two {*/
 /*    height: 240px;*/
 /*    background: gray;*/

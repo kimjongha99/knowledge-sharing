@@ -27,6 +27,7 @@ public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
         List<Article> articles = jpaQueryFactory
                 .selectFrom(qArticle)
                 .where(qArticle.user.userId.eq(userId))
+                .orderBy(qArticle.createdAt.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

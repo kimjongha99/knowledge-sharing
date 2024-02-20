@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ArticleInfo {
 
+    private  Long id;
     private  String title;
     private  int favoriteCount;
     private  int viewCount;
