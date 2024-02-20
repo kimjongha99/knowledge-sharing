@@ -1,4 +1,4 @@
-package com.hanghae.knowledgesharing.folliow.repository;
+package com.hanghae.knowledgesharing.follow.repository;
 
 
 import com.hanghae.knowledgesharing.common.entity.Follow;

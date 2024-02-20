@@ -6,6 +6,9 @@ import com.hanghae.knowledgesharing.user.dto.request.PatchPasswordRequestDto;
 import com.hanghae.knowledgesharing.user.dto.request.PatchProfileImageRequestDto;
 import com.hanghae.knowledgesharing.user.dto.response.GetSignInUserResponseDto;
 import com.hanghae.knowledgesharing.user.dto.response.GetUserResponseDto;
+import com.hanghae.knowledgesharing.user.dto.response.UserArticleResponseDto;
+import org.springframework.data.domain.Pageable;
+
 
 public interface UserService {
 
@@ -18,4 +21,6 @@ public interface UserService {
     ResponseDto<String> patchProfileImage(PatchProfileImageRequestDto requestBody, String userId);
 
     ResponseDto<String> patchPassword(PatchPasswordRequestDto requestBody, String userId);
+
+    UserArticleResponseDto getUserArticles(String userId, Pageable pageable);
 }
