@@ -2,14 +2,12 @@ package com.hanghae.knowledgesharing.admin.controller;
 
 import com.hanghae.knowledgesharing.admin.dto.request.UserAdminDeleteRequestDto;
 import com.hanghae.knowledgesharing.admin.dto.request.UserRoleChangeRequestDto;
-import com.hanghae.knowledgesharing.admin.dto.response.AdminArticleListResponseDto;
-import com.hanghae.knowledgesharing.admin.dto.response.UserAdminDeleteResponseDto;
-import com.hanghae.knowledgesharing.admin.dto.response.UserListResponseDto;
-import com.hanghae.knowledgesharing.admin.dto.response.UserRoleChangeResponseDto;
+import com.hanghae.knowledgesharing.admin.dto.response.*;
 import com.hanghae.knowledgesharing.admin.sevice.AdminService;
 import com.hanghae.knowledgesharing.article.dto.response.DeleteArticleResponseDto;
 import com.hanghae.knowledgesharing.article.dto.response.GetArticleResponseDto;
 import com.hanghae.knowledgesharing.common.dto.ResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -56,9 +54,9 @@ public class AdminController {
                 @RequestParam(required = false) String userId,
                 @RequestParam(required = false) String email,
                 @PageableDefault Pageable pageable
-        ){
+        ) {
                 UserListResponseDto response = adminService.getAllUsers(userId, email, pageable);
-                return  ResponseDto.success(response);
+                return ResponseDto.success(response);
         }
 
         @GetMapping("/articles")
@@ -67,9 +65,9 @@ public class AdminController {
                 @RequestParam(required = false) String content,
                 @RequestParam(required = false) String hashtag,
                 @PageableDefault Pageable pageable
-        ){
-                AdminArticleListResponseDto response = adminService.getAllArticles(title, content,hashtag, pageable);
-                return  ResponseDto.success(response);
+        ) {
+                AdminArticleListResponseDto response = adminService.getAllArticles(title, content, hashtag, pageable);
+                return ResponseDto.success(response);
         }
 
         @PostMapping("/change-role")
@@ -81,22 +79,20 @@ public class AdminController {
         }
 
 
-
         @DeleteMapping("/users-delete")
         public ResponseDto<UserAdminDeleteResponseDto> userAdminDelete(
                 @RequestBody UserAdminDeleteRequestDto requestDto
-        ){
+        ) {
                 UserAdminDeleteResponseDto response = adminService.userAdminDelete(requestDto);
                 return ResponseDto.success(response);
         }
-
 
 
         @DeleteMapping("/admin/articles/{articleId}")
         public ResponseDto<DeleteArticleResponseDto> deleteArticle(
                 @PathVariable("articleId") Long articleId
         ) {
-                 DeleteArticleResponseDto response = adminService.deleteArticle(articleId);
+                DeleteArticleResponseDto response = adminService.deleteArticle(articleId);
                 return ResponseDto.success(response);
 
         }
@@ -110,11 +106,16 @@ public class AdminController {
                 return ResponseDto.success(response);
         }
 
+        @Operation(summary = "로그인 타입별 유저 조회", description = "관리자 권한 필요.")
+        @GetMapping("/users-by-login-type")
+        public ResponseDto<UserTypeListResponseDto> getUsersByLoginType(
+                @RequestParam("loginType") String loginType,
+                @PageableDefault Pageable pageable) {
 
+                UserTypeListResponseDto response = adminService.getUsersByLoginType(loginType, pageable);
 
-
-
-
+                return ResponseDto.success(response);
+        }
 
 
 
