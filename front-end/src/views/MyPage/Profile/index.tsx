@@ -66,7 +66,7 @@ export default function Profile(){
                     <p>id : {user?.userId}</p>
                     <p>Email: {user?.email}</p>
                     <p>가입 경로: {user?.type}</p>
-                    <p>가입 경로: {user?.role}</p>
+                    <p>권한: {user?.role}</p>
                     <p className="flex items-center">
                         비밀번호: {isEditing ? (
                         <form onSubmit={handleChangePassword} className="flex items-center">
