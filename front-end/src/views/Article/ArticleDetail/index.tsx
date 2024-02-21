@@ -201,9 +201,10 @@ export default function ArticleDetail(){
             await axios.put(`http://localhost:4040/api/v1/articles/${articleId}/favorite`, requestBody, config);
             const updatedArticleResponse = await axios.get(`http://localhost:4040/api/v1/articles/${articleId}`);
             setArticle(updatedArticleResponse.data.data); // Assuming the response structure is the same
-
-        } catch (error) {
-            console.error(`Error ${actionType === 'INCREMENT' ? 'incrementing' : 'decrementing'} favorite count:`, error);
+        } catch (error: any) {
+            if (error.response) {
+                alert(error.response.data.errorMessage);
+            }
         }
 
         setIsUpdatingFavorite(false); /// 처리 후 버튼을 다시 활성화합니다.

@@ -71,8 +71,10 @@ function Comments() {
             await axios.post(`http://localhost:4040/api/v1/comments/${articleId}/comment`, { content: commentInput }, {
                 headers: { Authorization: `Bearer ${cookies.accessToken}` },
             });
-            setCommentInput('');
             fetchComments(currentPage); // Refresh comments
+
+            setCommentInput('');
+
         } catch (error) {
             console.error('Error posting comment:', error);
         }

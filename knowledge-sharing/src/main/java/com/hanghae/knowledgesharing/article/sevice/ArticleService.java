@@ -20,5 +20,5 @@ public interface ArticleService {
 
     ArticleViewCountResponseDto incrementArticleViewCount(String userId, Long articleId);
 
-    UpdateFavoriteCountResponseDto updateFavoriteCount(Long articleId, UpdateFavoriteCountRequestDto requestDto);
+    UpdateFavoriteCountResponseDto updateFavoriteCount(Long articleId, UpdateFavoriteCountRequestDto requestDto, String userId);
 }

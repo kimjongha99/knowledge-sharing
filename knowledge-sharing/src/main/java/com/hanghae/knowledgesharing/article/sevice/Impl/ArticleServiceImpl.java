@@ -193,19 +193,30 @@ public class ArticleServiceImpl implements ArticleService {
         return new ArticleViewCountResponseDto("조회수 증가 성공");
 
     }
+//    boolean isFavorite = redisService.likeArticle(articleId,userId);
 
     @Override
-    public UpdateFavoriteCountResponseDto updateFavoriteCount(Long articleId, UpdateFavoriteCountRequestDto requestDto) {
+    public UpdateFavoriteCountResponseDto updateFavoriteCount(Long articleId, UpdateFavoriteCountRequestDto requestDto , String userId) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new CustomException(ErrorCode.ArticleNotFound));
 
         switch (requestDto.getActionType()) {
             case INCREMENT:
-                article.increaseFavoriteCount();
+                if (redisService.likeArticle(articleId, userId)) {
+                    article.increaseFavoriteCount();
+                } else {
+                    throw new CustomException(ErrorCode.AlreadyLiked);
+                }
                 break;
             case DECREMENT:
-                int currentCount = article.getFavoriteCount();
-                article.decreaseFavoriteCount(currentCount);
+                if (redisService.unlikeArticle(articleId, userId)) {
+                    int currentCount = article.getFavoriteCount();
+                    if (currentCount > 0) {
+                        article.decreaseFavoriteCount(currentCount);
+                    }
+                } else {
+                    throw new CustomException(ErrorCode.NotLiked);
+                }
                 break;
             default:
                 throw new CustomException(ErrorCode.InvalidActionType);
