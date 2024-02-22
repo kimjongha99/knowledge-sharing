@@ -2,6 +2,7 @@ import './style.css';
 import Profile from "./Profile";
 import Follow from "./Follow";
 import ToFollow from "./ToFollow";
+import MyArticles from "./MyArticles";
 
 export default function MyPage(){
 
@@ -11,9 +12,12 @@ export default function MyPage(){
         <div>
             <main id="Main">
                 <div id="main-left">
-                    <section id="main-left-one"></section>
+                    {/*<section id="main-left-one"></section>*/}
+                    <MyArticles/>
                     <section id="main-left-two"></section>
-               </div>
+                    <section id="main-left-three"></section>
+
+                </div>
                 <div id="main-right">
                     <Profile/>
                     {/*<section id="main-right-two"></section>*/}

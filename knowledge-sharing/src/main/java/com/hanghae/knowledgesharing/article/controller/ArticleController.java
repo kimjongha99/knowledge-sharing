@@ -78,7 +78,7 @@ public class ArticleController {
             @PathVariable("articleId") Long articleId,
             @RequestBody UpdateFavoriteCountRequestDto requestDto,
             @AuthenticationPrincipal String userId) {
-        UpdateFavoriteCountResponseDto responseDto = articleService.updateFavoriteCount(articleId, requestDto);
+        UpdateFavoriteCountResponseDto responseDto = articleService.updateFavoriteCount(articleId, requestDto,userId);
         return ResponseDto.success(responseDto);
     }
 }

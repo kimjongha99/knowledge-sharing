@@ -7,7 +7,6 @@ import com.hanghae.knowledgesharing.admin.sevice.AdminService;
 import com.hanghae.knowledgesharing.article.dto.response.DeleteArticleResponseDto;
 import com.hanghae.knowledgesharing.article.dto.response.GetArticleResponseDto;
 import com.hanghae.knowledgesharing.article.repository.ArticleRepository;
-import com.hanghae.knowledgesharing.common.dto.ResponseDto;
 import com.hanghae.knowledgesharing.common.entity.Article;
 import com.hanghae.knowledgesharing.common.entity.ArticleHashtag;
 import com.hanghae.knowledgesharing.common.entity.Image;
@@ -20,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -142,6 +142,25 @@ public class AdminServiceImpl implements AdminService {
                 .imageUrls(imageUrls) // Directly pass the list of image URLs
                 .build();
         return responseDto;
+
+    }
+
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserTypeListResponseDto getUsersByLoginType(String loginType, Pageable pageable) {
+
+        Page<User> usersPage = userRepository.findByType(loginType, pageable);
+
+
+            // 각 사용자 엔터티를 UserTypeInfoDto로 변환합니다.
+
+        List<UserInfo> usersInfo = usersPage.getContent().stream()
+                .map(user -> new UserInfo(user.getUserId(), user.getEmail(), user.getType(), user.getProfileImageUrl(), user.getRole()))
+                .collect(Collectors.toList());
+
+        return new UserTypeListResponseDto(usersInfo, pageable.getPageNumber(), pageable.getPageSize(), usersPage.getTotalElements());
 
     }
 

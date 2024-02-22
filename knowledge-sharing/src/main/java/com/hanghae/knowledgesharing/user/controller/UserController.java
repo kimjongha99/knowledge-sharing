@@ -6,10 +6,13 @@ import com.hanghae.knowledgesharing.user.dto.request.PatchPasswordRequestDto;
 import com.hanghae.knowledgesharing.user.dto.request.PatchProfileImageRequestDto;
 import com.hanghae.knowledgesharing.user.dto.response.GetSignInUserResponseDto;
 import com.hanghae.knowledgesharing.user.dto.response.GetUserResponseDto;
+import com.hanghae.knowledgesharing.user.dto.response.UserArticleResponseDto;
 import com.hanghae.knowledgesharing.user.sevice.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -65,7 +68,7 @@ public class UserController {
     public ResponseDto<String> patchProfileImage(
             @RequestBody @Valid PatchProfileImageRequestDto requestBody,
             @AuthenticationPrincipal String userId) {
-        ResponseDto<String>  result = userService.patchProfileImage(requestBody, userId);
+        ResponseDto<String> result = userService.patchProfileImage(requestBody, userId);
         return result;
     }
 
@@ -77,8 +80,19 @@ public class UserController {
     ) {
         ResponseDto<String> result = userService.patchPassword(requestBody, userId);
         return result;
-
     }
+
+
+    @Operation(summary = "내가 쓴글 조회", description = "내가 쓴글 조회.")
+    @GetMapping("/myArticles")
+    public ResponseDto<UserArticleResponseDto> getUserArticles(
+            @AuthenticationPrincipal String  userId,
+            @PageableDefault Pageable pageable){
+
+        UserArticleResponseDto response = userService.getUserArticles(userId,pageable );
+        return  ResponseDto.success(response);
+    }
+
 
 
 }

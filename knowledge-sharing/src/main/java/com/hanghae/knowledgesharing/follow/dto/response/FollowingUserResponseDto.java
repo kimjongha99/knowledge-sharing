@@ -1,4 +1,4 @@
-package com.hanghae.knowledgesharing.folliow.dto.response;
+package com.hanghae.knowledgesharing.follow.dto.response;
 
 import lombok.Getter;
 

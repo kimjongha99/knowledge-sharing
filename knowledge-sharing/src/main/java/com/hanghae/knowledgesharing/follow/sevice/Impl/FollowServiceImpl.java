@@ -1,23 +1,21 @@
-package com.hanghae.knowledgesharing.folliow.sevice.Impl;
+package com.hanghae.knowledgesharing.follow.sevice.Impl;
 
 import com.hanghae.knowledgesharing.common.entity.Follow;
 import com.hanghae.knowledgesharing.common.entity.User;
 import com.hanghae.knowledgesharing.common.enums.CheckFollowEnum;
 import com.hanghae.knowledgesharing.common.exception.CustomException;
 import com.hanghae.knowledgesharing.common.exception.ErrorCode;
-import com.hanghae.knowledgesharing.folliow.dto.response.CheckFollowResponseDto;
-import com.hanghae.knowledgesharing.folliow.dto.response.FollowerUserResponseDto;
-import com.hanghae.knowledgesharing.folliow.dto.response.FollowingUserResponseDto;
-import com.hanghae.knowledgesharing.folliow.repository.FollowRepository;
-import com.hanghae.knowledgesharing.folliow.sevice.FollowService;
+import com.hanghae.knowledgesharing.follow.dto.response.CheckFollowResponseDto;
+import com.hanghae.knowledgesharing.follow.dto.response.FollowerUserResponseDto;
+import com.hanghae.knowledgesharing.follow.dto.response.FollowingUserResponseDto;
+import com.hanghae.knowledgesharing.follow.repository.FollowRepository;
+import com.hanghae.knowledgesharing.follow.sevice.FollowService;
 import com.hanghae.knowledgesharing.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

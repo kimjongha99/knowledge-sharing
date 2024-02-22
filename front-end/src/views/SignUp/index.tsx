@@ -153,7 +153,7 @@ export default function SignUp() {
             navigate('/auth/sign-in');
         } catch (error: any) {
             if (axios.isAxiosError(error) && error.response) {
-                // Set the error message from the server response
+                // 서버 응답에서 오류 메시지를 설정합니다.
                 SetSignMessage(error.response.data.errorMessage);
             } else {
                 console.error('An error occurred:', error);

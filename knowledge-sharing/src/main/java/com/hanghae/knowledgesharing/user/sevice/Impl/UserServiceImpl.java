@@ -1,20 +1,30 @@
 package com.hanghae.knowledgesharing.user.sevice.Impl;
 
 
+import com.hanghae.knowledgesharing.article.repository.ArticleRepository;
 import com.hanghae.knowledgesharing.common.dto.ResponseDto;
+import com.hanghae.knowledgesharing.common.entity.Article;
 import com.hanghae.knowledgesharing.common.entity.User;
 import com.hanghae.knowledgesharing.common.exception.CustomException;
 import com.hanghae.knowledgesharing.common.exception.ErrorCode;
 import com.hanghae.knowledgesharing.user.dto.request.PatchPasswordRequestDto;
 import com.hanghae.knowledgesharing.user.dto.request.PatchProfileImageRequestDto;
+import com.hanghae.knowledgesharing.user.dto.response.ArticleInfo;
 import com.hanghae.knowledgesharing.user.dto.response.GetSignInUserResponseDto;
 import com.hanghae.knowledgesharing.user.dto.response.GetUserResponseDto;
+import com.hanghae.knowledgesharing.user.dto.response.UserArticleResponseDto;
 import com.hanghae.knowledgesharing.user.repository.UserRepository;
 import com.hanghae.knowledgesharing.user.sevice.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +32,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private final ArticleRepository articleRepository;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
@@ -86,5 +97,22 @@ public class UserServiceImpl implements UserService {
         return ResponseDto.success("비밀번호 수정이 완료되었습니다.");
 
 
+    }
+
+    @Override
+    public UserArticleResponseDto getUserArticles(String userId, Pageable pageable) {
+        User user = userRepository.findByUserId(userId);
+        if(user == null){
+            throw new CustomException(ErrorCode.UserNotFound);
+        }
+
+        Page<Article> articlePage = articleRepository.getUserArticles(userId, pageable);
+
+        // 각 사용자 엔터티를 UserTypeInfoDto로 변환합니다.
+        List<ArticleInfo> articleInfos = articlePage.getContent().stream()
+                .map(article -> new ArticleInfo(article.getId(),article.getTitle(),article.getFavoriteCount(),article.getViewCount()))
+                .collect(Collectors.toList());
+
+        return  new UserArticleResponseDto(articleInfos,pageable.getPageNumber(), pageable.getPageSize(), articlePage.getTotalElements());
     }
 }
