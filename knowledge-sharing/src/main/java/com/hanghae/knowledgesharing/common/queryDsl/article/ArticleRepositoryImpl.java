@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -42,5 +43,19 @@ public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
         // PageableExecutionUtils.getPage()를 사용하여 Page 객체 생성
         return PageableExecutionUtils.getPage(articles, pageable, countQuery::fetchOne);
 
+    }
+
+
+    @Override
+    public List<Article> findTop3FavoriteArticlesFromLastWeek() {
+        QArticle qArticle = QArticle.article;
+        LocalDateTime oneWeekAgo = LocalDateTime.now().minusWeeks(1);
+
+        return jpaQueryFactory
+                .selectFrom(qArticle)
+                .where(qArticle.createdAt.after(oneWeekAgo))
+                .orderBy(qArticle.favoriteCount.desc())
+                .limit(3)
+                .fetch();
     }
 }

@@ -226,6 +226,17 @@ public class ArticleServiceImpl implements ArticleService {
         return new UpdateFavoriteCountResponseDto("좋아요 요청 성공");
     }
 
+    @Override
+    public List<Top3ArticleResponseDto> getTopFavoriteArticles() {
+        List<Article> articles = articleRepository.findTop3FavoriteArticlesFromLastWeek();
+        return articles.stream()
+                .map(Top3ArticleResponseDto::fromArticle)
+                .collect(Collectors.toList());
+    }
+
+
 
 }
+
+
 

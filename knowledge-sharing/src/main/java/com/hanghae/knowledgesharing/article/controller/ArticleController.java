@@ -16,6 +16,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/articles")
@@ -25,8 +27,8 @@ public class ArticleController {
 
 
     @PostMapping("")
-    public ResponseDto<String>postArticle(@RequestBody PostArticleRequestDto requestBody,
-                                          @AuthenticationPrincipal String userId
+    public ResponseDto<String> postArticle(@RequestBody PostArticleRequestDto requestBody,
+                                           @AuthenticationPrincipal String userId
     ) {
         String response = articleService.postArticle(requestBody, userId);
         return ResponseDto.success(response);
@@ -78,7 +80,18 @@ public class ArticleController {
             @PathVariable("articleId") Long articleId,
             @RequestBody UpdateFavoriteCountRequestDto requestDto,
             @AuthenticationPrincipal String userId) {
-        UpdateFavoriteCountResponseDto responseDto = articleService.updateFavoriteCount(articleId, requestDto,userId);
+        UpdateFavoriteCountResponseDto responseDto = articleService.updateFavoriteCount(articleId, requestDto, userId);
         return ResponseDto.success(responseDto);
+    }
+
+
+    /*
+     좋아요 상위 3개의 게시물을 가져오는 컨트롤러 메서드를만들어봐
+     */
+    @GetMapping("/top-favorites")
+    public ResponseDto<List<Top3ArticleResponseDto>> getTopFavoriteArticles() {
+        List<Top3ArticleResponseDto> topArticles = articleService.getTopFavoriteArticles();
+        return ResponseDto.success(topArticles);
+
     }
 }

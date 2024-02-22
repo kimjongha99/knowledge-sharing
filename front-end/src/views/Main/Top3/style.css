@@ -1,0 +1,50 @@
+.flex-container {
+    display: flex;
+    justify-content: space-around; /* This will space out the cards evenly */
+    flex-wrap: wrap; /* Allows cards to wrap to the next line on smaller screens */
+    padding: 1rem;
+}
+.card-container {
+    width: 300px; /* Fixed width */
+    height: 200px; /* Fixed height */
+    margin: 1rem; /* Adjusted for better spacing when wrapping */
+    background-color: #f0f9ff;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Makes the internal layout vertical */
+    justify-content: space-between; /* Spaces out the header, body, and footer */
+}
+.card-header,
+.card-body,
+.card-footer {
+    padding: 0.5rem;
+}
+.card-header {
+    background-color: #bae6fd;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+.card-body {
+    background-color: #e0f2fe;
+}
+.card-footer {
+    background-color: #fde68a;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+.button {
+    display: inline-block;
+    padding: 0.25rem 0.5rem; /* Adjusted to fit within the new card size */
+    background-color: #facc15;
+    color: #000;
+    text-align: center;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+
+#top3-like{
+    margin-left: 30px;
+    margin-top: 30px;
+}
