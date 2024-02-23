@@ -49,8 +49,8 @@ public class UserController {
     @Operation(summary = "사용자 정보를 조회", description = "현재 로그인한 사용자 정보를 조회 합니다.")
     @GetMapping("")
     public ResponseDto<GetSignInUserResponseDto> getSignInUser(@AuthenticationPrincipal String userId) {
-        ResponseDto<GetSignInUserResponseDto> result = userService.getSignInUser(userId);
-        return result;
+        GetSignInUserResponseDto result = userService.getSignInUser(userId);
+        return ResponseDto.success(result) ;
     }
 
 
@@ -59,8 +59,8 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseDto<GetUserResponseDto> getUser(@PathVariable("userId") String userId) {
 
-        ResponseDto<GetUserResponseDto> result = userService.getUser(userId);
-        return result; // 서비스에서 처리한 응답을 반환합니다.
+        GetUserResponseDto result = userService.getUser(userId);
+        return ResponseDto.success(result) ;
     }
 
     @Operation(summary = "프로필이미지", description = "프사 변경 합니다..")
@@ -68,8 +68,8 @@ public class UserController {
     public ResponseDto<String> patchProfileImage(
             @RequestBody @Valid PatchProfileImageRequestDto requestBody,
             @AuthenticationPrincipal String userId) {
-        ResponseDto<String> result = userService.patchProfileImage(requestBody, userId);
-        return result;
+        String result = userService.patchProfileImage(requestBody, userId);
+        return ResponseDto.success(result) ;
     }
 
     @Operation(summary = "비밀번호 변경", description = "비밀번호 변경 합니다..")
@@ -78,8 +78,8 @@ public class UserController {
             @RequestBody @Valid PatchPasswordRequestDto requestBody,
             @AuthenticationPrincipal String userId
     ) {
-        ResponseDto<String> result = userService.patchPassword(requestBody, userId);
-        return result;
+        String result = userService.patchPassword(requestBody, userId);
+        return ResponseDto.success(result) ;
     }
 
 

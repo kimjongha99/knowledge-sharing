@@ -2,7 +2,6 @@ package com.hanghae.knowledgesharing.user.sevice.Impl;
 
 
 import com.hanghae.knowledgesharing.article.repository.ArticleRepository;
-import com.hanghae.knowledgesharing.common.dto.ResponseDto;
 import com.hanghae.knowledgesharing.common.entity.Article;
 import com.hanghae.knowledgesharing.common.entity.User;
 import com.hanghae.knowledgesharing.common.exception.CustomException;
@@ -39,21 +38,21 @@ public class UserServiceImpl implements UserService {
 
     // 사용자 정보를 조회하여 반환합니다. 사용자가 없을 경우 예외를 발생시킵니다.
     @Override
-    public ResponseDto<GetSignInUserResponseDto> getSignInUser(String userId) {
+    public GetSignInUserResponseDto getSignInUser(String userId) {
         User user = userRepository.findByUserId(userId);
         if(user == null){
             throw new CustomException(ErrorCode.UserNotFound);
         };
 
         GetSignInUserResponseDto responseDto = GetSignInUserResponseDto.fromUser(user); // User 엔티티로부터 GetSignInUserResponseDto를 생성합니다.
-        return ResponseDto.success(responseDto); // User 엔티티를 기반으로 응답 DTO를 생성하여 반환합니다.
+        return responseDto; // User 엔티티를 기반으로 응답 DTO를 생성하여 반환합니다.
 
     }
 
 
     // 사용자 정보를 조회하고 결과를 반환합니다.
     @Override
-    public ResponseDto<GetUserResponseDto> getUser(String userId) {
+    public GetUserResponseDto  getUser(String userId) {
         User user = userRepository.findByUserId(userId);
         if(user == null){
             throw new CustomException(ErrorCode.UserNotFound);
@@ -61,11 +60,11 @@ public class UserServiceImpl implements UserService {
 
         GetUserResponseDto responseDto = GetUserResponseDto.fromUser(user); // User 엔티티로부터 GetSignInUserResponseDto를 생성합니다.
 
-        return ResponseDto.success(responseDto);
+        return responseDto;
     }
 
     @Override
-    public ResponseDto<String> patchProfileImage(PatchProfileImageRequestDto requestBody, String userId) {
+    public String patchProfileImage(PatchProfileImageRequestDto requestBody, String userId) {
         User user = userRepository.findByUserId(userId);
         if(user == null){
             throw new CustomException(ErrorCode.UserNotFound);
@@ -75,12 +74,12 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
 
-        return ResponseDto.success("프로필사진 수정이 완료되었습니다.");
+        return "프로필사진 수정이 완료되었습니다.";
 
     }
 
     @Override
-    public ResponseDto<String> patchPassword(PatchPasswordRequestDto requestBody, String userId) {
+    public String patchPassword(PatchPasswordRequestDto requestBody, String userId) {
         User user = userRepository.findByUserId(userId);
         if(user == null){
             throw new CustomException(ErrorCode.UserNotFound);
@@ -94,7 +93,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(requestBody.getNewPassword()));
         userRepository.save(user);
 
-        return ResponseDto.success("비밀번호 수정이 완료되었습니다.");
+        return "비밀번호 수정이 완료되었습니다.";
 
 
     }

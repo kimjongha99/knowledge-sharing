@@ -1,0 +1,35 @@
+name: Gradle CI
+
+on:
+  push:
+    branches: [ main,dev]
+    paths:
+      - 'knowledge-sharing/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'knowledge-sharing/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x knowledge-sharing/gradlew
+
+    - name: Change directory to knowledge-sharing and run Gradle build
+      working-directory: ./knowledge-sharing
+      run: ./gradlew build
+
+    - name: Change directory to knowledge-sharing and run Gradle test
+      working-directory: ./knowledge-sharing
+      run: ./gradlew clean test
