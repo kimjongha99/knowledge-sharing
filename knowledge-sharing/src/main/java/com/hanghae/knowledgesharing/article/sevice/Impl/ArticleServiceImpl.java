@@ -78,12 +78,12 @@ public class ArticleServiceImpl implements ArticleService {
 
 
         List<String> articleHashtags = article.getArticleHashtags().stream()
-                .map(ArticleHashtag::getHashtagName) // Assuming Hashtag entity has getName()
-                .collect(Collectors.toList());
+            .map(ArticleHashtag::getHashtagName) // Assuming Hashtag entity has getName()
+            .collect(Collectors.toList());
 
-        List<String> imageUrls = article.getImages().stream()
-                .map(Image::getImageUrl) // Assuming Image entity has getUrl()
-                .collect(Collectors.toList());
+            List<String> imageUrls = article.getImages().stream()
+            .map(Image::getImageUrl) // Assuming Image entity has getUrl()
+            .collect(Collectors.toList());
 
 
 
