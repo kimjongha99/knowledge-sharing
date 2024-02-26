@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name="user")
 @Table(name="user")
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @Column(name = "user_id", columnDefinition = "VARCHAR(30)")

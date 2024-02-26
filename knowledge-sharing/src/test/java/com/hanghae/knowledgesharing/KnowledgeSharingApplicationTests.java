@@ -16,16 +16,19 @@
 //
 //    @Autowired
 //    private UserRepository userRepository; // Assuming you have a user repository
+//
+//
+//
+//
+//
+//
 //    @Test
 //    public void insertTestData() {
-//        // Create a User object
-//        String userId = "test00";
 //
+//        for (int i = 101; i <= 200; i++) {
 //
-//        // Persist the User object if necessary
-//        // userRepository.save(user); // Uncomment if you need to persist the new User
+//            String userId = "test" + i;
 //
-//        for (int i = 1; i <= 100; i++) {
 //            // Create a new PostArticleRequestDto instance
 //            PostArticleRequestDto requestDto = new PostArticleRequestDto();
 //
@@ -33,13 +36,11 @@
 //            requestDto.setTitle("Test Title " + i);
 //            requestDto.setContent("Test content for article " + i);
 //            requestDto.setHashtags(Arrays.asList("hashtag1", "hashtag2")); // Modify as needed
-//            requestDto.setImageUrls(Arrays.asList("image" + i + ".jpg", "image" + (i + 1) + ".jpg")); // Modify as needed
+//            requestDto.setImageUrls(Arrays.asList("https://knowledge-sharing-jong.s3.ap-northeast-2.amazonaws.com/user/005b9fcb-c473-43b8-b1ac-862fff2149f4.jpg")); // Modify as needed
 //
-//            // Call the postArticle method
-////            ResponseEntity<? super PostArticleResponseDto> response = articleService.postArticle(requestDto, userId); // Ensure the articleService is properly initialized
+//            String response = articleService.postArticle(requestDto, userId); // Ensure the articleService is properly initialized
 //
-//            // Optional: Print out a message or log the result
-//            System.out.println("Inserted article " + i);
+//            System.out.println("Inserted article " + i+ "\n"+response);
 //        }
 //    }
 //

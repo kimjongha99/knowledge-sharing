@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class PasswordEncoderExample {
     public static void main(String[] args) {
         // Your raw password
-        String rawPassword = "test123";
+        String rawPassword = "test00";
 
         // Encoder
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -18,3 +18,9 @@ public class PasswordEncoderExample {
 
     }
 }
+
+
+//
+//SELECT *
+//        FROM user
+//        ORDER BY CAST(REGEXP_REPLACE(user_id, '\\D', '') AS UNSIGNED);
