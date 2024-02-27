@@ -1,21 +1,4 @@
-import React, { useState} from 'react';
-import './style.css';
-import {useCookies} from "react-cookie";
-import axios from "axios";
-
-
-
-
-
-
-
-function Test (){
-
-
-    return (
-
-        <div>
-            <div>
+ <div>
                 <div className="flex items-center justify-between px-6 py-4 bg-gray-800 text-white rounded-lg">
                     <h1 className="text-lg font-bold">Quiz</h1>
                     <div className="flex items-center gap-4">
@@ -30,9 +13,11 @@ function Test (){
                         <h2 className="text-2xl font-bold">Question 1</h2>
                         <p className=" text-2xl dark:text-gray-400">What is the capital of France?</p>
                     </div>
-                    <div
-                        className="flex items-center justify-center h-[200px] bg-gray-200 hover:bg-gray-300 rounded-md transition-colors">
-                        <span className="text-center text-4xl">Paris</span>
+                    <div className="grid gap-4">
+                        <button className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 transition-colors">Paris</button>
+                        <button className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 transition-colors">London</button>
+                        <button className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 transition-colors">Berlin</button>
+                        <button className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 transition-colors">Rome</button>
                     </div>
                     <div className="flex justify-between">
                         <button className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 transition-colors">Previous</button>
@@ -46,11 +31,3 @@ function Test (){
                     </div>
                 </div>
                 </div>
-        </div>
-
-    );
-};
-
-export default Test;
-
-

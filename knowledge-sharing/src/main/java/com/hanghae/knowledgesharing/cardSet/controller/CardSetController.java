@@ -7,6 +7,8 @@ import com.hanghae.knowledgesharing.cardSet.service.CardSetService;
 import com.hanghae.knowledgesharing.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +39,7 @@ public class CardSetController {
     public ResponseDto<GetFlashCardListsResponseDto> getFlashCardList(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "description", required = false) String description,
-            Pageable pageable){
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable){
 
         GetFlashCardListsResponseDto response = cardSetService.getFlashCardList(pageable,title,description);
         return ResponseDto.success(response);

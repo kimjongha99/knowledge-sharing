@@ -10,6 +10,7 @@ import lombok.Setter;
 public class FlashCardDto {
 
     private Long flashCardId;
+    private String realId;
     private String term;
     private String definition;
 

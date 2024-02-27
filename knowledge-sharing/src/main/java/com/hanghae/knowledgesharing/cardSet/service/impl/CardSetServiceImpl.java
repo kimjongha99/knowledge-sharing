@@ -4,7 +4,6 @@ package com.hanghae.knowledgesharing.cardSet.service.impl;
 import com.hanghae.knowledgesharing.cardSet.dto.FlashCardDto;
 import com.hanghae.knowledgesharing.cardSet.dto.FlashCardSetDto;
 import com.hanghae.knowledgesharing.cardSet.dto.response.GetFlashCardListsResponseDto;
-import com.hanghae.knowledgesharing.quiz.repository.CardRepository;
 import com.hanghae.knowledgesharing.cardSet.repository.CardSetRepository;
 import com.hanghae.knowledgesharing.cardSet.service.CardSetService;
 import com.hanghae.knowledgesharing.common.entity.*;
@@ -12,6 +11,7 @@ import com.hanghae.knowledgesharing.common.enums.HashTagTypeEnum;
 import com.hanghae.knowledgesharing.common.exception.CustomException;
 import com.hanghae.knowledgesharing.common.exception.ErrorCode;
 import com.hanghae.knowledgesharing.hashtag.repository.HashTagRepository;
+import com.hanghae.knowledgesharing.quiz.repository.CardRepository;
 import com.hanghae.knowledgesharing.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -185,9 +186,13 @@ public class CardSetServiceImpl  implements CardSetService {
     @Transactional(readOnly = true)
     public List<FlashCardDto> getFlashCard(Long cardSetId) {
         List<Flashcard> flashcards = cardRepository.findByFlashcardSetId(cardSetId);
+        AtomicInteger index = new AtomicInteger(1); // Use AtomicInteger to increment within the lambda
+
         return flashcards.stream().map(flashcard -> {
             FlashCardDto dto = new FlashCardDto();
             dto.setFlashCardId(flashcard.getId());
+            dto.setRealId(String.valueOf(index.getAndIncrement())); // Increment index for each mapped dto
+
             dto.setTerm(flashcard.getTerm());
             dto.setDefinition(flashcard.getDefinition());
             return dto;
