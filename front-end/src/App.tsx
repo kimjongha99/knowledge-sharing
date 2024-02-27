@@ -14,6 +14,7 @@ import ArticleDetail from "./views/Article/ArticleDetail";
 import Test from "./views/Test";
 import ArticlePost from "./views/Article/ArticlePost";
 import Practice from "./views/Practice";
+import QuizPost from "./views/Quiz/QuizPost";
 
 function App() {
     const { user, setUser } = useUserStore();
@@ -86,6 +87,7 @@ function App() {
           <Route path='articles/post' element={<ArticlePost/>}/>
 
           <Route path="/practice" element={<Practice />}/>
+          <Route path='/quiz/post' element={<QuizPost/>}/>
 
 
 

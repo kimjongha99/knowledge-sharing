@@ -1,13 +1,26 @@
+import React, { useState} from 'react';
 import './style.css';
+import {useCookies} from "react-cookie";
+import axios from "axios";
 
-export default function Test(){
 
 
-    return(
+
+
+
+
+const Test: React.FC = () => {
+
+
+    return (
+
         <div>
 
         </div>
-    )
-}
+
+    );
+};
+
+export default Test;
 
 
