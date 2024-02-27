@@ -19,7 +19,9 @@
 
 #sidebar {
     width: 250px; /* Adjust the width as necessary */
-    height: 800px;
+    background: rgb(73, 57, 113);
+    border-radius: 0 15px 15px 0 ;
+    min-height: 800px; /* Full height of the viewport */
 
 
 }

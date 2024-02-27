@@ -29,7 +29,11 @@ public enum ErrorCode {
     InvalidActionType(HttpStatus.BAD_REQUEST, "타입이 정확하지않습니다" ),
     CommentNotFound(HttpStatus.BAD_REQUEST,"댓글을 찾을수없습니다." ),
     AlreadyLiked(HttpStatus.METHOD_NOT_ALLOWED, "이미 좋아요를 눌렀습니다 1시간후에 시도해주세요"),
-    NotLiked(HttpStatus.METHOD_NOT_ALLOWED, "이미 싫어요를 눌렀습니다 1시간후에 다시 시도해주세요" );
+    NotLiked(HttpStatus.METHOD_NOT_ALLOWED, "이미 싫어요를 눌렀습니다 1시간후에 다시 시도해주세요" ),
+    CardSetNotFound(HttpStatus.NOT_FOUND," 카드세트를 찾을수없습니다." ),
+    NoPermission(HttpStatus.UNAUTHORIZED,"소유자가아닙니다." ),
+    FLASHCARD_EMPTY(HttpStatus.BAD_REQUEST, "플래시카드가 제공되지않았습니다."),
+    FLASHCARD_MINIMUM_NOT_MET(HttpStatus.BAD_REQUEST, "최소 4개의 플래시카드가 필요합니다..");
 
 
     private final HttpStatus httpStatus;

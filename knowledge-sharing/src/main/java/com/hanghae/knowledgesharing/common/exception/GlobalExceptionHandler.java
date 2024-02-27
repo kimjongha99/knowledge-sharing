@@ -29,12 +29,6 @@ public class GlobalExceptionHandler {
                 .body(new ResponseDto.Error(e.getErrorCode().getMessage()));
     }
 
-    @ExceptionHandler(CustomException.ExcelError.class)  // 이건 지울수도?
-    public ResponseEntity<ResponseDto.Error> excelErrorException(CustomException.ExcelError e) {
-        return ResponseEntity.status(e.getErrorCode().getHttpStatus())
-                .body(new ResponseDto.Error(e.getNumberMessage() + e.getErrorCode().getMessage()));
-    }
-
 
     @ExceptionHandler(MethodArgumentNotValidException.class) //이거는 유효성검사 커스텀
     public ResponseEntity<ResponseDto.Error> validationException(MethodArgumentNotValidException e) {

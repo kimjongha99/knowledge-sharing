@@ -29,5 +29,8 @@ public class CardHashTag extends BaseTimeEntity {
         this.flashcardSet = flashcardSet;
         this.hashtag = hashTag;
     }
+    public String getHashtagName() {
+        return this.hashtag.getName(); // 가정: HashTag 엔티티에 getName 메소드가 있다.
+    }
 
 }

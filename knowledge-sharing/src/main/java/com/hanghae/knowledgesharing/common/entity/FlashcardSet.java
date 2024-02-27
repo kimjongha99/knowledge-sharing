@@ -54,4 +54,11 @@ public class FlashcardSet extends BaseTimeEntity {
     }
 
 
+    public void setDescription(String description) {
+        this.description=description;
+    }
+
+    public void setTitle(String title) {
+        this.title=title;
+    }
 }
