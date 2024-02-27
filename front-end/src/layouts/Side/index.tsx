@@ -28,6 +28,9 @@ export default function Side() {
         if (index === 3) {
             navigate(`/practice`);
         }
+        if (index === 4) {
+            navigate(`/exam`);
+        }
     };
 
     const isLoggedIn = cookies.accessToken && cookies.refreshToken;
@@ -66,12 +69,12 @@ export default function Side() {
                     </li>
                     <li className={`nav-item ${activeIndex === 3 ? 'active' : ''}`} onClick={() => handleItemClick(3)}>
                         <a>
-                            <span className="nav-text">Practice[학습]</span>
+                            <span className="nav-text">Learning[학습]</span>
                         </a>
                     </li>
                     <li className={`nav-item ${activeIndex === 4 ? 'active' : ''}`} onClick={() => handleItemClick(4)}>
                         <a >
-                            <span className="nav-text">Settings</span>
+                            <span className="nav-text">Examination[테스트]</span>
                         </a>
                     </li>
                 </ul>
@@ -79,3 +82,4 @@ export default function Side() {
         </div>
     )
 }
+

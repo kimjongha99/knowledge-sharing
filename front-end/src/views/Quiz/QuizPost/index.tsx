@@ -2,6 +2,7 @@ import './style.css';
 import React, {useState} from "react";
 import axios from "axios";
 import {useCookies} from "react-cookie";
+import {useNavigate} from "react-router-dom";
 
 
 interface Flashcard {
@@ -17,6 +18,8 @@ export default function QuizPost(){
     const [hashtags, setHashtags] = useState<string[]>([]);
     const [tempHashtag, setTempHashtag] = useState<string>('');
     const [flashcards, setFlashcards] = useState<Flashcard[]>([{ term: '', definition: '' }]);
+    const navigator = useNavigate();
+
     const handleHashtagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTempHashtag(e.target.value);
     };
@@ -58,6 +61,8 @@ export default function QuizPost(){
                 },
             });
             alert('퀴즈 세트가 성공적으로 생성되었습니다!');
+            navigator('/practice');
+
         } catch (error) {
             console.error('퀴즈 세트 생성에 실패했습니다:', error);
             alert('퀴즈 세트 생성에 실패했습니다.');
@@ -131,17 +136,21 @@ export default function QuizPost(){
                             value={card.term}
                             onChange={(e) => handleFlashcardChange(index, 'term', e.target.value)}
                             className="flex-1 text-md p-2 mr-3 border-2 border-gray-300"
+                            placeholder="문제의 질문을 입력하세요"
                         />
                         <input
                             type="text"
                             value={card.definition}
                             onChange={(e) => handleFlashcardChange(index, 'definition', e.target.value)}
+                            placeholder="문제의 정답을 입력하세요"
+
                             className="flex-1 text-md p-2 border-2 border-gray-300"
                         />
                         <button
                             type="button"
                             onClick={() => removeFlashcard(index)}
                             className="ml-3 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                            
                         >
                             &times; Remove
                         </button>

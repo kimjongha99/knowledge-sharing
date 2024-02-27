@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 interface QuizDetail {
     realId: Number;
@@ -24,7 +24,9 @@ interface ApiResponse {
     data: Quiz[];
 }
 
-function Test() {
+function ExamDetail() {
+    const { cardSetId } = useParams<{ cardSetId: string }>(); // Ensure the type matches the expected parameter
+
     const [quizzes, setQuizzes] = useState<Quiz[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0); // 현재 표시되고 있는 문제의 인덱스
     const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: string }>({}); // 인덱스별 선택한 답변 상태
@@ -38,7 +40,7 @@ function Test() {
 
     useEffect(() => {
         const fetchQuizzes = async () => {
-            const response = await axios.get<ApiResponse>('http://localhost:4040/api/v1/quiz/5');
+            const response = await axios.get<ApiResponse>(`http://localhost:4040/api/v1/quiz/${cardSetId}`);
             setQuizzes(response.data.data);
         };
 
@@ -200,4 +202,4 @@ function Test() {
     );
 }
 
-export default Test;
+export default ExamDetail;

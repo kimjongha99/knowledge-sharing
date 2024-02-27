@@ -2,7 +2,7 @@ import './style.css';
 import {useEffect, useState} from "react";
 import axios from "axios";
 import Pagination from "../../components/Pagination";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
 interface FlashcardSet {
     flashCardSetId: number;
@@ -107,8 +107,10 @@ export default function Practice(){
             <div className="grid-container">
 
             {flashcardSets.map((set) => (
-                <div key={set.flashCardSetId}  id='grid-item'  style={{width: '400px', height: '200px'}}>
+                <Link to={`/card-set/${set.flashCardSetId}`} key={set.flashCardSetId}  id='grid-item'  style={{width: '400px', height: '200px'}}>
+
                     <div className="p-6">
+
                         <h2 className="text-lg font-semibold">{set.title}</h2>
                         <p className="text-lg opacity-75">{set.description}</p>
                         <div className="flex items-center mt-4">
@@ -117,8 +119,9 @@ export default function Practice(){
                             #{set.hashtags.join('#'+' ')}
                         </div>
                     </div>
-                </div>
-            ))}
+                </Link>
+
+                ))}
             </div>
 
             <Pagination

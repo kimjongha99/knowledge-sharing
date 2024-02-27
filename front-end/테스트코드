@@ -6,6 +6,7 @@
                         <span className="text-sm">요소 들어갈꺼면 넣고 </span>
                     </div>
                 </div>
+
                 <div className="quiz-main"> </div>
 
                 <div className="flex-1 p-6 space-y-4">

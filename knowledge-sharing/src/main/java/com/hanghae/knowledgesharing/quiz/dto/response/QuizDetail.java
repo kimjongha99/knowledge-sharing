@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 public class QuizDetail {
 
+    private Long realId;
     private String term;
     private String answer;
     private String failureAnswer1;
@@ -13,7 +14,8 @@ public class QuizDetail {
     private String failureAnswer3;
 
 
-    public QuizDetail(String term, String answer, String failureAnswer1, String failureAnswer2, String failureAnswer3) {
+    public QuizDetail(Long realId, String term, String answer, String failureAnswer1, String failureAnswer2, String failureAnswer3) {
+        this.realId = realId;
         this.term = term;
         this.answer = answer;
         this.failureAnswer1 = failureAnswer1;

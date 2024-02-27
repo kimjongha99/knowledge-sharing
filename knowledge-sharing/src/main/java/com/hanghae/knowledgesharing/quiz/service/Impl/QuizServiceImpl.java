@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,20 +41,23 @@ public class QuizServiceImpl  implements QuizService {
         List<String> allDefinitions = flashcards.stream()
                 .map(Flashcard::getDefinition)
                 .collect(Collectors.toList());
-
+        AtomicInteger index = new AtomicInteger(1); // Use AtomicInteger to increment within the lambda
         List<QuizDetail> quizDetails = flashcards.stream().map(flashcard -> {
             List<String> otherDefinitions = new ArrayList<>(allDefinitions);
             otherDefinitions.remove(flashcard.getDefinition());
             Collections.shuffle(otherDefinitions);
             List<String> failureAnswers = otherDefinitions.subList(0, Math.min(3, otherDefinitions.size()));
+            Long realId = Long.valueOf(index.getAndIncrement());
 
             return new QuizDetail(
+                    realId,
                     flashcard.getTerm(),
                     flashcard.getDefinition(),
                     failureAnswers.size() > 0 ? failureAnswers.get(0) : null,
                     failureAnswers.size() > 1 ? failureAnswers.get(1) : null,
                     failureAnswers.size() > 2 ? failureAnswers.get(2) : null
             );
+
         }).collect(Collectors.toList());
 
         QuizListResponseDto quizListResponseDto = new QuizListResponseDto(

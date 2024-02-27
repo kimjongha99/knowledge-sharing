@@ -15,6 +15,9 @@ import Test from "./views/Test";
 import ArticlePost from "./views/Article/ArticlePost";
 import Practice from "./views/Practice";
 import QuizPost from "./views/Quiz/QuizPost";
+import QuizDetail from "./views/Quiz/QuizDetail";
+import Exam from "./views/Exam";
+import ExamDetail from "./views/Exam/ExamDetail";
 
 function App() {
     const { user, setUser } = useUserStore();
@@ -87,11 +90,16 @@ function App() {
           <Route path='articles/post' element={<ArticlePost/>}/>
 
           <Route path="/practice" element={<Practice />}/>
+          <Route path="/card-set/:cardSetId" element={<QuizDetail />} />
           <Route path='/quiz/post' element={<QuizPost/>}/>
 
 
+          <Route path="/exam" element={<Exam />}/>
+          <Route path="/quiz/:cardSetId" element={<ExamDetail />} />
 
-              <Route path='/test' element={<Test/>}/>
+
+
+         <Route path='/test' element={<Test/>}/>
       </Route>
       </Routes>
 
