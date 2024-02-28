@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,4 +21,9 @@ public interface CardSetRepository extends JpaRepository<FlashcardSet, Long> {
             "(:description IS NULL OR :description = '' OR f.description LIKE CONCAT('%', :description, '%'))")
     Page<FlashcardSet> getFlashcardSets(@Param("title") String title, @Param("description") String description, Pageable pageable);
 
+
+
+
+    @Query("SELECT a FROM FlashcardSet a JOIN a.cardHashTags ah WHERE ah.hashtag.tagName = :tagName")
+    List<FlashcardSet> findByHashtagsTagName(String tagName);
 }

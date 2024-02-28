@@ -140,7 +140,7 @@ function ExamDetail() {
                 <h1 className="text-lg font-bold">Quiz</h1>
                 <div className="flex items-center gap-4">
 
-                    <span className="text-sm">요소 들어갈꺼면 넣고 </span>
+                    <span className="text-sm">문제를 읽고 답을 선택해서 공부하세요. </span>
                 </div>
             </div>
             <div className="quiz-main"> </div>

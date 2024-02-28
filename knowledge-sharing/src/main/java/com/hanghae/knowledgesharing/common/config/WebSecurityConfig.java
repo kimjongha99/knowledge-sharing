@@ -49,7 +49,7 @@ public class WebSecurityConfig {
                 )
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**","/api/files/**","/api/files/article/**","/swagger-ui/**","/v3/api-docs/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "api/v1/articles/**","api/v1/comments/**","api/v1/card-set/**","api/v1/quiz/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/v1/articles/**","api/v1/comments/**","api/v1/card-set/**","api/v1/quiz/**","api/v1/hashtag/**").permitAll()
                         .requestMatchers("/api/v1/users/**").hasAnyRole("USER", "ADMIN") // 권한 부여 // 접두사 ROLE는 생략
                         .requestMatchers("/api/v1/admin/**").hasAuthority("ROLE_ADMIN") // "ROLE_" 접두사를 포함한 역할 이름 사용
                         .anyRequest().authenticated()
