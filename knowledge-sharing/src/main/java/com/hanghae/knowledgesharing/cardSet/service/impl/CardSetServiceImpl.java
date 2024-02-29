@@ -3,6 +3,7 @@ package com.hanghae.knowledgesharing.cardSet.service.impl;
 
 import com.hanghae.knowledgesharing.cardSet.dto.FlashCardDto;
 import com.hanghae.knowledgesharing.cardSet.dto.FlashCardSetDto;
+import com.hanghae.knowledgesharing.cardSet.dto.response.DetailFlashCardSetDto;
 import com.hanghae.knowledgesharing.cardSet.dto.response.GetFlashCardListsResponseDto;
 import com.hanghae.knowledgesharing.cardSet.repository.CardSetRepository;
 import com.hanghae.knowledgesharing.cardSet.service.CardSetService;
@@ -198,5 +199,30 @@ public class CardSetServiceImpl  implements CardSetService {
             return dto;
         }).collect(Collectors.toList());
     }
+
+    @Override
+    public DetailFlashCardSetDto getDetailFlashCard(Long cardSetId) {
+        FlashcardSet flashcardSet = cardSetRepository.findById(cardSetId)
+                .orElseThrow(() -> new CustomException(ErrorCode.CardSetNotFound));
+
+
+        // FlashcardSet에서 Flashcard 목록을 추출하여 DetailFlashCardDto 목록으로 변환
+        List<DetailFlashCardSetDto.DetailFlashCardDto> flashCardDtos = flashcardSet.getFlashcards().stream()
+                .map(flashcard -> new DetailFlashCardSetDto.DetailFlashCardDto(flashcard.getTerm(), flashcard.getDefinition()))
+                .collect(Collectors.toList());
+
+        // FlashcardSet에서 해시태그 목록 추출 (가정: CardHashTag 엔티티에서 해시태그 문자열을 추출하는 getHashtag 메소드가 존재한다고 가정)
+        List<String> hashtags = flashcardSet.getCardHashTags().stream()
+                .map(CardHashTag::getHashtagName) // Assuming Hashtag entity has getName()
+                .collect(Collectors.toList());
+
+        // DetailFlashCardSetDto 객체 생성 및 반환
+        return new DetailFlashCardSetDto(
+                flashcardSet.getId(),
+                flashcardSet.getTitle(),
+                flashcardSet.getDescription(),
+                hashtags,
+                flashCardDtos
+        );    }
 
 }

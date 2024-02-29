@@ -10,8 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface ArticleRepository extends JpaRepository<Article,Long> , ArticleRepositoryCustom {
 
@@ -25,6 +23,5 @@ public interface ArticleRepository extends JpaRepository<Article,Long> , Article
                                                       Pageable pageable);
 
     @Query("SELECT a FROM article a JOIN a.articleHashtags ah WHERE ah.hashtag.tagName = :tagName")
-
-    List<Article> findByHashtagsTagName(String tagName);
+    Page<Article> findByHashtagsTagName(String tagName, Pageable pageable);
 }

@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -25,5 +24,9 @@ public interface CardSetRepository extends JpaRepository<FlashcardSet, Long> {
 
 
     @Query("SELECT a FROM FlashcardSet a JOIN a.cardHashTags ah WHERE ah.hashtag.tagName = :tagName")
-    List<FlashcardSet> findByHashtagsTagName(String tagName);
+    Page<FlashcardSet> findByHashtagsTagName(String tagName, Pageable pageable);
+
+
+    @Query("SELECT f FROM FlashcardSet f WHERE f.user.id = :userId")
+    Page<FlashcardSet> getUserFlashCardSet(@Param("userId") String userId, Pageable pageable);
 }

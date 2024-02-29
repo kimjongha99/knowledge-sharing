@@ -2,6 +2,7 @@ package com.hanghae.knowledgesharing.cardSet.controller;
 
 import com.hanghae.knowledgesharing.cardSet.dto.FlashCardDto;
 import com.hanghae.knowledgesharing.cardSet.dto.FlashCardSetDto;
+import com.hanghae.knowledgesharing.cardSet.dto.response.DetailFlashCardSetDto;
 import com.hanghae.knowledgesharing.cardSet.dto.response.GetFlashCardListsResponseDto;
 import com.hanghae.knowledgesharing.cardSet.service.CardSetService;
 import com.hanghae.knowledgesharing.common.dto.ResponseDto;
@@ -52,6 +53,8 @@ public class CardSetController {
         String result = cardSetService.updateCardSet(cardSetId, flashCardSetDto, userId);
         return ResponseDto.success(result);
     }
+
+
     @DeleteMapping("/{cardSetId}")
     public ResponseDto<String> deleteCardSet(
             @PathVariable Long cardSetId,
@@ -68,8 +71,13 @@ public class CardSetController {
 
     }
 
-
-
+    @GetMapping("/detail/{cardSetId}")
+    public ResponseDto<DetailFlashCardSetDto> getDetailFlashCard(
+            @PathVariable Long cardSetId
+    ){
+        DetailFlashCardSetDto response = cardSetService.getDetailFlashCard(cardSetId);
+        return ResponseDto.success(response);
+    }
 
 
 

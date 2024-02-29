@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class PasswordEncoderExample {
     public static void main(String[] args) {
         // Your raw password
-        String rawPassword = "asdasdsad123";
+        String rawPassword = "asdsadas2133";
 
         // Encoder
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

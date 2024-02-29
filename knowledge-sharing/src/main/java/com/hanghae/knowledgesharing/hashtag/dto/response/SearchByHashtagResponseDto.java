@@ -13,14 +13,22 @@ import java.util.List;
 public class SearchByHashtagResponseDto {
     private List<ArticleSimpleDto> articles;
     private List<FlashcardSetSimpleDto> flashcardSets;
-
+    private int page;
+    private int size;
+    private long totalElements;
     // ArticleSimpleDto 정의
+
+
+
+
+
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ArticleSimpleDto {
         private Long id;
         private String title;
+        private String content;
         // 필요한 필드 및 생성자, getter 추가
     }
 
@@ -31,6 +39,8 @@ public class SearchByHashtagResponseDto {
     public static class FlashcardSetSimpleDto {
         private Long id;
         private String title;
+        private String content;
+
         // 필요한 필드 및 생성자, getter 추가
     }
 }
