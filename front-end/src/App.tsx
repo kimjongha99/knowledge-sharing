@@ -18,6 +18,7 @@ import QuizPost from "./views/Quiz/QuizPost";
 import QuizDetail from "./views/Quiz/QuizDetail";
 import Exam from "./views/Exam";
 import ExamDetail from "./views/Exam/ExamDetail";
+import QuizEdit from "./views/Quiz/QuizEdit";
 
 function App() {
     const { user, setUser } = useUserStore();
@@ -92,6 +93,7 @@ function App() {
           <Route path="/practice" element={<Practice />}/>
           <Route path="/card-set/:cardSetId" element={<QuizDetail />} />
           <Route path='/quiz/post' element={<QuizPost/>}/>
+          <Route path="/card-set/edit/:cardSetId" element={<QuizEdit />} />
 
 
           <Route path="/exam" element={<Exam />}/>
@@ -99,7 +101,7 @@ function App() {
 
 
 
-         <Route path='/test' element={<Test/>}/>
+         {/*<Route path='/test' element={<Test/>}/>*/}
       </Route>
       </Routes>
 

@@ -18,7 +18,7 @@ export default function MyArticles(){
     const [articles, setArticles] = useState<Article[]>([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
-    const pageSize = 4; // Assuming a constant page size
+    const pageSize = 9; // Assuming a constant page size
     const navigate = useNavigate(); // Use the useNavigate hook
 
   //

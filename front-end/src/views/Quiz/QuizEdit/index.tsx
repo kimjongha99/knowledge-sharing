@@ -3,7 +3,7 @@ import './style.css';
 import {useCookies} from "react-cookie";
 import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
-import {useUserStore} from "../../stores/userStore";
+import {useUserStore} from "../../../stores/userStore";
 
 interface Flashcard {
     term: string;
@@ -17,7 +17,7 @@ interface FlashcardSetDetail {
     flashcards: Flashcard[];
 }
 
-function Test() {
+function QuizEdit() {
     const [cookies] = useCookies(['accessToken']); // 'accessToken' 쿠키를 읽어옵니다.
     const { cardSetId } = useParams<{ cardSetId: string }>(); // Ensure the type matches the expected parameter
 
@@ -203,4 +203,4 @@ function Test() {
     );
 }
 
-export default Test;
+export default QuizEdit;
