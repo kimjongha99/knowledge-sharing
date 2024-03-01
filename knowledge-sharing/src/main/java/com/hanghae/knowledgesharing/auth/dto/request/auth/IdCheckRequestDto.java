@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor // 기본 생성자 추가
- public class IdCheckRequestDto {
+@NoArgsConstructor
+public class IdCheckRequestDto {
 
 
     @NotBlank
