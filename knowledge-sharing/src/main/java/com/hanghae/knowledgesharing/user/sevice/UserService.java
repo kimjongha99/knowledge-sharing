@@ -6,6 +6,7 @@ import com.hanghae.knowledgesharing.user.dto.request.PatchProfileImageRequestDto
 import com.hanghae.knowledgesharing.user.dto.response.GetSignInUserResponseDto;
 import com.hanghae.knowledgesharing.user.dto.response.GetUserResponseDto;
 import com.hanghae.knowledgesharing.user.dto.response.UserArticleResponseDto;
+import com.hanghae.knowledgesharing.user.dto.response.UserQuizResponseDto;
 import org.springframework.data.domain.Pageable;
 
 
@@ -24,4 +25,6 @@ public interface UserService {
     UserArticleResponseDto getUserArticles(String userId, Pageable pageable);
 
 
+
+    UserQuizResponseDto getUserQuiz(String userId, Pageable pageable);
 }

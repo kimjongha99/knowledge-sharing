@@ -22,6 +22,6 @@ public interface ArticleRepository extends JpaRepository<Article,Long> , Article
                                                       @Param("hashtag") String hashtag,
                                                       Pageable pageable);
 
-
-
+    @Query("SELECT a FROM article a JOIN a.articleHashtags ah WHERE ah.hashtag.tagName = :tagName")
+    Page<Article> findByHashtagsTagName(String tagName, Pageable pageable);
 }

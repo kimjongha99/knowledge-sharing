@@ -2,7 +2,7 @@
 
     display: flex;
     justify-content: center;
-
+    margin-top: 20px;
 }
 
 #post-button button {

@@ -30,11 +30,25 @@ public class HashTag extends BaseTimeEntity {
     @OneToMany(mappedBy = "hashtag", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ArticleHashtag> articleHashtags = new ArrayList<>();
 
-    // Regular constructor
-    public HashTag(String tagName) {
+
+    @OneToMany(mappedBy = "hashtag", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CardHashTag> cardHashTags = new ArrayList<>();
+
+
+
+
+    public HashTag(String tagName) {  //이거는 아티클용이야
         this.tagName = tagName;
         this.tagType = HashTagTypeEnum.ARTICLE_TAG;
         this.articleHashtags = new ArrayList<>();
+    }
+
+    // QUIZ_TAG 태그를 위한 추가 생성자
+    public HashTag(String tagName, HashTagTypeEnum tagType) {
+        this.tagName = tagName;
+        this.tagType = tagType;
+        this.cardHashTags = new ArrayList<>();
+
     }
 
     public String getName() {

@@ -25,7 +25,12 @@ export default function Side() {
         if (index === 2) {
             navigate(`/articles`);
         }
-
+        if (index === 3) {
+            navigate(`/practice`);
+        }
+        if (index === 4) {
+            navigate(`/exam`);
+        }
     };
 
     const isLoggedIn = cookies.accessToken && cookies.refreshToken;
@@ -41,19 +46,17 @@ export default function Side() {
 
     return(
 
-        <div>
+        <div >
             <nav className="main-menu">
                 <ul>
                     <li className={`nav-item ${activeIndex === 0 ? 'active' : ''}`} onClick={() => handleItemClick(0)}>
                         <a >
-                            <i className="fa fa-house nav-icon"></i>
                             <span className="nav-text">Home</span>
                         </a>
                     </li>
                     {isLoggedIn &&(
                             <li className={`nav-item ${activeIndex === 1 ? 'active' : ''}`} onClick={() => handleItemClick(1)}>
                                 <a>
-                                    <i className="fa fa-user nav-icon"></i>
                                     <span className="nav-text">Profile</span>
                                 </a>
                             </li>
@@ -61,20 +64,17 @@ export default function Side() {
                         
                     <li className={`nav-item ${activeIndex === 2 ? 'active' : ''}`} onClick={() => handleItemClick(2)}>
                         <a>
-                            <i className="fa fa-calendar-check nav-icon"></i>
-                            <span className="nav-text" id='knowledge-article'> Knowledge Article</span>
+                            <span className="nav-text" id='knowledge-article'> Knowledge Article[지식공유]</span>
                         </a>
                     </li>
                     <li className={`nav-item ${activeIndex === 3 ? 'active' : ''}`} onClick={() => handleItemClick(3)}>
                         <a>
-                            <i className="fa fa-person-running nav-icon"></i>
-                            <span className="nav-text">Activities</span>
+                            <span className="nav-text">Learning[학습]</span>
                         </a>
                     </li>
                     <li className={`nav-item ${activeIndex === 4 ? 'active' : ''}`} onClick={() => handleItemClick(4)}>
                         <a >
-                            <i className="fa fa-sliders nav-icon"></i>
-                            <span className="nav-text">Settings</span>
+                            <span className="nav-text">Examination[테스트]</span>
                         </a>
                     </li>
                 </ul>
@@ -82,3 +82,4 @@ export default function Side() {
         </div>
     )
 }
+

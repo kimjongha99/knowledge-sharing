@@ -38,15 +38,21 @@ public class User extends BaseTimeEntity {
     private String refreshToken;
 
 
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Article> articles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL, orphanRemoval = true)//너
+    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Follow> followings = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, orphanRemoval = true) //나
+    @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Follow> followers = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FlashcardSet> flashcardSets = new ArrayList<>();
+
 
 
     public User(SignUpRequestDto dto) {
@@ -81,4 +87,6 @@ public class User extends BaseTimeEntity {
     public void setRole(UserRoleEnum roleEnum) {
         this.role = roleEnum;
     }
+
+
 }

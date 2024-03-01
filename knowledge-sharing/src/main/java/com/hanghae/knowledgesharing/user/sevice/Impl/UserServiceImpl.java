@@ -2,16 +2,15 @@ package com.hanghae.knowledgesharing.user.sevice.Impl;
 
 
 import com.hanghae.knowledgesharing.article.repository.ArticleRepository;
+import com.hanghae.knowledgesharing.cardSet.repository.CardSetRepository;
 import com.hanghae.knowledgesharing.common.entity.Article;
+import com.hanghae.knowledgesharing.common.entity.FlashcardSet;
 import com.hanghae.knowledgesharing.common.entity.User;
 import com.hanghae.knowledgesharing.common.exception.CustomException;
 import com.hanghae.knowledgesharing.common.exception.ErrorCode;
 import com.hanghae.knowledgesharing.user.dto.request.PatchPasswordRequestDto;
 import com.hanghae.knowledgesharing.user.dto.request.PatchProfileImageRequestDto;
-import com.hanghae.knowledgesharing.user.dto.response.ArticleInfo;
-import com.hanghae.knowledgesharing.user.dto.response.GetSignInUserResponseDto;
-import com.hanghae.knowledgesharing.user.dto.response.GetUserResponseDto;
-import com.hanghae.knowledgesharing.user.dto.response.UserArticleResponseDto;
+import com.hanghae.knowledgesharing.user.dto.response.*;
 import com.hanghae.knowledgesharing.user.repository.UserRepository;
 import com.hanghae.knowledgesharing.user.sevice.UserService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +31,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     private final ArticleRepository articleRepository;
+
+    private final CardSetRepository cardSetRepository;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
@@ -114,4 +115,38 @@ public class UserServiceImpl implements UserService {
 
         return  new UserArticleResponseDto(articleInfos,pageable.getPageNumber(), pageable.getPageSize(), articlePage.getTotalElements());
     }
+
+
+    @Override
+    public UserQuizResponseDto getUserQuiz(String userId, Pageable pageable) {
+        User user = userRepository.findByUserId(userId);
+        if(user == null){
+            throw new CustomException(ErrorCode.UserNotFound);
+        }
+        Page<FlashcardSet> flashcardSetPage = cardSetRepository.getUserFlashCardSet(userId,pageable);
+
+        // 플래시카드 세트 엔티티를 FlashcardSetSimpleDto로 변환
+        List<UserQuizResponseDto.FlashcardSetSimpleDto> flashcardSetDtos = flashcardSetPage.getContent().stream()
+                .map(flashcardSet -> new UserQuizResponseDto.FlashcardSetSimpleDto(
+                        flashcardSet.getId(),
+                        flashcardSet.getTitle(),
+                        flashcardSet.getDescription() // content 필드는 description으로 가정
+                ))
+                .collect(Collectors.toList());
+
+
+        // UserQuizResponseDto 생성 및 반환
+        return new UserQuizResponseDto(
+                flashcardSetDtos,
+                flashcardSetPage.getNumber(),
+                flashcardSetPage.getSize(),
+                flashcardSetPage.getTotalElements()
+        );
+
+    }
+
+
+
+
+
 }

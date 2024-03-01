@@ -1,6 +1,6 @@
 #main-left-one {
-    height: 180px;
-    width: 420px;
+    height: 360px;
+    width: 440px;
     display: flex;
     flex-direction: column;
     gap: 10px; /* 아티클 사이의 간격 */

@@ -1,6 +1,6 @@
 import './style.css';
 import {useCookies} from "react-cookie";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Pagination from "../../../components/Pagination";
 import {Link, useNavigate} from "react-router-dom";
@@ -18,7 +18,7 @@ export default function MyArticles(){
     const [articles, setArticles] = useState<Article[]>([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
-    const pageSize = 4; // Assuming a constant page size
+    const pageSize = 9; // Assuming a constant page size
     const navigate = useNavigate(); // Use the useNavigate hook
 
   //
@@ -26,7 +26,7 @@ export default function MyArticles(){
     useEffect(() => {
         const fetchMyArticles = async () => {
             try {
-                const response = await axios.get(`http://localhost:4040/api/v1/users/myArticles?page=${currentPage}&size=${pageSize}`, {
+                const response = await axios.get(`http://localhost:4040/api/v1/users/my-articles?page=${currentPage}&size=${pageSize}`, {
                     headers: {
                         'Authorization': `Bearer ${cookies.accessToken}`,
                     },
@@ -46,6 +46,8 @@ export default function MyArticles(){
     };
     return(
         <section id='main-left-one'>
+
+            <h2 className="flex justify-center">내가쓴 게시글</h2>
 
             {articles.map((article) => (
                 <div key={article.id} className="article-preview">

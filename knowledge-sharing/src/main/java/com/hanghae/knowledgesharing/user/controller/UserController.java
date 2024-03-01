@@ -7,6 +7,7 @@ import com.hanghae.knowledgesharing.user.dto.request.PatchProfileImageRequestDto
 import com.hanghae.knowledgesharing.user.dto.response.GetSignInUserResponseDto;
 import com.hanghae.knowledgesharing.user.dto.response.GetUserResponseDto;
 import com.hanghae.knowledgesharing.user.dto.response.UserArticleResponseDto;
+import com.hanghae.knowledgesharing.user.dto.response.UserQuizResponseDto;
 import com.hanghae.knowledgesharing.user.sevice.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -84,7 +85,7 @@ public class UserController {
 
 
     @Operation(summary = "내가 쓴글 조회", description = "내가 쓴글 조회.")
-    @GetMapping("/myArticles")
+    @GetMapping("/my-articles")
     public ResponseDto<UserArticleResponseDto> getUserArticles(
             @AuthenticationPrincipal String  userId,
             @PageableDefault Pageable pageable){
@@ -92,6 +93,16 @@ public class UserController {
         UserArticleResponseDto response = userService.getUserArticles(userId,pageable );
         return  ResponseDto.success(response);
     }
+    @Operation(summary = "내가 쓴퀴즈 조회", description = "내가 쓴퀴즈 조회.")
+    @GetMapping("/my-quiz")
+    public ResponseDto<UserQuizResponseDto> getUserQuiz(
+            @AuthenticationPrincipal String  userId,
+            @PageableDefault Pageable pageable){
+
+        UserQuizResponseDto response = userService.getUserQuiz(userId,pageable);
+        return  ResponseDto.success(response);
+    }
+
 
 
 
