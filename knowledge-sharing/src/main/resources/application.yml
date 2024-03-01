@@ -7,26 +7,26 @@ server:
       force: true
 
 spring:
-  profiles:
-    active: db, jwt, mail, s3 ,oauth
   datasource:
-    driver-class-name: ${driver-class-name}
-    url: ${url}
-    username: ${username_}
-    password: ${password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(NNagm7HUOgOAm5JKunXE0mGUkoAcvQITc5ZnS+sKvyBEj/pMga2Dy58A57mIipv79TmBlrTwcVBI3kLi31CO1ps04Z5ALmuw83/2Rs8wS7RfSfkroFXqMY7Ty65IvGpf4OYNZqvU0eo=)
+    username: ENC(sAxGMaGwANmdGhzv1z0Syg==)
+    password: ENC(LOjsqwSFgoVgARXo4KVMpLRWXzSETUEi)
+
+
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
         format_sql: true
         show_sql: true
     database-platform: org.hibernate.dialect.MySQLDialect
   mail:
-    host: ${host}
-    port: ${port}
-    username: ${mail-name}
-    password: ${mail-pw}
+    host: smtp.gmail.com
+    port: 587
+    username: ENC(7PuKKOb0jSMJUxBZY/Alsj8Rm1QaTfTfbGQU1jglJHw=)
+    password: ENC(6zWY/jW56r7nJmnvAlwqkGW/z12xIV5VxMoYrF8g57A=)
     properties:
       mail:
         smtp:
@@ -38,8 +38,8 @@ spring:
       client:
         registration:
           kakao:
-            client-id: ${kakao-client-id}
-            client-secret: ${kakao-client-secret}
+            client-id: ENC(lN/Xa0LYwIKYD36v3rXP+93ehShimctF7t/xJMbYXTHADd1VY2HvK86SoHVfhYSx)
+            client-secret: ENC(9CJ51wZRFl7YrevWFuQPc329oqcBsjo6SRtPWAEBNpqOLER/syKrHrhLcSVygYGK)
 
             redirect-uri: '{baseUrl}/oauth2/callback/{registrationId}'
             authorization-grant-type: authorization_code
@@ -49,8 +49,8 @@ spring:
               - profile_nickname
               - account_email
           naver:
-            client-id: ${naver-client-id}
-            client-secret: ${naver-client-secret}
+            client-id: ENC(obUIqzVRKabOVJGtYW12SrYHwBnwrftM/K4lTtjzaPo=)
+            client-secret: ENC(aMn1+v9uHBUNAiatXGD0hasgdYceG1A8)
 
             redirect-uri: '{baseUrl}/oauth2/callback/{registrationId}'
             authorization-grant-type: authorization_code
@@ -76,10 +76,10 @@ spring:
 cloud:
   aws:
     credentials:
-      access-key: ${accessKey}
-      secret-key: ${secretKey}
+      access-key: ENC(N03M2no7K9/xvFNvYkHwAU1uiN2IboQ8V5spR8hKRp0=)
+      secret-key: ENC(yO9t9VD3wr5PUnSNCttQqMqvIRRXGuw1ZKiT/NkguznZc2MptT+nMr/oX0//cg0/RroQvZRCFyw=)
     s3:
-      bucket: ${bucketName}
+      bucket: ENC(mQStqKUDxgmmeoSr9vrVAnQ3HG+pWhlxZk7BrtWfpIk=)
     region:
       static: ap-northeast-2
     stack:
@@ -90,3 +90,6 @@ logging:
       springframework:
         security:
           DEBUG
+
+secret-key: ENC(3FGPF5Z13b5WvsumK+tx/A1XtAc9P/BqFro29ldlQKwgBex4X3qBuUlTkDvALTlXHUT+wP1N3sQ3LDukRzZOVSNJUwzMAaXoJDjhIrnvh49ui3f0Kz8R0BJ2viSnE506)
+
