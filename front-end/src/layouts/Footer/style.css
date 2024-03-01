@@ -1,0 +1,61 @@
+:root {
+    --text-01: #45413E;
+    --light-01: #F9F9F9;
+    --light-02: #FFFFFF;
+    --brand-01: #DB7F67;
+    --brand-02: #F4CFC6;
+    --card-hover: 0px 4px 24px rgba(0, 0, 0, 0.15);
+    --card-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+    --hover-timing: all 0.2s ease;
+    --nav-card-size: 240px;
+
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    scroll-behavior: smooth;
+
+
+}
+
+
+
+footer {
+    flex-direction: row;
+    text-align: left;
+    height: 500px;
+}
+
+footer {
+    background: var(--text-01);
+    padding: 80px 80px 0px;
+    display: flex;
+}
+
+
+
+footer ul {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 24px;
+    box-shadow: none;
+    flex: 1;
+    color: var(--light-01);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 80px;
+
+}
+
+
+footer ul li a {
+    color: var(--light-01);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+
+footer ul li {
+    color: var(--light-01);
+    padding: 0;
+
+}
+

@@ -1,0 +1,9 @@
+.hashtag-input-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.hashtag-input {
+    flex: 1;
+    min-width: 120px;
+}

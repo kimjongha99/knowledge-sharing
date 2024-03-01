@@ -1,0 +1,53 @@
+#main-right-three {
+    height: 236px;
+    overflow-y: auto; /* Will only add a scrollbar if necessary */
+
+}
+/* style.css */
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Adjust the space between buttons */
+    margin-top: 20px; /* Space above the pagination controls */
+}
+
+.pagination button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff; /* Bootstrap primary color for example */
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination button:disabled {
+    background-color: #cccccc;
+    cursor: default;
+}
+
+.pagination button:hover:not(:disabled) {
+    background-color: #0056b3; /* A slightly darker shade for hover effect */
+}
+
+.pagination span {
+    font-size: 16px;
+}
+.following-list {
+    list-style-type: none; /* Removes default list styling */
+    padding: 0;
+    margin: 0;
+}
+
+.following-list li {
+    background-color: #f9f9f9; /* Light grey background */
+    border: 1px solid #ddd; /* Light grey border */
+    padding: 10px;
+    margin-bottom: 5px; /* Space between list items */
+    border-radius: 5px; /* Rounded corners for each list item */
+}
+
+.following-list li:hover {
+    background-color: #efefef; /* Slightly darker on hover */
+}

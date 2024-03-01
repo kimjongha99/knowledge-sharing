@@ -1,0 +1,18 @@
+#main-left-one {
+    height: 360px;
+    width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* 아티클 사이의 간격 */
+    padding: 10px; /* 내부 패딩 */
+}
+
+.article-preview {
+    height: 20px;
+    display: flex;
+    align-items: center; /* 내부 요소를 수직 중앙에 정렬 */
+    justify-content: start; /* 내부 요소를 수평 시작점에서 정렬 */
+    gap: 10px; /* 내부 요소 사이의 간격 */
+    padding: 0 10px; /* 좌우 패딩 */
+    border-bottom: 1px solid #eee; /* 아티클 사이에 경계선 추가 */
+}

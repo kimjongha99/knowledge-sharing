@@ -1,0 +1,46 @@
+.input-group {
+    margin-bottom: 1rem;
+}
+.input-group input[type="text"] {
+    width: calc(100% - 4.5rem);
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+}
+.input-group button {
+    width: 4rem;
+    padding: 0.5rem;
+    background-color: #f3f4f6;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+.comment {
+    border-top: 1px solid #e5e5e5;
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+}
+.comment-id {
+    font-size: 0.875rem;
+    color: #555;
+}
+.comment-content {
+    margin: 0.5rem 0;
+}
+.comment-author {
+    font-size: 0.875rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+.comment-actions {
+    text-align: right;
+}
+.comment-actions button {
+    background-color: #f3f4f6;
+    border: 1px solid #ddd;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}

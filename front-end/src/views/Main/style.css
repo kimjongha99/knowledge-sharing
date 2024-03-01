@@ -1,0 +1,8 @@
+
+#top-3-articles {
+    display: flex; /* Use Flexbox for layout */
+    width: 1200px; /* Set the width of the container */
+    height: 200px; /* Set the height of the container */
+    /* 컨테이너를 가로 중앙에 배치 */
+    margin: 20px auto 0;
+}

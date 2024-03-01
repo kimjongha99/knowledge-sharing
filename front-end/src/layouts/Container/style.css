@@ -1,0 +1,28 @@
+#wrap {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full height of the viewport */
+
+}
+
+#content {
+    display: flex;
+    flex: 1;
+
+}
+
+#wrap-main {
+    flex-grow: 1; /* Ensures it takes up the rest of the space */
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+#sidebar {
+    width: 250px; /* Adjust the width as necessary */
+    background: rgb(73, 57, 113);
+    border-radius: 0 15px 15px 0 ;
+    min-height: 800px; /* Full height of the viewport */
+
+
+}
+
