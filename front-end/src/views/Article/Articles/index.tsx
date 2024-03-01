@@ -1,10 +1,10 @@
 import './style.css';
 import {useCookies} from "react-cookie";
 import {useEffect, useState} from "react";
-import axios from "axios";
 import {useUserStore} from "../../../stores/userStore";
 import Pagination from "../../../components/Pagination";
 import {Link, useNavigate} from "react-router-dom";
+import axiosInstance from "../../../api/axios";
 
 interface Article {
     boardId: number;
@@ -37,7 +37,7 @@ export default function Articles(){
         const fetchArticles = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:4040/api/v1/articles?page=${currentPage}&size=5`, {
+                const response = await axiosInstance.get(`/api/v1/articles?page=${currentPage}&size=5`, {
                     headers: {
                         Authorization: `Bearer ${cookies.accessToken}`,
                         'Accept': '*/*',

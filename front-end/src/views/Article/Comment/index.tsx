@@ -1,9 +1,9 @@
 import {useCookies} from "react-cookie";
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import {useParams} from "react-router-dom";
 import Pagination from "../../../components/Pagination";
 import {useUserStore} from "../../../stores/userStore";
+import axiosInstance from "../../../api/axios";
 interface CommentItem {
     id: number;
     content: string;
@@ -27,7 +27,7 @@ function Comments() {
         // This function is now inside useEffect to capture currentPage changes
         const fetchComments = async () => {
             try {
-                const response = await axios.get(`http://localhost:4040/api/v1/comments/${articleId}/comment?page=${currentPage}&size=3`, {
+                const response = await axiosInstance.get(`/api/v1/comments/${articleId}/comment?page=${currentPage}&size=3`, {
                     headers: { Authorization: `Bearer ${cookies.accessToken}` },
                 });
                 setComments(response.data.data.content);
@@ -44,7 +44,7 @@ function Comments() {
 
     const fetchComments = async (page: number) => {
         try {
-            const response = await axios.get(`http://localhost:4040/api/v1/comments/${articleId}/comment?page=${page}&size=3`, {
+            const response = await axiosInstance.get(`/api/v1/comments/${articleId}/comment?page=${page}&size=3`, {
                 headers: { Authorization: `Bearer ${cookies.accessToken}` },
             });
             setComments(response.data.data.content);
@@ -68,7 +68,7 @@ function Comments() {
         if (!commentInput.trim()) return;
 
         try {
-            await axios.post(`http://localhost:4040/api/v1/comments/${articleId}/comment`, { content: commentInput }, {
+            await axiosInstance.post(`/api/v1/comments/${articleId}/comment`, { content: commentInput }, {
                 headers: { Authorization: `Bearer ${cookies.accessToken}` },
             });
             fetchComments(currentPage); // Refresh comments
@@ -82,7 +82,7 @@ function Comments() {
 
     const handleDeleteComment = async (commentId: number) => {
         try {
-            await axios.delete(`http://localhost:4040/api/v1/comments/${commentId}/comment`, {
+            await axiosInstance.delete(`/api/v1/comments/${commentId}/comment`, {
                 headers: { Authorization: `Bearer ${cookies.accessToken}` },
             });
             fetchComments(currentPage); // Refresh comments
@@ -106,7 +106,7 @@ function Comments() {
         if (!editCommentContent.trim()) return;
 
         try {
-            await axios.patch(`http://localhost:4040/api/v1/comments/${commentId}/comment`, { content: editCommentContent }, {
+            await axiosInstance.patch(`/api/v1/comments/${commentId}/comment`, { content: editCommentContent }, {
                 headers: { Authorization: `Bearer ${cookies.accessToken}` },
             });
             setEditingCommentId(null);

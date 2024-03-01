@@ -2,6 +2,7 @@ import './style.css';
 import React, {SetStateAction, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import axiosInstance from "../../api/axios";
 
 export default function SignUp() {
     const [id, setId] = useState<string>('');
@@ -26,7 +27,7 @@ export default function SignUp() {
     const checkIdDuplicate = async () => {
         try {
             // Make the POST request to check ID
-            const response = await axios.post('http://localhost:4040/api/v1/auth/id-check', {id});
+            const response = await axiosInstance.post('/api/v1/auth/id-check', {id});
             // Handle success response
             if (response.status === 200) {
                 // Set message from the response data
@@ -57,7 +58,7 @@ export default function SignUp() {
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
     const sendEmailCertification = async () => {
         try {
-            const response = await axios.post('http://localhost:4040/api/v1/auth/email-certification', {
+            const response = await axiosInstance.post('/api/v1/auth/email-certification', {
                 email,
                 id
             });
@@ -85,7 +86,7 @@ export default function SignUp() {
     };
     const verifyCertificationNumber = async () => {
         try {
-            const response = await axios.post('http://localhost:4040/api/v1/auth/check-certification', {
+            const response = await axiosInstance.post('/api/v1/auth/check-certification', {
                 email,
                 id,
                 certificationNumber
@@ -143,7 +144,7 @@ export default function SignUp() {
             console.log('Password and confirm password do not match.');
         }
         try {
-            await axios.post('http://localhost:4040/api/v1/auth/sign-up', {
+            await axiosInstance.post('/api/v1/auth/sign-up', {
                 email,
                 id,
                 password,

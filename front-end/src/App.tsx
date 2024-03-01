@@ -7,11 +7,9 @@ import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
 import {useUserStore} from "./stores/userStore";
 import {useCookies} from "react-cookie";
-import axios from "axios";
 import MyPage from "./views/MyPage";
 import Articles from "./views/Article/Articles";
 import ArticleDetail from "./views/Article/ArticleDetail";
-import Test from "./views/Test";
 import ArticlePost from "./views/Article/ArticlePost";
 import Practice from "./views/Practice";
 import QuizPost from "./views/Quiz/QuizPost";
@@ -19,6 +17,7 @@ import QuizDetail from "./views/Quiz/QuizDetail";
 import Exam from "./views/Exam";
 import ExamDetail from "./views/Exam/ExamDetail";
 import QuizEdit from "./views/Quiz/QuizEdit";
+import axiosInstance from "./api/axios";
 
 function App() {
     const { user, setUser } = useUserStore();
@@ -42,7 +41,7 @@ function App() {
 
     const refreshAccessToken = async () => {
         try {
-            await axios.post('http://localhost:4040/api/v1/auth/refresh', {
+            await axiosInstance.post('/api/v1/auth/refresh', {
                 refreshToken: cookies.refreshToken,
             }, {
                 withCredentials: true,
@@ -58,7 +57,7 @@ function App() {
     const fetchUserData = async () => {
         if (cookies.accessToken) {
             try {
-                const response = await axios.get('http://localhost:4040/api/v1/users', {
+                const response = await axiosInstance.get('/api/v1/users', {
                     headers: { Authorization: `Bearer ${cookies.accessToken}` },
                     withCredentials: true,
                 });

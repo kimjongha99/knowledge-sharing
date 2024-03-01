@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import {useNavigate} from "react-router-dom";
+import axiosInstance from "../../../api/axios";
 
 interface ArticleForm {
     title: string;
@@ -46,7 +46,7 @@ const ArticlePost: React.FC = () => {
         formData.append('file', file);
 
         try {
-            const response = await axios.post('http://localhost:4040/api/files/upload/article', formData, {
+            const response = await axiosInstance.post('/api/files/upload/article', formData, {
                 headers: {
                     'Authorization': `Bearer ${cookies.accessToken}`,
                 },
@@ -72,7 +72,7 @@ const ArticlePost: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:4040/api/v1/articles', articleForm, {
+            await axiosInstance.post('/api/v1/articles', articleForm, {
                 headers: {
                     'Authorization': `Bearer ${cookies.accessToken}`,
                     'Content-Type': 'application/json',

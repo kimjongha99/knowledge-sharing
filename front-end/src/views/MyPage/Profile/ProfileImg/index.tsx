@@ -1,17 +1,21 @@
 import './style.css';
-import axios from "axios";
 import {ChangeEvent, useEffect, useRef, useState} from "react";
 import {useCookies} from "react-cookie";
 import {useUserStore} from "../../../../stores/userStore";
+import axiosInstance from "../../../../api/axios";
+
+
+
+
 const uploadFileApi = async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
-    const response = await axios.post('http://localhost:4040/api/files/upload', formData);
+    const response = await axiosInstance.post('/api/files/upload', formData);
     return response.data; // Returns the URL of the uploaded image
 };
 
 const updateProfileImageApi = async (profileImageUrl: string, accessToken: string) => {
-    await axios.patch('http://localhost:4040/api/v1/users/profile-image', {
+    await axiosInstance.patch('/api/v1/users/profile-image', {
         profileImageUrl: profileImageUrl // <- Change this line
     }, {
         headers: { 'Authorization': `Bearer ${accessToken}` }
