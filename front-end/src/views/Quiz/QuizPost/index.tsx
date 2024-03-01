@@ -1,8 +1,8 @@
 import './style.css';
 import React, {useState} from "react";
-import axios from "axios";
 import {useCookies} from "react-cookie";
 import {useNavigate} from "react-router-dom";
+import axiosInstance from "../../../api/axios";
 
 
 interface Flashcard {
@@ -50,7 +50,7 @@ export default function QuizPost(){
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:4040/api/v1/card-set', {
+            await axiosInstance.post('/api/v1/card-set', {
                 title,
                 description,
                 hashtags,

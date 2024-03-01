@@ -33,7 +33,13 @@ dependencies {
     implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
 
     compileOnly 'org.projectlombok:lombok'
+
+
     runtimeOnly 'com.mysql:mysql-connector-j'
+
+
+
+
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -53,7 +59,8 @@ dependencies {
     //aop
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '3.0.5'
 
-
+    //jasypt
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
 }
 
 // querydsl에서 사용할 경로 설정

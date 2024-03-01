@@ -1,7 +1,7 @@
 import './style.css';
 import {useEffect, useState} from "react";
-import axios from "axios";
 import {Link} from "react-router-dom";
+import axiosInstance from "../../../api/axios";
 
 interface top3Articles{
     id: number ;
@@ -15,7 +15,7 @@ export default function Top3() {
 
     useEffect(() => {
         // Using Axios to fetch data
-        axios.get('http://localhost:4040/api/v1/articles/top-favorites')
+        axiosInstance.get('/api/v1/articles/top-favorites')
             .then(response => {
                 // Check if the status code is 200 and data is present
                 if (response.status === 200 && response.data.data) {

@@ -1,9 +1,9 @@
 import './style.css';
 import {useCookies} from "react-cookie";
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import Pagination from "../../../components/Pagination";
 import {Link, useNavigate} from "react-router-dom";
+import axiosInstance from "../../../api/axios";
 
 interface Article {
     id: number;
@@ -26,7 +26,7 @@ export default function MyArticles(){
     useEffect(() => {
         const fetchMyArticles = async () => {
             try {
-                const response = await axios.get(`http://localhost:4040/api/v1/users/my-articles?page=${currentPage}&size=${pageSize}`, {
+                const response = await axiosInstance.get(`/api/v1/users/my-articles?page=${currentPage}&size=${pageSize}`, {
                     headers: {
                         'Authorization': `Bearer ${cookies.accessToken}`,
                     },

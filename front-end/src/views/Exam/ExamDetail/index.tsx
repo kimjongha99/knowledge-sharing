@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
-import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
+import axiosInstance from "../../../api/axios";
 
 interface QuizDetail {
     realId: Number;
@@ -40,7 +40,7 @@ function ExamDetail() {
 
     useEffect(() => {
         const fetchQuizzes = async () => {
-            const response = await axios.get<ApiResponse>(`http://localhost:4040/api/v1/quiz/${cardSetId}`);
+            const response = await axiosInstance.get<ApiResponse>(`/api/v1/quiz/${cardSetId}`);
             setQuizzes(response.data.data);
         };
 
@@ -100,14 +100,7 @@ function ExamDetail() {
         return "bg-gray-200 hover:bg-gray-300";
     };
 
-    useEffect(() => {
-        const fetchQuizzes = async () => {
-            const response = await axios.get<ApiResponse>('http://localhost:4040/api/v1/quiz/5');
-            setQuizzes(response.data.data);
-        };
 
-        fetchQuizzes();
-    }, []);
 
     const currentQuestion = currentQuiz?.quizDetailList[currentIndex];
 

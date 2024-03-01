@@ -74,7 +74,7 @@ public class WebSecurityConfig {
     protected CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // Frontend's URL
+        corsConfiguration.setAllowedOrigins(Arrays.asList("https://knowledge-sharing-98a68ftp0-kimjongha99s-projects.vercel.app")); // Frontend's URL
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
         corsConfiguration.setAllowCredentials(true); // Allow credentials

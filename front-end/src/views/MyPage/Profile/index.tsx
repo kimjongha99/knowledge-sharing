@@ -3,8 +3,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useUserStore} from "../../../stores/userStore";
 import {useCookies} from "react-cookie";
 import {useState} from "react";
-import axios from "axios";
 import ProfileImg from "./ProfileImg";
+import axiosInstance from "../../../api/axios";
 
 export default function Profile(){
     const [newPassword, setNewPassword] = useState(''); // State to hold the new password input by the user
@@ -35,7 +35,7 @@ export default function Profile(){
         e.preventDefault(); // Prevent the default form submission behavior
 
         try {
-            const response = await axios.patch('http://localhost:4040/api/v1/users/password', {
+            const response = await axiosInstance.patch('/api/v1/users/password', {
                 newPassword: newPassword,
             }, {
                 headers: {

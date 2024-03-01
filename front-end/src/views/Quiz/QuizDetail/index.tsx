@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './style.css';
-import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
+import axiosInstance from "../../../api/axios";
 
 
 
@@ -27,7 +27,7 @@ function QuizDetail (){
 
     useEffect(() => {
         const fetchCards = async () => {
-            const response = await axios.get<ApiResponse>( `http://localhost:4040/api/v1/card-set/${cardSetId}`);
+            const response = await axiosInstance.get<ApiResponse>( `/api/v1/card-set/${cardSetId}`);
             setCards(response.data.data);
         };
 

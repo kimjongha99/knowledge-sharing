@@ -1,10 +1,10 @@
 import './style.css';
 import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import {useUserStore} from "../../../stores/userStore";
 import {useCookies} from "react-cookie";
 import Comment from "../Comment";
+import axiosInstance from "../../../api/axios";
 
 
 interface Article {
@@ -73,7 +73,7 @@ export default function ArticleDetail(){
         formData.append('file', file);
 
         try {
-            const response = await axios.post('http://localhost:4040/api/files/upload/article', formData, {
+            const response = await axiosInstance.post('/api/files/upload/article', formData, {
                 headers: {
                     'Authorization': `Bearer ${cookies.accessToken}`,
                 },
@@ -88,7 +88,7 @@ export default function ArticleDetail(){
     const handleUpdate = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         try {
-            await axios.patch(`http://localhost:4040/api/v1/articles/${articleId}`, formData, {
+            await axiosInstance.patch(`/api/v1/articles/${articleId}`, formData, {
                 headers: { Authorization: `Bearer ${cookies.accessToken}` },
             });
             navigate('/articles'); // Redirect to articles list on success
@@ -108,7 +108,7 @@ export default function ArticleDetail(){
                 headers: { Authorization: `Bearer ${cookies.accessToken}` },
             };
             // Replace followId and followingId with appropriate IDs
-            const response = await axios.post(`http://localhost:4040/api/v1/follows/${user.userId}/${article?.writer}`, {}, config);
+            const response = await axiosInstance.post(`/api/v1/follows/${user.userId}/${article?.writer}`, {}, config);
 
             // Correctly accessing the nested checkFollowEnum value
             const checkFollowEnum = response.data.data.checkFollowEnum;
@@ -132,7 +132,7 @@ export default function ArticleDetail(){
             const config = {
                 headers: { Authorization: `Bearer ${cookies.accessToken}` },
             };
-            await axios.delete(`http://localhost:4040/api/v1/articles/${articleId}`, config,
+            await axiosInstance.delete(`/api/v1/articles/${articleId}`, config,
         );
             navigate('/articles'); // Navigate to the articles page after successful deletion
         } catch (error) {
@@ -143,7 +143,7 @@ export default function ArticleDetail(){
     useEffect(() => {
         const fetchArticle = async () => {
             // Fetch article logic...
-            const response = await axios.get(`http://localhost:4040/api/v1/articles/${articleId}`);
+            const response = await axiosInstance.get(`/api/v1/articles/${articleId}`);
             setArticle(response.data.data);
             // Populate form data with the fetched article
             setFormData({
@@ -163,7 +163,7 @@ export default function ArticleDetail(){
                     const config = {
                         headers: { Authorization: `Bearer ${cookies.accessToken}` }
                     };
-                    await axios.get(`http://localhost:4040/api/v1/articles/${articleId}/increase-view`, config);
+                    await axiosInstance.get(`/api/v1/articles/${articleId}/increase-view`, config);
                 }
             } catch (error) {
                 console.error('Error incrementing view count:', error);
@@ -198,8 +198,8 @@ export default function ArticleDetail(){
             const requestBody = {
                 actionType: actionType,
             };
-            await axios.put(`http://localhost:4040/api/v1/articles/${articleId}/favorite`, requestBody, config);
-            const updatedArticleResponse = await axios.get(`http://localhost:4040/api/v1/articles/${articleId}`);
+            await axiosInstance.put(`/api/v1/articles/${articleId}/favorite`, requestBody, config);
+            const updatedArticleResponse = await axiosInstance.get(`/api/v1/articles/${articleId}`);
             setArticle(updatedArticleResponse.data.data); // Assuming the response structure is the same
         } catch (error: any) {
             if (error.response) {

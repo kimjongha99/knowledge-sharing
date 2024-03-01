@@ -1,9 +1,9 @@
 import './style.css';
 import {useCookies} from "react-cookie";
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import Pagination from "../../../components/Pagination";
 import {Link, useNavigate} from "react-router-dom";
+import axiosInstance from "../../../api/axios";
 
 interface Quiz {
     id: number;
@@ -20,7 +20,7 @@ export default function MyQuiz() {
     const navigate = useNavigate(); // Use the useNavigate hook
     const handleDelete = async (quizId: any) => {
         try {
-            const response = await axios.delete(`http://localhost:4040/api/v1/card-set/${quizId}`, {
+            const response = await axiosInstance.delete(`/api/v1/card-set/${quizId}`, {
                 headers: {
                     'Authorization': `Bearer ${cookies.accessToken}`, // 헤더에 Authorization 토큰을 포함
                 },
@@ -43,7 +43,7 @@ export default function MyQuiz() {
     useEffect(() => {
         const fetchMyQuiz = async () => {
             try {
-                const response = await axios.get(`http://localhost:4040/api/v1/users/my-quiz?page=${currentPage}&size=${pageSize}`, {
+                const response = await axiosInstance.get(`/api/v1/users/my-quiz?page=${currentPage}&size=${pageSize}`, {
                     headers: {
                         'Authorization': `Bearer ${cookies.accessToken}`,
                     },

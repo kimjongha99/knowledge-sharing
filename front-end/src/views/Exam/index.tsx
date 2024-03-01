@@ -1,9 +1,10 @@
 import './style.css';
 import {useEffect, useState} from "react";
-import axios from "axios";
 import Pagination from "../../components/Pagination";
 import {Link, useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
+import axiosInstance from "../../api/axios";
+import axios from "axios";
 
 
 interface FlashcardSet {
@@ -35,7 +36,6 @@ interface FlashcardSet {
 
 
 
-
      const handleSearch = async (page: number = currentPage) => {
          const params = new URLSearchParams({
              page: String(page ), // 페이지 인덱스는 0부터 시작하므로 1을 빼줍니다.
@@ -47,7 +47,7 @@ interface FlashcardSet {
          }
 
          try {
-             const response = await axios.get('http://localhost:4040/api/v1/card-set', { params });
+             const response = await axiosInstance.get('/api/v1/card-set', { params });
              setFlashcardSets(response.data.data.flashcardSets);
              setTotalPages(response.data.data.totalPages); // 총 페이지 수를 설정합니다.
              console.log(response.data);

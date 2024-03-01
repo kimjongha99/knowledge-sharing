@@ -1,6 +1,7 @@
 import './style.css';
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import axiosInstance from "../../api/axios";
 import axios from "axios";
 
 export default function SignIn(){
@@ -14,7 +15,7 @@ export default function SignIn(){
         e.preventDefault(); // Prevent the form from submitting in the traditional way
 
         try {
-            const response = await axios.post('http://localhost:4040/api/v1/auth/sign-in', {
+            const response = await axiosInstance.post('/api/v1/auth/sign-in', {
                 id,
                 password,
             },

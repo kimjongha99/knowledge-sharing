@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 import {useCookies} from "react-cookie";
-import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
 import {useUserStore} from "../../../stores/userStore";
+import axiosInstance from "../../../api/axios";
 
 interface Flashcard {
     term: string;
@@ -40,7 +40,7 @@ function QuizEdit() {
         e.preventDefault(); // 폼 제출의 기본 동작을 방지합니다.
 
         try {
-            const response = await axios.put(`http://localhost:4040/api/v1/card-set/${cardSetId}`, {
+            const response = await axiosInstance.put(`/api/v1/card-set/${cardSetId}`, {
                 title,
                 description,
                 hashtags,
@@ -67,15 +67,20 @@ function QuizEdit() {
         }
     };
     useEffect(() => {
-        fetch(`http://localhost:4040/api/v1/card-set/detail/${cardSetId}`)
-            .then((response) => response.json())
-            .then((data: { statusCode: number; data: FlashcardSetDetail }) => {
-                const { title, description, hashtags, flashcards } = data.data;
+        const fetchCardSetDetail = async () => {
+            try {
+                const response = await axiosInstance.get(`/api/v1/card-set/detail/${cardSetId}`);
+                const { title, description, hashtags, flashcards } = response.data.data;
                 setTitle(title);
                 setDescription(description);
                 setHashtags(hashtags);
                 setFlashcards(flashcards);
-            });
+            } catch (error) {
+                console.error('Error fetching card set detail:', error);
+            }
+        };
+
+        fetchCardSetDetail();
     }, []);
 
     const addFlashcard = () => {

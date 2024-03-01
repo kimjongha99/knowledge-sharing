@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import axios from 'axios';
 import { useUserStore } from '../../../stores/userStore';
 import './style.css';
+import axiosInstance from "../../../api/axios";
 
 interface FollowingUser {
     userId: string;
@@ -24,7 +24,7 @@ export default function ToFollow() {
             if (!user?.userId) return;
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:4040/api/v1/follows/${user.userId}/followers?page=${currentPage}&size=3`, {
+                const response = await axiosInstance.get(`/api/v1/follows/${user.userId}/followers?page=${currentPage}&size=3`, {
                     headers: {
                         Authorization: `Bearer ${cookies.accessToken}`,
                         'Accept': '*/*',

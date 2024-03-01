@@ -1,8 +1,8 @@
 import './style.css';
 import {useEffect, useState} from "react";
-import axios from "axios";
 import Pagination from "../../../components/Pagination";
 import {Link} from "react-router-dom";
+import axiosInstance from "../../../api/axios";
 
 
 interface Article {
@@ -41,7 +41,7 @@ function SearchHashtag() {
 
     const fetchData = async (searchTag: string, page: number) => {
         try {
-            const response = await axios.get<ApiResponse>(`http://localhost:4040/api/v1/hashtag/${searchTag}?page=${page}&size=2`);
+            const response = await axiosInstance.get<ApiResponse>(`/api/v1/hashtag/${searchTag}?page=${page}&size=2`);
             setData(response.data.data);
             // Calculate total pages using totalElements and size
             const totalPagesCalc = Math.ceil(response.data.data.totalElements / response.data.data.size);
