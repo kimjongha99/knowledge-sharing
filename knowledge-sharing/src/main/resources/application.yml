@@ -1,10 +1,19 @@
 server:
-  port: 4040
+  port: 443
   servlet:
     encoding:
       charset: UTF-8
       enabled: true
       force: true
+  ssl:
+    key-store: /opt/certs/knowledgeback.pfx
+    key-store-password:
+    key-store-type: PKCS12
+    enabled: true
+    trust-store: /opt/certs/trust.jks
+    trust-store-password:
+
+
 
 spring:
   datasource:
