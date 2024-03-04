@@ -29,7 +29,7 @@ export default function Top3() {
 
     return (
         <div>
-            <h2 id='top3-like'>주간 좋아요 TOP3</h2>
+            <h1 id='top3-like'>주간 좋아요 TOP3</h1>
         <div className="flex-container">
 
 
@@ -47,7 +47,7 @@ export default function Top3() {
                     </div>
                     <div className="card-footer">
                         <Link to={`/articles/${article.id}`}>
-                        <div className="button">게시글 바로보기</div>
+                        <div className="button">게시글 바로보기!</div>
                         </Link>
 
                 </div>
