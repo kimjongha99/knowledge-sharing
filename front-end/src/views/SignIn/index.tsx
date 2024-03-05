@@ -33,8 +33,8 @@ export default function SignIn(){
 
                 // Set tokens in cookies
                 // You might want to specify path, domain, secure (for https) and sameSite (for CSRF protection) based on your requirements
-                setCookie('accessToken', accessToken, { path: '/', maxAge: expirationTime });
-                setCookie('refreshToken', refreshToken, { path: '/', maxAge: 60 * 60 * 24 * 7 }); // For 7 days
+                setCookie('accessToken', accessToken, { path: '/', maxAge: expirationTime, secure: true, sameSite: 'none' });
+                setCookie('refreshToken', refreshToken, { path: '/', maxAge: 60 * 60 * 24 * 7, secure: true, sameSite: 'none' });
                 console.log('Cookies after setting:', cookies);
 
                 // Optionally, directly log the new tokens to ensure they are correct

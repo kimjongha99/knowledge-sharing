@@ -59,7 +59,7 @@ function App() {
                 withCredentials: true,
             });
             const { newAccessToken } = response.data; // 새로운 accessToken 받아오기
-            setCookie('accessToken', newAccessToken, { path: '/', maxAge: 3600 }); // 환경에 맞게 설정
+            setCookie('accessToken', newAccessToken, { path: '/', maxAge: 3600, secure: true, sameSite: 'none' });
             fetchUserData(); // 새 토큰으로 사용자 정보 가져오기
         } catch (error) {
             console.error('Failed to refresh access token:', error);
