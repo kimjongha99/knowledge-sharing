@@ -6,7 +6,6 @@ import Container from "./layouts/Container";
 import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
 import {useUserStore} from "./stores/userStore";
-import {useCookies} from "react-cookie";
 import MyPage from "./views/MyPage";
 import Articles from "./views/Article/Articles";
 import ArticleDetail from "./views/Article/ArticleDetail";
@@ -18,6 +17,7 @@ import Exam from "./views/Exam";
 import ExamDetail from "./views/Exam/ExamDetail";
 import QuizEdit from "./views/Quiz/QuizEdit";
 import axiosInstance from "./api/axios";
+import {useCookies} from "react-cookie";
 
 function App() {
     const { user, setUser } = useUserStore();
