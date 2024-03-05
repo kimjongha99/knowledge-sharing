@@ -57,7 +57,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
 
 
-        response.sendRedirect("https://knowledge-sharing-98a68ftp0-kimjongha99s-projects.vercel.app/");
+        response.sendRedirect("http://localhost:3000");
 
     }
 

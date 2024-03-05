@@ -64,8 +64,8 @@ public class WebSecurityConfig {
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(new FailedAuthenticationEntryPoint()) // 실패하면 NP 핸들링
                 )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // jwt 필터 등록
-                  .requiresChannel(channel -> channel.anyRequest().requiresSecure());
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) ;// jwt 필터 등록
+//                  .requiresChannel(channel -> channel.anyRequest().requiresSecure());
 
         return httpSecurity.build();
 

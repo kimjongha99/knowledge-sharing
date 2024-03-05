@@ -7,20 +7,20 @@ server:
       force: true
   ssl:
     key-store: /opt/certs/knowledgeback.pfx
-    key-store-password:
+    key-store-password: ENC(7C3DNMlGSb2InmCvn4Szvw3mhCPo41eK)
     key-store-type: PKCS12
     enabled: true
     trust-store: /opt/certs/trust.jks
-    trust-store-password:
+    trust-store-password: ENC(7C3DNMlGSb2InmCvn4Szvw3mhCPo41eK)
 
 
 
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ENC(NNagm7HUOgOAm5JKunXE0mGUkoAcvQITc5ZnS+sKvyBEj/pMga2Dy58A57mIipv79TmBlrTwcVBI3kLi31CO1ps04Z5ALmuw83/2Rs8wS7RfSfkroFXqMY7Ty65IvGpf4OYNZqvU0eo=)
-    username: ENC(sAxGMaGwANmdGhzv1z0Syg==)
-    password: ENC(LOjsqwSFgoVgARXo4KVMpLRWXzSETUEi)
+    url: ENC(CZ2YMIVrhkSEz6/88RbFU7qPuCOjXcy6gOkCV1kHaSlc1WHwGapQMZrJtmMqPEUb9UlQkiCX+c8BIOD6V6OJKmiNjEFcCaYVPD3yc3w09k/V2HvB8mpdZKPpalq/tI40U6fKg5ylvcU=)
+    username: ENC(rK1e6GskqhBvqmDI7QC0dQ==)
+    password: ENC(3IJk1Uf4VEkmg4mBLyqEk9p/MVb9YroB)
 
 
   jpa:

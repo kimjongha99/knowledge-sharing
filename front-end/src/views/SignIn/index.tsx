@@ -3,6 +3,7 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axiosInstance from "../../api/axios";
 import axios from "axios";
+import {useCookies} from "react-cookie";
 
 export default function SignIn(){
     const [id, setId] = useState('');
@@ -10,6 +11,7 @@ export default function SignIn(){
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
+    const [cookies, setCookie] = useCookies(['accessToken', 'refreshToken']);
 
     const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // Prevent the form from submitting in the traditional way
@@ -26,6 +28,19 @@ export default function SignIn(){
             );
 
             if (response.status === 200) {
+                // Extract tokens
+                const { accessToken, refreshToken, expirationTime } = response.data.data;
+
+                // Set tokens in cookies
+                // You might want to specify path, domain, secure (for https) and sameSite (for CSRF protection) based on your requirements
+                setCookie('accessToken', accessToken, { path: '/', maxAge: expirationTime, secure: true, sameSite: 'none' });
+                setCookie('refreshToken', refreshToken, { path: '/', maxAge: 60 * 60 * 24 * 7, secure: true, sameSite: 'none' });
+                console.log('Cookies after setting:', cookies);
+
+                // Optionally, directly log the new tokens to ensure they are correct
+                console.log('New accessToken:', accessToken);
+                console.log('New refreshToken:', refreshToken);
+
                 // Sign-in was successful, navigate to the home page
                 navigate('/');
             }
