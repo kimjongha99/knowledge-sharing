@@ -82,7 +82,7 @@ function App() {
               <Route path='sign-up' element={<SignUp/>} />
               <Route path='sign-in' element={<SignIn/>} />
           </Route>
-          <Route path='/us  er/:userId' element={<MyPage/>} />
+          <Route path='/user/:userId' element={<MyPage/>} />
 
 
           <Route path="/articles" element={<Articles />}/>
