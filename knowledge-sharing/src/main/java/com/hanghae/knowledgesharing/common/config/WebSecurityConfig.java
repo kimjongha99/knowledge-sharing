@@ -64,8 +64,8 @@ public class WebSecurityConfig {
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(new FailedAuthenticationEntryPoint()) // 실패하면 NP 핸들링
                 )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // jwt 필터 등록
-                  .requiresChannel(channel -> channel.anyRequest().requiresSecure());
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) ;// jwt 필터 등록
+//                  .requiresChannel(channel -> channel.anyRequest().requiresSecure());
 
         return httpSecurity.build();
 
@@ -75,7 +75,7 @@ public class WebSecurityConfig {
     protected CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Arrays.asList("https://knowledge-sharing-two.vercel.app/")); // Frontend's URL
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000/")); // Frontend's URL
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
         corsConfiguration.setAllowCredentials(true); // Allow credentials

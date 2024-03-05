@@ -21,9 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
@@ -129,57 +126,36 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override@Transactional
-    public SignInResponseDto signIn(SignInRequestDto dto , HttpServletResponse response) throws UnsupportedEncodingException {
+    public SignInResponseDto signIn(SignInRequestDto dto) {
 
-            String userId = dto.getId();
-            User user = userRepository.findByUserId(userId);
-            if(user == null){
-                throw new CustomException(ErrorCode.UserNotFound);
-            };
-            String password = dto.getPassword();
-            String encodedPassword = user.getPassword();
-            boolean isMatched = passwordEncoder.matches(password, encodedPassword);
-            if(!isMatched) {
-                throw new CustomException(ErrorCode.PasswordFail);
-            };
-        // Create tokens
-        String accessToken = jwtProvider.create(userId);
-        String refreshToken = jwtProvider.createRefreshToken(userId);
-        int expirationTime = 3600; // 1 hour for the access token
+        String userId = dto.getId();
+        User user = userRepository.findByUserId(userId);
+        if(user == null){
+            throw new CustomException(ErrorCode.UserNotFound);
+        };
+        String password = dto.getPassword();
+        String encodedPassword = user.getPassword();
+        boolean isMatched = passwordEncoder.matches(password, encodedPassword);
+        if(!isMatched) {
+            throw new CustomException(ErrorCode.PasswordFail);
+        };
 
-        // Set access token cookie
-        setCookie(response, "accessToken", accessToken, expirationTime, "/", false, "None", true);
-
-        // Set refresh token cookie, 7 days for the refresh token
-        setCookie(response, "refreshToken", refreshToken, 7 * 24 * 60 * 60, "/", false, "None", true);
+        String  accessToken = jwtProvider.create(userId);
+        String  refreshToken = jwtProvider.createRefreshToken(userId);
+        int expirationTime = 3600;
 
         user.setRefreshToken(refreshToken);
         userRepository.save(user);
 
         SignInResponseDto responseDto = new SignInResponseDto(accessToken, refreshToken, expirationTime);
-        return responseDto;
+        return responseDto; // 성공 응답 생성 및 반환
+
+
+
     }
 
-    private void setCookie(HttpServletResponse response, String name, String value, int maxAge, String path, boolean isHttpOnly, String sameSite, boolean secure) throws UnsupportedEncodingException {
-        // Ensure value is URL encoded to prevent issues with special characters
-        String encodedValue = URLEncoder.encode(value, "UTF-8");
 
-        // Manually build the cookie string to include the Partitioned attribute
-        StringBuilder cookieStringBuilder = new StringBuilder();
-        cookieStringBuilder.append(String.format("%s=%s; Path=%s; Max-Age=%d; Secure; HttpOnly=%b; SameSite=%s; Partitioned", name, encodedValue, path, maxAge, isHttpOnly, sameSite));
 
-        if (secure) {
-            cookieStringBuilder.append("; Secure");
-        }
-
-        // Note: HttpOnly attribute handling may need to be adjusted based on your requirements.
-        if (isHttpOnly) {
-            cookieStringBuilder.append("; HttpOnly");
-        }
-
-        // Add the cookie to the response
-        response.addHeader("Set-Cookie", cookieStringBuilder.toString());
-    }
     //    //1. RefreshRequestDto 에서 리프래쉬토큰을 가져온다.
 //    //2. jwtProvider 리프래쉬 토큰 검증 메서드를 만들고 검증한다.
 //    //3. 리프래쉬토큰이 만료된 토큰이거나 잘못된토큰이면 refreshInExpired 이 에러를 날린다.
@@ -203,11 +179,6 @@ public class AuthServiceImpl implements AuthService {
         }
         // 새로운 액세스 토큰을 생성합니다.
         String newAccessToken = jwtProvider.create(userId);
-
-
-        String accessTokenValue = String.format("accessToken=%s; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=%d", newAccessToken, 3000);
-        response.addHeader("Set-Cookie", accessTokenValue);
-
 
         RefreshResponseDto refreshResponse = new RefreshResponseDto(newAccessToken); // 생성자를 public으로 변경하거나, 팩토리 메소드/빌더 패턴 사용
 
