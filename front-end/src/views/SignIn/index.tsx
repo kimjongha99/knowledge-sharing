@@ -37,9 +37,6 @@ export default function SignIn(){
                 setCookie('refreshToken', refreshToken, { path: '/', maxAge: 60 * 60 * 24 * 7, secure: true, sameSite: 'none' });
                 console.log('Cookies after setting:', cookies);
 
-                // Optionally, directly log the new tokens to ensure they are correct
-                console.log('New accessToken:', accessToken);
-                console.log('New refreshToken:', refreshToken);
 
                 // Sign-in was successful, navigate to the home page
                 navigate('/');
@@ -60,7 +57,7 @@ export default function SignIn(){
 
 
     // OAuth 로그인 //
-    const DOMAIN = 'http://localhost:4040';
+    const DOMAIN = 'https://knowledge-sharing-two.vercel.app';
     const API_DOMAIN = `${DOMAIN}/api/v1`;
     const SNS_SIGN_IN_URL = (type: 'kakao' | 'naver') => `${API_DOMAIN}/auth/oauth2/${type}`;
     const onSnsSignInButtonClickHandler = (type: 'kakao' | 'naver') => {

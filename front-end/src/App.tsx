@@ -18,6 +18,7 @@ import ExamDetail from "./views/Exam/ExamDetail";
 import QuizEdit from "./views/Quiz/QuizEdit";
 import axiosInstance from "./api/axios";
 import {useCookies} from "react-cookie";
+import OAuth from "./views/OAuth";
 
 function App() {
     const { user, setUser } = useUserStore();
@@ -133,6 +134,7 @@ function App() {
 
           <Route path="/exam" element={<Exam />}/>
           <Route path="/quiz/:cardSetId" element={<ExamDetail />} />
+         <Route path='oauth-response/:accessToken/:expirationTime/:refreshToken/:refreshExpirationTime' element={<OAuth/>} />
 
 
 

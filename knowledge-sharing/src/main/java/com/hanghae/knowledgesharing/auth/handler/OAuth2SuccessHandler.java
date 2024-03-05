@@ -4,7 +4,6 @@ import com.hanghae.knowledgesharing.common.entity.User;
 import com.hanghae.knowledgesharing.common.jwt.JwtProvider;
 import com.hanghae.knowledgesharing.user.repository.UserRepository;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +12,8 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Component
 @RequiredArgsConstructor
@@ -32,33 +33,25 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         String userId = oAuth2User.getName();
         String accessToken = jwtProvider.create(userId);
-
-        Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
-        accessTokenCookie.setHttpOnly(false);
-        accessTokenCookie.setSecure(false); // Note: Set to false if you are testing over HTTP in development environment, true for production
-        accessTokenCookie.setPath("/");
-        accessTokenCookie.setMaxAge(3600); // Expiration time should match the JWT expiration
-        response.addCookie(accessTokenCookie);
-
-
         String refreshToken = jwtProvider.createRefreshToken(userId);
-        Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
-        refreshTokenCookie.setHttpOnly(false);
-        refreshTokenCookie.setSecure(false); // Note: Set to false if you are testing over HTTP in development environment, true for production
-        refreshTokenCookie.setPath("/");
-        refreshTokenCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days for refresh token
-        response.addCookie(refreshTokenCookie);
-
 
 
         User user = userRepository.findByUserId(userId);
         user.setRefreshToken(refreshToken);
         userRepository.save(user);
 
+//        long refreshTokenExpiryDuration = 7 * 24 * 60 * 60;
+//
+//        response.sendRedirect("https://knowledge-sharing-two.vercel.app/ "+ accessToken + "/3600");
+        // 7일의 시간을 초단위로 환산
+        long refreshExpirySeconds = 7 * 24 * 60 * 60; // 7 days in seconds
 
+        String redirectURL = String.format("https://knowledge-sharing-two.vercel.app/%s/3600/%s/%d",
+                URLEncoder.encode(accessToken, StandardCharsets.UTF_8),
+                URLEncoder.encode(refreshToken, StandardCharsets.UTF_8),
+                refreshExpirySeconds);
 
-        response.sendRedirect("http://localhost:3000");
-
+        response.sendRedirect(redirectURL);
     }
 
 }
