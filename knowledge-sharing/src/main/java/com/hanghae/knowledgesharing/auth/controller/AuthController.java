@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.UnsupportedEncodingException;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
@@ -64,8 +62,8 @@ public class AuthController {
 
     // 로그인 요청을 처리합니다.
     @PostMapping("/sign-in")
-    public ResponseDto<SignInResponseDto> signIn(@RequestBody @Valid SignInRequestDto requestBody, HttpServletResponse response) throws UnsupportedEncodingException {
-        SignInResponseDto  result = authService.signIn(requestBody,response);
+    public ResponseDto<SignInResponseDto> signIn(@RequestBody @Valid SignInRequestDto requestBody){
+        SignInResponseDto  result = authService.signIn(requestBody);
 
         return ResponseDto.success(result);
     }

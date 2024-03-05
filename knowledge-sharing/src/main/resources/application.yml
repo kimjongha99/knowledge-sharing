@@ -18,9 +18,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql:3306/testdb?serverTimezone=UTC&characterEncoding=UTF-8
-    username: ENC(STXL5z/l8ncZAI0Cl/e1jQ==)
-    password: ENC(NswNbA7VSznAJZz6KnetXw==)
+    url: ENC(CZ2YMIVrhkSEz6/88RbFU7qPuCOjXcy6gOkCV1kHaSlc1WHwGapQMZrJtmMqPEUb9UlQkiCX+c8BIOD6V6OJKmiNjEFcCaYVPD3yc3w09k/V2HvB8mpdZKPpalq/tI40U6fKg5ylvcU=)
+    username: ENC(rK1e6GskqhBvqmDI7QC0dQ==)
+    password: ENC(3IJk1Uf4VEkmg4mBLyqEk9p/MVb9YroB)
 
 
   jpa:
@@ -78,7 +78,7 @@ spring:
             user-name-attribute: response
   data:
     redis:
-      host: redis
+      host: localhost
       port: 6379
 
 

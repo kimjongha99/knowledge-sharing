@@ -14,7 +14,6 @@ import com.hanghae.knowledgesharing.common.jwt.JwtProvider;
 import com.hanghae.knowledgesharing.common.util.email.CertificationNumber;
 import com.hanghae.knowledgesharing.common.util.email.EmailProvider;
 import com.hanghae.knowledgesharing.user.repository.UserRepository;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -127,7 +126,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override@Transactional
-    public SignInResponseDto signIn(SignInRequestDto dto , HttpServletResponse response) {
+    public SignInResponseDto signIn(SignInRequestDto dto) {
 
         String userId = dto.getId();
         User user = userRepository.findByUserId(userId);
@@ -144,21 +143,6 @@ public class AuthServiceImpl implements AuthService {
         String  accessToken = jwtProvider.create(userId);
         String  refreshToken = jwtProvider.createRefreshToken(userId);
         int expirationTime = 3600;
-
-        Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
-        accessTokenCookie.setHttpOnly(false);
-        accessTokenCookie.setSecure(false); // Note: Set to false if you are testing over HTTP in development environment, true for production
-        accessTokenCookie.setPath("/");
-        accessTokenCookie.setMaxAge(3600); // Expiration time should match the JWT expiration
-        response.addCookie(accessTokenCookie);
-
-        Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
-        refreshTokenCookie.setHttpOnly(false);
-        refreshTokenCookie.setSecure(false); // Note: Set to false if you are testing over HTTP in development environment, true for production
-        refreshTokenCookie.setPath("/");
-        refreshTokenCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days for refresh token
-        response.addCookie(refreshTokenCookie);
-
 
         user.setRefreshToken(refreshToken);
         userRepository.save(user);
@@ -195,11 +179,6 @@ public class AuthServiceImpl implements AuthService {
         }
         // 새로운 액세스 토큰을 생성합니다.
         String newAccessToken = jwtProvider.create(userId);
-
-
-        String accessTokenValue = String.format("accessToken=%s; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=%d", newAccessToken, 3000);
-        response.addHeader("Set-Cookie", accessTokenValue);
-
 
         RefreshResponseDto refreshResponse = new RefreshResponseDto(newAccessToken); // 생성자를 public으로 변경하거나, 팩토리 메소드/빌더 패턴 사용
 

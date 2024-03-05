@@ -7,8 +7,6 @@ import com.hanghae.knowledgesharing.auth.dto.response.auth.SignInResponseDto;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.UnsupportedEncodingException;
-
 public interface AuthService {
     @Transactional
     String idChecking(IdCheckRequestDto requestDto);
@@ -24,7 +22,7 @@ public interface AuthService {
 
 
     @Transactional
-    SignInResponseDto signIn(SignInRequestDto dto, HttpServletResponse response) throws UnsupportedEncodingException;
+    SignInResponseDto signIn(SignInRequestDto dto) ;
 
     //    //1. RefreshRequestDto 에서 리프래쉬토큰을 가져온다.
     //    //2. jwtProvider에 리프래쉬 토큰 검증 메서드를 만들고 검증한다.

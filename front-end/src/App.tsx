@@ -28,24 +28,39 @@ function App() {
    //region
     useEffect(() => {
         const checkAuthStatus = async () => {
-            if (cookies.accessToken) {
-                fetchUserData();
-            } else if (!cookies.accessToken && cookies.refreshToken) {
+            if (!cookies.accessToken && cookies.refreshToken) {
+                // 액세스 토큰이 없고 리프레시 토큰이 있을 경우, 액세스 토큰 갱신 시도
                 await refreshAccessToken();
+            } else if (cookies.accessToken) {
+                // 액세스 토큰이 있는 경우, 만료 시간 체크 후 필요하다면 갱신 시도
+                const isTokenExpired = checkTokenExpiration(cookies.accessToken);
+                if (isTokenExpired) {
+                    await refreshAccessToken();
+                    console.log('토큰이 만료되었습니다.');
+
+                } else {
+                    fetchUserData();
+                }
             }
         };
+
         checkAuthStatus();
     }, [cookies.accessToken, cookies.refreshToken]);
 
 
 
+
+
     const refreshAccessToken = async () => {
         try {
-            await axiosInstance.post('/api/v1/auth/refresh', {
+            const response = await axiosInstance.post('/api/v1/auth/refresh', {
                 refreshToken: cookies.refreshToken,
             }, {
                 withCredentials: true,
             });
+            const { newAccessToken } = response.data; // 새로운 accessToken 받아오기
+            setCookie('accessToken', newAccessToken, { path: '/', maxAge: 3600 }); // 환경에 맞게 설정
+            fetchUserData(); // 새 토큰으로 사용자 정보 가져오기
         } catch (error) {
             console.error('Failed to refresh access token:', error);
             removeCookie('accessToken');
@@ -53,6 +68,7 @@ function App() {
             navigate('/auth/sign-in');
         }
     };
+
 
     const fetchUserData = async () => {
         if (cookies.accessToken) {
@@ -63,14 +79,34 @@ function App() {
                 });
                 const { userId, email, profileImageUrl, role, type } = response.data.data;
                 setUser({ userId, email, profileImageUrl, role, type });
-
             } catch (error) {
                 console.error('Failed to fetch user data:', error);
                 removeCookie('accessToken');
                 navigate('/auth/sign-in'); // Optionally redirect to sign-in
+
             }
         }
     };
+    function checkTokenExpiration(token: string): boolean {
+        // JWT는 세 부분으로 나누어져 있으며, '.'을 기준으로 구분됩니다.
+        const payload = token.split('.')[1];
+        if (!payload) {
+            throw new Error('Token structure is incorrect');
+        }
+
+        // 페이로드 부분을 Base64 디코딩하여 JSON 객체로 변환합니다.
+        const decodedPayload = JSON.parse(atob(payload));
+
+        // exp 필드는 Unix 시간(초 단위)으로 토큰의 만료 시간을 나타냅니다.
+        const exp = decodedPayload.exp;
+        if (!exp) {
+            throw new Error('Expiration time is missing in the token payload');
+        }
+
+        // 현재 시간(초 단위)을 구하고, 만료 시간과 비교합니다.
+        const currentTime = Math.floor(Date.now() / 1000);
+        return currentTime > exp;
+    }
 
     //endregion
 
