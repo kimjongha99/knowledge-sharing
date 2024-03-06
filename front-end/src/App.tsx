@@ -134,8 +134,8 @@ function App() {
 
           <Route path="/exam" element={<Exam />}/>
           <Route path="/quiz/:cardSetId" element={<ExamDetail />} />
-         <Route path='oauth-response/:accessToken/:expirationTime/:refreshToken/:refreshExpirationTime' element={<OAuth/>} />
-
+         <Route path='oauth-response/:accessToken/:expirationTime' element={<OAuth/>} />
+              {/*:refreshToken/:refreshExpirationTime*/}
 
 
          {/*<Route path='/test' element={<Test/>}/>*/}

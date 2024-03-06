@@ -47,7 +47,7 @@ spring:
       client:
         registration:
           kakao:
-            client-id: ENC(lN/Xa0LYwIKYD36v3rXP+93ehShimctF7t/xJMbYXTHADd1VY2HvK86SoHVfhYSx)
+            client-id: ENC(sYhAniF+FYqwgg7uHswZUj64B1AukKeK7Qz0ujNEU/n0oc7LZTjpzck6kcqxiYgC)
             client-secret: ENC(9CJ51wZRFl7YrevWFuQPc329oqcBsjo6SRtPWAEBNpqOLER/syKrHrhLcSVygYGK)
 
             redirect-uri: '{baseUrl}/oauth2/callback/{registrationId}'
