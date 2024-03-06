@@ -57,7 +57,7 @@ export default function SignIn(){
 
 
     // OAuth 로그인 //
-    const DOMAIN = 'https://knowledge-sharing-two.vercel.app';
+    const DOMAIN = 'https://www.knowledge-back.shop';
     const API_DOMAIN = `${DOMAIN}/api/v1`;
     const SNS_SIGN_IN_URL = (type: 'kakao' | 'naver') => `${API_DOMAIN}/auth/oauth2/${type}`;
     const onSnsSignInButtonClickHandler = (type: 'kakao' | 'naver') => {
