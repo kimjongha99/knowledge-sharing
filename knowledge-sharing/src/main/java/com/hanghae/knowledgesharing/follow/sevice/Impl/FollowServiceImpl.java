@@ -24,7 +24,6 @@ public class FollowServiceImpl implements FollowService {
     private  final FollowRepository followRepository;
 
     @Override
-    @Transactional
     public CheckFollowResponseDto checkFollow(String followId, String followingId) {
         // 팔로워 유저와 팔로잉 유저의 존재 확인 및 객체 가져오기
         User follower = userRepository.findByUserId(followId);
