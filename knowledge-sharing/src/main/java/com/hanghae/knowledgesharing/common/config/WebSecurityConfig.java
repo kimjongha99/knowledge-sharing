@@ -71,7 +71,7 @@ public class WebSecurityConfig {
 
     }
 
-    @Bean  //cors 설정 모든 헤더에 대해 허용하겠다
+    @Bean
     protected CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -87,6 +87,8 @@ public class WebSecurityConfig {
         return source;
 
     }
+
+
     class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
         @Override
